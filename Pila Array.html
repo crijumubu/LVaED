@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <head>
+        <meta charset="utf-8"/>
+        <title>LVaED</title>
+        <meta name="description" content="Este es un aporte hacia el aprendizaje de las estructuras de datos"/>
+        <meta name="author" content="Cristian Julian Muñoz Buenahora, John Jairo Corzo Calderon, Santiago Andres DelValle Pinilla"/>
+        <meta name="keywords" content="Estructuras de datos"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/EstilosPrincipal.css"/>
+        <link rel="stylesheet" href="/Estilos, scripts e imagenes/prism.css"/>
+        <script src="Estilos, scripts e imagenes/botonArriba.js"></script>
+    </head>
+    <body>
+        <div id="principio">
+            <header>
+                <h1>Laboratorio virtual para el aprendizaje de estructuras de datos - LVaED</h1> 
+            </header>
+
+            <nav> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="EstructurasDeDatos.html">Estructura de datos</a></li>
+                    <li><a href="Trasformaciones.html">Trasformaciones</a></li>
+                </ul>
+            </nav>
+
+            <h1 id="titulo">Pilas basadas en arreglos</h1>
+            <section id="nuevoSection">
+                <article>
+                    <h2 id="definicion">Definición</h2><br>
+                    <p>Son conocidas como una estructura LIFO (del inglés: “Last Input, First Output”, cuya respectiva traducción al español sería:  ́"Último en entrar, Primero en salir"), esto ocurre, debido a que, la  ́unica forma de eliminar datos de una pila es por el mismo extremo que son ingresados (Ver figura 6).</p><br>
+                    <p>Las pilas también son estructuras de datos lineales, por lo que, los datos de una pila se encuentran ordenados sucesivamente, causando, que los predecesores y antecesores de un dato, sean  ́unicos para cada uno de estos. Las pilas no se encuentran definidas en los lenguajes de programación, debido a esto, se debe recurrir a estructuras ya definidas, tales como, los arreglos o listas, para hacer uso de estas [2].</p><br>
+                    <img id="imgEstructura" src="Estilos, scripts e imagenes/Pilas.png" alt="Pilas">
+                    <p id="descripcionImagen">Figura 6: Representación de una pila</p>
+                </article>
+            </section>
+
+            <aside id="indice">
+                <h2 id="tituloIndice">Índice</h2>
+                <ul id="ulindice">
+                    <li><a class="liindice" href="#definicion">1. Definición de una pila</a></li>
+                    <li><a class="liindice" href="#principalesMetodos">2. Principales métodos</a></li>
+                    <li> <a class="liindice" href="#java">3. Implementación en Java</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionJava">3.1 Desarrollo de la pila</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#c++">4. Implementación en C++</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionC++">4.1 Desarrollo de la pila</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#python"> 5. Implementación en Python</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionPython">5.1 Desarrollo de la pila</a></li>
+                        </ul>
+                    </li>     
+                    <li><a class="liindice" href="#aplicacion">6. Ejercicio de aplicación de la estructura</a></li>  
+                </ul>
+            </aside>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="principalesMetodos">Principales métodos</h2><br>
+                    <ul>
+                        <li><p><b>clear()</b> -> Método void el cual se encarga de vaciar (Eliminar todos los elementos) la pila.</p></li><br>
+                        <li><p><b>IsEmpty ()</b> -> Método booleano el cual se encarga de verificar que la pila contenga al menos un elemento; Si no es así, retornara un false indicando que esta vacía.</p></li><br>
+                        <li><p><b>peek()</b> -> Método object el cual se encarga de retornar el ultimo elemento ingresado a la pila , siendo este su “Top”.</p></li><br>
+                        <li><p><b>pop ()</b> -> Método object el cual se encarga de retornar el “Top” de la pila, además de eliminarlo de la estructura.</p></li><br>
+                        <li><p><b>push (Object object)</b> -> Método booleano el cual se encarga de ingresar el objeto ingresado en el parámetro a la pila, convirtiéndose ese su “Top”; Si el proceso resulta exitoso, retornara un true indicando su correcto uso.</p></li><br>
+                        <li><p><b>size ()</b> -> Método int el cual se encarga de retornar el tamaño de la pila.</p></li><br>
+                        <li><p><b>search (Object object)</b> -> Método booleano el cual se encarga de verificar si el objeto ingresado en el parámetro existe en la pila; Retornara un true si lo está, o un false si no existe dentro de la estructura.</p></li><br>
+                        <li><p><b>sort ()</b> -> Método void el cual se encarga organizar la pila.</p></li><br>
+                        <li><p><b>reverse ()</b> -> Método void el cual se encarga de invertir las posiciones de la pila (“Volteándola”), ocasionando que los últimos elementos ingresados sean los últimos en salir (Los que están al fondo de la pila) y que lo primeros elementos ingresados sean los primeros en salir.</p></li><br>
+                    </ul>
+                </article>
+
+                <article>
+                    <h2 id="java">Implementación de la estructura en Java</h2>
+                    <br>
+                    <h3 id="implementacionJava">Pila basada en arreglos</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+import java.util.Arrays;
+
+public class Pila implements IPila {
+
+
+    /*
+    Nota : Es una pila básada en los arreglos del propio lenguaje , volviendola así una estructura estática 
+    */
+
+    private int size;
+    private Object[] array;
+    private int top; // Es necesario saber la posición del top ya que es un arreglo
+
+    public Pila(int size) { 
+        this.size = size;
+        this.array = new Object[(size > 0) ? size : 1];
+        clear();
+    }
+
+    @Override
+    public void clear() { //Recorre todas las posiciones del arreglo volviendo en cada posición su elemento correspondiente en null
+        for (int i = 0; i < array.length; i++) {
+            array[i] = null;
+        }
+        top = -1; // Se establece el top "-1" debido a que la estructura esta vacia
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return array[0] == null; // Si en la posición 0 , el objeto es igual a null , significa que la estructura esta vacia
+    }
+
+    @Override
+    public Object peek() {
+        return (!isEmpty()) ? array[top] : null; // Extrae el top que es el ultimo elemento que ha sido ingresado en la pila (Siempre y cuando que el método isEmpty verifique que almenos haya un elemento la estructura)
+    }
+
+    @Override
+    public Object pop() {
+        if (!isEmpty()) {
+            Object object = array[top]; // Se almacena el top de la pila en la variable object 
+            array[top--] = null; // Se "Elimina" el top declarandolo como null y le resta -1 a top
+            return object; // Retorna el la variable con el antiguo top
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean push(Object object) {
+        if (top + 1 < size) {
+            try {
+                array[++top] = object; // Se le agrega un nuevo espacio al array y en ese sitio se almacena la variable ingresada en el parametro
+                return true;
+            } catch (Exception e) {
+                System.out.println(e);
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int size() {
+        return top + 1; // Retorna ++top (El tamaño de la estructura) debido a que un array empieza desde 0 
+    }
+
+    @Override
+    public boolean search(Object object) {
+        Object[] copia = new Object[size];
+        boolean correcto = false; 
+        for (int i=0; i < size; i++){ // Se recorre el arreglo
+            copia[i] = pop(); // Se extrae elemento por elemento hasta que encuentre el objeto ingresado en el parametro , si no es así retorna el valor orignal de booleano (False)
+            if (copia[i]==object){
+                correcto = true;
+            }
+        }
+
+        for (int i=0; i < size; i++){
+            array[i] = copia[(size-1)-i];
+        }
+
+        top = size-1;
+
+        return correcto;
+    }
+
+    @Override
+    public void sort() { //Organiza los elementos de la pila 
+        Object[] resultado = new Object[size];
+        Object dato;
+        while (array.length != 0){
+            dato = Eliminar(array);
+            this.Situar(dato, resultado);
+        }
+        array = resultado;
+        //Arrays.sort(array);
+    }
+
+    @Override
+    public void reverse() { // Invierte los elementos de la pila
+        Object[] newArray = new Object[size];
+        for (int i=0; i < size; i++){
+            newArray[i] = pop();
+        }
+        array = newArray;
+        top = size-1;
+    }
+
+    @Override
+    public String toString() { // Crea una concatenación de Strings con todos los elementos del array (Pila)
+        return "ArrayStack{" +
+                "size=" + size +
+                ", array=" + Arrays.toString(array) +
+                ", top=" + top +
+                '}';
+    }
+
+    public Object Eliminar(Object[] arrayAEliminar){
+        Object[] newArray = new Object[size-1];
+        for (int i=0; i < size-1; i++){
+            newArray[i] = arrayAEliminar[i];
+        }
+        array = newArray;
+        size = array.length;
+        top = size-1;
+
+        return arrayAEliminar[arrayAEliminar.length-1];
+    }
+
+    public void AgregarAlFinal(Object[] arrayAInsertar, Object objectoAAgregar){
+        Object[] newArray = new Object[size+1]; //Aumenta la capacidad de almacenamiento
+        for (int i=0; i < size+1; i++){
+            if (i != size){
+                newArray[i] = arrayAInsertar[i]; //Agrega los elementos en el nuevo array
+            }else {
+                newArray[i] = objectoAAgregar; // Y al final como su "Top" el ultimo objeto ingresado
+            }
+
+        }
+
+        top = size; // El tamaño aumenta en +1
+        array = newArray;
+        size = array.length;
+    }
+
+    private void Situar(Object dato, Object[] resultado) { 
+        Object[] auxiliar = new Object[size];
+        if (resultado.length == 0){
+            AgregarAlFinal(resultado,dato);
+            //auxiliar.
+        }else {
+            if (dato.toString().compareTo(resultado[resultado.length-1].toString()) <= 0){
+                AgregarAlFinal(resultado,dato);
+            }
+        }
+    }
+}                               
+                        </code>
+                    </pre>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="c++">Implementación de la estructura en C++</h2>
+                    <br>
+                    <h3 id="implementacionC++">Pila basada en arreglos</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#include < iostream >
+#pragma once
+#include < vector >
+#include < any >
+using namespace std;
+
+class Pila : public IPila{
+
+        /*
+    Nota : Es una pila básada en los arreglos del propio lenguaje , volviendola así una estructura estática 
+    */
+    
+    private:
+        int size_Conflict = 0;
+        std::vector< std::any > array;
+        int top = 0; // Es necesario saber la posición del top ya que es un arreglo
+    
+    Pila::Pila(int size) 
+    {
+        this->size_Conflict = size;
+        this->array = std::vector< std::any >((size > 0) ? size : 1);
+        clear();
+    }
+
+    void Pila::clear() //Recorre todas las posiciones del arreglo volviendo en cada posición su elemento correspondiente en null
+    {
+        for (int i = 0; i < array.size(); i++)
+        {
+            array[i] = std::any();
+        }
+        top = -1; // Se establece el top "-1" debido a que la estructura esta vacia
+    }
+
+    bool Pila::isEmpty()
+    {
+        return !array[0].has_value(); // Si en la posición 0 , el objeto es igual a null , significa que la estructura esta vacia
+    }
+
+    std::any Pila::peek()
+    {
+        return (!isEmpty()) ? array[top] : std::any();  // Extrae el top que es el ultimo elemento que ha sido ingresado en la pila (Siempre y cuando que el método isEmpty verifique que almenos haya un elemento la estructura)
+    }
+
+    std::any Pila::pop()
+    {
+        if (!isEmpty())
+        {
+            std::any object = array[top]; // Se almacena el top de la pila en la variable object 
+            array[top--] = std::any(); // Se "Elimina" el top declarandolo como null y le resta -1 a top
+            return object; // Retorna el la variable con el antiguo top
+        }
+        else
+        {
+            return std::any();
+        }
+    }
+
+    bool Pila::push(std::any object)
+    {
+        if (top + 1 < size_Conflict)
+        {
+            try
+            {
+                array[++top] = object; // Se le agrega un nuevo espacio al array y en ese sitio se almacena la variable ingresada en el parametro
+                return true;
+            }
+            catch (const std::runtime_error &e)
+            {
+                std::wcout << e << std::endl;
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    int Pila::size()
+    {
+        return top + 1; // Retorna ++top (El tamaño de la estructura) debido a que un array empieza desde 0 
+    }
+
+    bool Pila::search(std::any object)
+    {
+        std::vector< std::any > copia(size_Conflict);
+        bool correcto = false;
+        for (int i = 0; i < size_Conflict; i++) // Se recorre el arreglo
+        {
+            copia[i] = pop(); // Se extrae elemento por elemento hasta que encuentre el objeto ingresado en el parametro , si no es así retorna el valor orignal de booleano (False)
+            if (copia[i] == object)
+            {
+                correcto = true;
+            }
+        }
+
+        for (int i = 0; i < size_Conflict; i++)
+        {
+            array[i] = copia[(size_Conflict - 1) - i];
+        }
+
+        top = size_Conflict - 1;
+
+        return correcto;
+    }
+
+    void Pila::sort() //Organiza los elementos de la pila 
+    {
+        std::vector< std::any > resultado(size_Conflict);
+        std::any dato;
+        while (array.size() != 0)
+        {
+            dato = Eliminar(array);
+            this->Situar(dato, resultado);
+        }
+        array = resultado;
+        //Arrays.sort(array);
+    }
+
+    void Pila::reverse() // Invierte los elementos de la pila
+    {
+        std::vector< std::any > newArray(size_Conflict);
+        for (int i = 0; i < size_Conflict; i++)
+        {
+            newArray[i] = pop();
+        }
+        array = newArray;
+        top = size_Conflict - 1;
+    }
+
+    std::wstring Pila::toString() // Crea una concatenación de Strings con todos los elementos del array (Pila)
+        return "ArrayStack{" +
+
+    {
+        return L"ArrayStack{" + L"size=" + std::to_wstring(size_Conflict) + L", array=" + Arrays->toString(array) + L", top=" + std::to_wstring(top) + StringHelper::toString(L'}');
+    }
+
+    std::any Pila::Eliminar(std::vector< std::any > &arrayAEliminar)
+    {
+        std::vector< std::any > newArray(size_Conflict - 1);
+        for (int i = 0; i < size_Conflict - 1; i++)
+        {
+            newArray[i] = arrayAEliminar[i];
+        }
+        array = newArray;
+        size_Conflict = array.size();
+        top = size_Conflict - 1;
+
+        return arrayAEliminar[arrayAEliminar.size() - 1];
+    }
+
+    void Pila::AgregarAlFinal(std::vector< std::any > &arrayAInsertar, std::any objectoAAgregar)
+    {
+        std::vector< std::any > newArray(size_Conflict + 1);//Aumenta la capacidad de almacenamiento
+        for (int i = 0; i < size_Conflict + 1; i++)
+        {
+            if (i != size_Conflict)
+            {
+                newArray[i] = arrayAInsertar[i]; //Agrega los elementos en el nuevo array
+            }
+            else
+            {
+                newArray[i] = objectoAAgregar;// Y al final como su "Top" el ultimo objeto ingresado
+            }
+
+        }
+
+        top = size_Conflict; // El tamaño aumenta en +1
+        array = newArray;
+        size_Conflict = array.size();
+    }
+
+    void Pila::Situar(std::any dato, std::vector< std::any > &resultado)
+    {
+        std::vector< std::any > auxiliar(size_Conflict);
+        if (resultado.empty())
+        {
+            AgregarAlFinal(resultado,dato);
+            //auxiliar.
+        }
+        else
+        {
+            if (dato.toString().compareTo(resultado[resultado.size() - 1].toString()) <= 0)
+            {
+                AgregarAlFinal(resultado,dato);
+            }
+        }
+    }	
+};                                                                
+                        </code>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="python">Implementación de la estructura en Python</h2>
+                    <br>
+                    <h3 id="implementacionPython">Pila basada en arreglos</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+class ArrayStack():
+
+__size = 0  #Variable tipo int para almacenar tamaño de la pila
+__array = [] #Como en python no hay arreglos predefinidos, se usa una lista, para evitar usar librerias
+top = 0 #Indica la posicion del elemento en la cabeza
+
+"""
+Constructor de la clase, el unico parametro obligatorio es el tamaño de la pila 
+"""
+def __init__ (self, size):
+    self.__size = size
+    self.__array = [None]*(self.__size) 
+    self.top = -1
+
+"""
+Limpia la pila
+"""
+def clear(self): #No recibe parametros ni tiene retorno
+    for i in range(0, self.__size):
+        self.__array[i] = None
+    self.top = -1
+
+"""
+Retorna True si la pila esta vacia
+"""
+def isEmpty(self): #Retorna un booleano
+    return self.__array[0] == None
+
+"""
+Retorna el objeto en la cabeza de la pila sin eliminarlo
+"""
+def peeK(self): #Retorna un objeto
+    return self.__array[self.top] if (not self.isEmpty()) else None
+
+"""
+Elimina el objeto en la cabeza de la pila y lo retorna
+"""
+def pop(self): #No recibe parametro y retorna un objeto 
+    if(not self.isEmpty()):
+        ob = self.__array[self.top]
+        self.__array[self.top] = None
+        self.top -= 1
+        return ob
+    else:
+        return None
+
+"""
+Agrega objetos a la pila
+"""
+def push(self, ob): #Recibe como parametro un objeto y retorna un booleano
+    if(self.top + 1 < self.__size):
+        try:
+            self.top += 1
+            self.__array[self.top] = ob
+            return True
+        except Exception:
+            return False
+    else:
+        return False
+
+"""
+Retorna la cantidad de elementos en la lista
+"""
+def size(self): #Retorna un entero
+    return self.top + 1
+
+"""
+Buscar un objeto en la pila
+"""
+def search(self, ob): #Recibe como parametro un objeto y retorna un booleano
+    tempArr = ArrayStack(self.__size)
+
+    temp = object
+    cont = 0
+    find = False
+
+    for i in range(0, self.__size):
+        temp = self.pop()
+        if(temp == ob):
+            self.push(temp)
+            find = True
+        else:
+            tempArr.push(temp)
+            cont += 1
+    
+    for x in range(0, cont):
+        self.push(tempArr.pop())
+
+    return find
+
+"""
+Ordenar la lista
+"""
+def sort(self): #No recibe parametros ni tiene retorno
+    self.__array.sort()
+
+"""
+Invierte los elementos de la pila
+"""
+def reverse(self): #No recibe parametros ni tiene retorno
+    tempArr = self.__array.copy()
+    self.clear()
+
+    for i in range(len(tempArr)-1 ,-1,-1):
+        self.push(tempArr[i])
+
+"""
+Imprimir la pila
+"""
+def __str__(self):
+    return str(self.__array) + " top index: {0}".format(self.top)                        
+                        </code>
+                    </pre>
+                </article>
+            </section>
+            
+            <section class="implementacion">
+                <article>
+                    <h2 id="aplicacion">Ejercicio de aplicación de la lista enlazada sencilla</h2>
+                    <br>
+                    <p>Se requiere determinar frases que son palíndromos, para lo cual se ha de seguir la siguiente estrategia, añadir cada carácter de la frase a una pila y a la vez a una lista (La de preferencia): Extraer carácter a carácter simultáneamente de la pila y lista con el fin de comparar contenidos y determinar si son palíndromos.</p><br>            
+                    <pre>
+                        <code id="showCode" class="language-java">
+import java.lang.reflect.Array;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner p = new Scanner(System.in);
+        System.out.println("Escriba su palabra");
+        String data = p.nextLine();
+        Pila one = new Pila(data.length()); //Se crea una pila por array
+        List two = new List(); // Se crea una lista
+        for(int i = 0 ; i < data.length() ; i++){ // Se recorre la palabra ingresa y se le agrega caracter por caracter a las estructuras
+            char u = data.charAt(i);
+            one.push(u);
+            two.add(u);
+        }
+        boolean des = true; // Se crea el identificador
+        ListNode head = two.head;
+        for(int k = 0 ; k < data.length() ; k++){
+            Object var = one.pop(); // Mediante el método .pop , la pila retorna y elimina el ultimo elemento en ingresar
+            //System.out.println(var);
+            Object var2 = head.getObject(); // Se declara la cabeza
+            //System.out.println(var2);
+            head = head.next; // Se recorre la lista desde la cabeza
+            if(var==var2){
+                des =true;
+            }else {
+                des = false; // Si almenos una variable no es igual , el identificador se define como false y cierra el ciclo
+                break;
+            }
+        }
+        String s = "";
+        //Se define la concatenación donde se muestre si es o no palindroma
+        if(des==true){
+            s = "Es palindroma";
+        }else {
+            s = "No es palindroma";
+        }
+        System.out.println("La palabra" + " " + data + " " + s); // Impresión final
+    }
+}                            
+                        </code>
+                    </pre>
+                <p id="descripcionImagen">EJERCICIO PROPUESTO  POR LENIN JAVIER SERRANO</p>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+
+            <footer id="pie">
+                Universidad Pontificia Bolivariana - Seccional Bucaramanga
+            </footer>
+        </div>
+        <script src="Estilos, scripts e imagenes/prism.js"></script>
+    </body>
+</html>

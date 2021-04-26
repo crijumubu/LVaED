@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <head>
+        <meta charset="utf-8"/>
+        <title>LVaED</title>
+        <meta name="description" content="Este es un aporte hacia el aprendizaje de las estructuras de datos"/>
+        <meta name="author" content="Cristian Julian Muñoz Buenahora, John Jairo Corzo Calderon, Santiago Andres DelValle Pinilla"/>
+        <meta name="keywords" content="Estructuras de datos"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/EstilosPrincipal.css"/>
+        <link rel="stylesheet" href="/Estilos, scripts e imagenes/prism.css"/>
+        <script src="Estilos, scripts e imagenes/botonArriba.js"></script>
+    </head>
+    <body>
+        <div id="principio">
+            <header>
+                <h1>Laboratorio virtual para el aprendizaje de estructuras de datos - LVaED</h1> 
+            </header>
+
+            <nav> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="EstructurasDeDatos.html">Estructura de datos</a></li>
+                    <li><a href="Trasformaciones.html">Trasformaciones</a></li>
+                </ul>
+            </nav>
+
+            <h1 id="titulo">Cola basada en arreglos</h1>
+            <section id="nuevoSection">
+                <article>
+                    <h2 id="definicion">Definición</h2><br>
+                    <p>Este tipo de estructura de datos lineal, y tambien puede ser denominado como FIFO (del inglés: “First Input, First output”, cuya respectiva traducción al español sería: "Primero en ingresar, Primero en salir"),  esto ocurre, ya que, a diferencia de las pilas, en las colas son ingresados y eliminados por distintos extremos, es decir, salen en orden de entrada, siendo el primer valor ingresado, el primero en salir (Ver figura 8). De la misma forma a las pilas, las colas no están definidas en los lenguajes de programación, por lo que, también es necesario recurrir a arreglos y listas [2].</p><br>
+                    <img id="imgEstructura" src="Estilos, scripts e imagenes/Colas.png" alt="Colas">
+                    <p id="descripcionImagen">Figura 8: Representación de una cola</p>
+                </article>
+            </section>
+
+            <aside id="indice">
+                <h2 id="tituloIndice">Índice</h2>
+                <ul id="ulindice">
+                    <li><a class="liindice" href="#definicion">1. Definición de una cola basada en arreglos</a></li>
+                    <li><a class="liindice" href="#principalesMetodos">2. Principales métodos</a></li>
+                    <li> <a class="liindice" href="#java">3. Implementación en Java</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionJava">3.1 Desarrollo de la cola basada en arreglos</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#c++">4. Implementación en C++</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionC++">4.1 Desarrollo de la cola basada en arreglos</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#python"> 5. Implementación en Python</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionPython">5.1 Desarrollo de la cola basada en arreglos</a></li>
+                        </ul>
+                    </li> 
+                    <li><a class="liindice" href="#aplicacion">6. Ejercicio de aplicación de la estructura</a></li>    
+                </ul>
+            </aside>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="principalesMetodos">Principales métodos</h2><br>
+                    <ul>
+                        <li><p><b>clear ()</b> -> Método void el cual se encarga de vaciar (Eliminar todos los elementos) la cola.</p></li><br>
+                        <li><p><b>IsEmpty ()</b> -> Método booleano el cual se encarga de verificar que la cola contenga al menos un elemento; Si no es así, retornara un false indicando que está vacía.</p></li><br>
+                        <li><p><b>extract ()</b> -> Método object el cual se encarga de retornar el primer elemento ingresado a la cola para posteriormente eliminarlo de la estructura.</p></li><br>
+                        <li><p><b>insert (Object object)</b> -> Método booleano el cual se encarga de incorporar el objeto ingresado en el parámetro a la cola; Si el proceso resulta exitoso, retornara un true indicando su correcto uso.</p></li><br>
+                        <li><p><b>size ()</b> -> Método int el cual se encarga de retornar el tamaño de la cola.</p></li><br>
+                        <li><p><b>search (Object object)</b> -> Método booleano el cual se encarga de verificar si el objeto ingresado en el parámetro existe en la cola; Retornara un true si lo está, o un false si no existe dentro de la estructura.</p></li><br>
+                        <li><p><b>sort ()</b> -> Método void el cual se encarga organizar la cola.</p></li><br>
+                        <li><p><b>reverse ()</b> -> Método void el cual se encarga de invertir las posiciones de la cola, siendo así los primeros elementos ingresados, los últimos en salir y los últimos elementos ingresados, los primeros en salir.</p></li><br>
+                        <li><p><b>toString ()</b> -> Método string el cual se encarga de retornar una concatenación en la cual están los elementos de la cola.</p></li><br>
+                    </ul>
+                </article>
+                <article>
+                    <h2 id="java">Implementación de la estructura en Java</h2>
+                    <br>
+                    <h3 id="implementacionJava">Cola basada en arreglos</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+import java.util.Arrays;
+
+public class Cola implements ICola{
+
+
+    /*
+
+    Nota : Al estar basada en arrays , convierte la cola en una estructura estática  
+
+    */
+
+    private Object array[];
+
+    public Cola(int size){
+        if (size>0){
+            array = new Object[size];
+        }else{
+            array = new Object[1];
+        }
+    }
+    @Override
+    public void clear() { // Recorre la cola , asignando a cada posición su contenido null
+        for (int i = 0; i < array.length; i++) {
+            array[i] = null;
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        boolean estaVacia = false; 
+        for (int i=0; i < size(); i++){
+            if (array[i] == null){ // Si el primer el primer elemento es null , significa que la cola esta vacia
+                estaVacia = true;
+            }else{
+                estaVacia = false;
+                break; // Rompe el ciclo cuando se de esta condición
+            }
+        }
+        return estaVacia;
+    }
+
+    @Override
+    public Object extract() {
+        Object object = null; // Se declara el Objeto donde se va almacenar el primer elemento de la cola
+        for (int i=0; i < size(); i++){
+            if (array[i]!=null){
+                object = array[i]; // Asigna el objeto el valor del primer elemento de la cola
+                array[i] = null; // Elimina el elemento
+                return object;
+            }
+        }
+        return object; // Se hace este return debido a que si la cola esta vacia , retorna el valor original asignado (Null)
+    }
+
+    @Override
+    public boolean insert(Object object) {
+        for (int i=0; i < array.length; i++){
+            if (array[i] == null){ // Cuando la posición de un array de null y en el caso de las colas , signfica que será puesto al final de la misma
+                array[i] = object; // Se le asigna el objeto a ese espacio
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int size() { // Retorna el tamaño de la estructura 
+        return array.length;
+    }
+
+    @Override
+    public boolean search(Object object) {
+        Object arraycopia[] = new Object[size()];
+        for (int i=0; i < size(); i++){
+            if (array[i] == object){ // Recorre el array para verificar si el objeto ingresaod en el parametro esta dentro de la estructura
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void sort() { // Organiza la cola
+        List s = new List();
+        for (Object o: array){
+            s.add(o);
+        }
+        s.sortList();
+        array = s.toArray();
+    }
+
+    @Override
+    public void reverse() { 
+        Object reverseArray[] = new Object[size()]; // Crea un array donde se van almacenar los elementos "Inversos"
+        for (int i = 0; i < size(); i++){
+            reverseArray[i] = array[array.length-(i+1)]; // Recorre el array original inversamente
+        }
+        array = reverseArray; //Asigna los valores del Array "Inverso" al original
+    }
+
+    @Override
+    public String toString(){ // Crea una concatenación de Strings con los elementos del array (Cola)
+        return "ArrayTail{" + "size=" + size() + ", array=" + Arrays.toString(array) + '}'; //Aparte del tamaño
+    }
+}                                                       
+                        </code>
+                    </pre>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="c++">Implementación de la estructura en C++</h2>
+                    <br>
+                    <h3 id="implementacionC++">Cola basada en arreglos</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#include < iostream >
+#pragma once
+#include < vector >
+#include < any >
+using namespace std;
+
+class Cola : public ICola{
+
+        /*
+
+    Nota : Al estar basada en arrays , convierte la cola en una estructura estática  
+
+    */
+
+    private:
+    std::vector< std::any > array;
+    
+    Cola::Cola(int size)
+    {
+        if (size > 0)
+        {
+            array = std::vector< std::any >(size);
+        }
+        else
+        {
+            array = std::vector< std::any >(1);
+        }
+    }
+
+    void Cola::clear() // Recorre la cola , asignando a cada posición su contenido null
+    {
+        for (int i = 0; i < array.size(); i++)
+        {
+            array[i] = std::any();
+        }
+    }
+
+    bool Cola::isEmpty()
+    {
+        bool estaVacia = false;
+        for (int i = 0; i < size(); i++)
+        {
+            if (!array[i].has_value()) // Si el primer el primer elemento es null , significa que la cola esta vacia
+            {
+                estaVacia = true;
+            }
+            else
+            {
+                estaVacia = false;
+                break; // Rompe el ciclo cuando se de esta condición
+            }
+        }
+        return estaVacia;
+    }
+
+    std::any Cola::extract()
+    {
+        std::any object; // Se declara el Objeto donde se va almacenar el primer elemento de la cola
+        for (int i = 0; i < size(); i++)
+        {
+            if (array[i].has_value())
+            {
+                object = array[i]; // Asigna el objeto el valor del primer elemento de la cola
+                array[i] = std::any(); // Elimina el elemento
+                return object;
+            }
+        }
+        return object; // Se hace este return debido a que si la cola esta vacia , retorna el valor original asignado (Null)
+    }
+
+    bool Cola::insert(std::any object)
+    {
+        for (int i = 0; i < array.size(); i++)
+        {
+            if (!array[i].has_value())// Cuando la posición de un array de null y en el caso de las colas , signfica que será puesto al final de la misma
+            {
+                array[i] = object; // Se le asigna el objeto a ese espacio
+                return true;
+            }
+        }
+        return false;
+    }
+
+    int Cola::size() // Retorna el tamaño de la estructura 
+    {
+        return array.size();
+    }
+
+    bool Cola::search(std::any object)
+    {
+        std::vector< std::any > arraycopia(size());
+        for (int i = 0; i < size(); i++)
+        {
+            if (array[i] == object) // Recorre el array para verificar si el objeto ingresaod en el parametro esta dentro de la estructura
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void Cola::sort() // Organiza la cola
+    {
+        List *s = new List();
+        for (auto o : array)
+        {
+            s->push_back(o);
+        }
+        s->sortList();
+        array = s->toArray();
+
+        delete s;
+    }
+
+    void Cola::reverse()
+    {
+        std::vector< std::any > reverseArray(size());// Crea un array donde se van almacenar los elementos "Inversos"
+        for (int i = 0; i < size(); i++)
+        {
+            reverseArray[i] = array[array.size() - (i + 1)];// Recorre el array original inversamente
+        }
+        array = reverseArray;//Asigna los valores del Array "Inverso" al original
+    }
+
+    std::wstring Cola::toString()// Crea una concatenación de Strings con los elementos del array (Cola)
+    {
+        return L"ArrayTail{" + L"size=" + std::to_wstring(size()) + L", array=" + Arrays->toString(array) + L'}'; //Aparte del tamaño
+    }
+};                                                                                                                  
+                        </code>
+                </article>
+            </section>
+            <section class="implementacion">
+                <article>
+                    <h2 id="python">Implementación de la estructura en Python</h2>
+                    <br>
+                    <h3 id="implementacionPython">Cola basada en arreglos</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+class ArrayQueue():
+
+__queue = [] #Como en python no hay arreglos predefinidos, se usa una lista, para evitar usar librerias
+__head = -1 #Indica la posicion del elemento en la cabeza
+__tail = -1 #Indica la posicion del elemento en el final de la cola
+__size = 0  #Variable tipo int para almacenar tamaño de la pila
+
+"""
+Constructor de la clase, el unico parametro obligatorio es el tamaño de la cola 
+"""
+def __init__ (self, size):
+    self.__size = size
+    self.__queue = [None]*(self.__size) 
+    
+
+"""
+Limpia la cola, no tiene retorno
+"""
+def clear(self): #No recibe parametros ni tiene retorno
+    for i in range(0, self.__size):
+        self.__queue[i] = None
+    self.__head = -1
+    self.__tail = self.__head
+
+"""
+Retorna True si la pila esta vacia, retorna un booleano
+"""
+def isEmpty(self): #Retorna un booleano
+    return self.__queue[0] == None 
+
+"""
+Extrae el elemento en la cabeza de la cola, retorna un objeto o none
+"""
+def extract(self):
+    if(not self.isEmpty()):
+        temp = self.__queue[self.__head]
+        
+        self.__queue[self.__head] = None
+        if(self.__head > self.__tail):
+            head = 0
+        else:
+            head+=1
+    
+        return temp
+    else:
+        return None
+
+"""
+Insertar un nodo, al final de la cola, retorna un booleano
+"""
+def insert(self, ob):
+    if(self.__head == -1 or self.__head==0):
+        if(self.__tail +1 < self.__size):
+            self.__tail += 1
+            self.__queue[self.__tail] = ob
+
+            if(self.__head == -1):
+                head = 0
+            return True
+        else:
+            return False
+    else:
+        if(self.__tail == self.__size -1):
+            self.__queue[0] = ob
+            self.__tail = 0
+            return True
+        elif(self.__tail + 1 != self.__head):
+            self.__tail += 1 
+            self.__queue[self.__tail] = ob
+            return True
+        else:
+            return False
+
+"""
+Retorna la cantidad de elementos, que no sean nulos, en el arreglo, retorna un entero
+"""
+def size(self):
+    return abs(self.__tail - self.__head) + 1
+
+"""
+Busca un objeto en la cola, returna un booleano
+"""
+def search(self, ob):
+    for i in self.__queue:
+        if(i == ob):
+            return True
+    
+    return False
+
+"""
+Ordena la cola, no tiene retorno
+"""
+def sort(self):
+    if(not self.isEmpty):
+        self.__queue.sort()
+
+"""
+Revierte el orden de la cola, no tiene retorno
+"""
+def reverse(self):
+    temp = object
+    indOp = 0
+
+    for i in range(0,self.__size/2):
+        temp = self.__queue[i]
+        indOp = self.__size - i - 1
+        self.__queue[i] = self.__queue[indOp]
+        self.__queue[indOp] = temp
+
+
+"""
+Imprimir la cola
+"""
+def __str__(self):
+    return "ArrayStack[ size: {0}, array: {1}, head index: {2}, tail index: {3}]".format(self.size, self.__queue, self.__head, self.__tail)                        
+                        </code>
+                    </pre>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="aplicacion">Ejercicio de aplicación de la cola basada en arrays</h2>
+                    <br>
+                    <p>La empresa DataLabel ha tenido un problema con el almacenamiento digital respecto a sus productos, en donde sus tres categorías: Acción, Mundo Abierto y Simuladores se han mezclado en una lista; Vuestra tarea es clasificar nuevamente estos tres tipos de juegos en diferentes colas representados por su inicial A-nombreJuego (Acción), M-nombreJuego (MundoAbierto) y/o S-nombreJuego (Simulador) además estas implementaciones tendrán que ser por el historial de agregación (Con respecto a la cola combinada).</p><br>            
+                    <pre>
+                        <code id="showCode" class="language-java">
+//DESARROLLADO EN JAVA
+
+import java.util.ArrayList;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        ArrayList datai = new ArrayList();
+        datai.add("S-Fifa20");
+        datai.add("S-Formula1");
+        datai.add("A-Call Of Duty");
+        datai.add("M-Grand Theft AutoV");
+        datai.add("M-World Of Warcraft");
+        datai.add("S-Nba2021");
+        datai.add("A-Destiny");
+        datai.add("A-Halo");
+        datai.add("S-Age of empires");
+        datai.add("S-Monopoly");
+        datai.add("M-Genshing Impact");
+        datai.add("A-Warframe");
+        datai.add("A-PUBG");
+        datai.add("A-Fortnite");
+        datai.add("M-Never Winter");
+        datai.add("M-Magi");
+        datai.add("A-For Honor");
+        datai.add("A-Left 4 Dead");
+        datai.add("S-Pes2021");
+
+        //Data de los juegos
+
+        Cola data = new Cola(datai.size());
+
+        int TA = 0;
+        int TM = 0;
+        int TS = 0;
+        for(Object u : datai){
+            data.insert(u);
+            char o = u.toString().charAt(0);
+            if(o == 'A'){
+                TA++;
+            }else if(o=='M'){
+                TM++;
+            }else if (o=='S'){
+                TS++;
+            }
+        }
+        //Como son estructuras estáticas debido al ser implementadas por Arrays , se debe clasificar y denotar el tamaño de las subcolas antes de su implementación
+
+        Cola data_A = new Cola(TA);
+        Cola data_M = new Cola(TM);
+        Cola data_S = new Cola(TS); // Creación de las colas
+
+        for(Object u : datai){
+            data.insert(u);
+            char o = u.toString().charAt(0);
+            if(o == 'A'){ // Se empieza a recorrer la cola combinada y se clasifica en las subcolas dependiendo el Id
+                data_A.insert(data.extract());
+            }else if(o=='M'){
+                data_M.insert(data.extract());
+            }else if (o=='S'){
+                data_S.insert(data.extract()); // Se inserta en la subCola y se borra de la cola combinada
+            }
+        }
+
+        System.out.println(" Esta es la lista de los juegos de acción \n" + data_A+ " " + "y este es su tamaño" + " " + data_A.size());
+        System.out.println(" Esta es la lista de los juegos de Simulación \n" + data_S+ " " + "y este es su tamaño" + " " + data_S.size());
+        System.out.println(" Esta es la lista de los juegos de Mundo Abierto \n" + data_M + " " + "y este es su tamaño" + " " + data_M.size()); // Impresión final
+    }
+}                            
+                        </code>
+                    </pre>
+                <p id="descripcionImagen">EJERCICIO PROPUESTO POR LOS LOS INTEGRANTES DEL EQUIPO DE TRABAJO</p>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+            
+            <footer id="pie">
+                Universidad Pontificia Bolivariana - Seccional Bucaramanga
+            </footer>
+        </div>
+        <script src="Estilos, scripts e imagenes/prism.js"></script>
+    </body>
+</html>

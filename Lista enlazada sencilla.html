@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <head>
+        <meta charset="utf-8"/>
+        <title>LVaED</title>
+        <meta name="description" content="Este es un aporte hacia el aprendizaje de las estructuras de datos"/>
+        <meta name="author" content="Cristian Julian Muñoz Buenahora, John Jairo Corzo Calderon, Santiago Andres DelValle Pinilla"/>
+        <meta name="keywords" content="Estructuras de datos"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/EstilosPrincipal.css"/>
+        <link rel="stylesheet" href="/Estilos, scripts e imagenes/prism.css"/>
+        <script src="Estilos, scripts e imagenes/botonArriba.js"></script>
+    </head>
+    <body>
+        <div id="principio">
+            <header>
+                <h1>Laboratorio virtual para el aprendizaje de estructuras de datos - LVaED</h1> 
+            </header>
+
+            <nav> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="EstructurasDeDatos.html">Estructura de datos</a></li>
+                    <li><a href="Trasformaciones.html">Trasformaciones</a></li>
+                </ul>
+            </nav>
+
+            <h1 id="titulo">Lista enlazada sencilla</h1>
+            <section id="nuevoSection">
+                <article>
+                    <h2 id="definicion">Definición</h2><br>
+                    <p>Mantiene  las  principales  características de una lista, el dinamismo y la linealidad, este tipo de lista está compuesta por una secuencia, o colección de nodos, estos se encuentran formados por 2 campos, uno donde se guardan los datos o información y el otro indica la posición del siguiente nodo (Ver figura 1).</p><br>
+                    <p>Esta estructura de datos, al ser de tipo dinámico, la cantidad de nodos que compone una lista encadenada sencilla puede cambiar a lo largo de la ejecución, es decir, no es necesario reservar un espacio en la memoria, en el momento de su creación [2].</p><br>
+                    <img id="imgEstructura" src="Estilos, scripts e imagenes/Listas encadenadas sencillas.png" alt="Lista encadenada sencilla">
+                    <p id="descripcionImagen">Figura 1: Representación de una lista enlazada sencilla</p>
+                </article>
+            </section>
+
+            <aside id="indice">
+                <h2 id="tituloIndice">Índice</h2>
+                <ul id="ulindice">
+                    <li><a class="liindice" href="#definicion">1. Definición de una lista enlazada sencilla </a></li>
+                    <li><a class="liindice" href="#principalesMetodos">2. Principales métodos</a></li>
+                    <li> <a class="liindice" href="#java">3. Implementación en Java</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodoJava">3.1 Nodo de la lista</a></li>
+                            <li><a class="liindice" href="#implementacionJava">3.2 Desarrollo de la lista</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#c++">4. Implementación en C++</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodoc++">4.1 Nodo de la lista</a></li>
+                            <li><a class="liindice" href="#implementacionC++">4.2 Desarrollo de la lista</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#python"> 5. Implementación en Python</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodopython">5.1 Nodo de la lista</a></li>
+                            <li><a class="liindice" href="#implementacionPython">5.2 Desarrollo de la lista</a></li>
+                        </ul>
+                    </li>   
+                    <li><a class="liindice" href="#aplicacion">6. Ejercicio de aplicación de la estructura</a></li>  
+                </ul>
+            </aside>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="principalesMetodos">Principales métodos</h2><br>
+                    <ul>
+                        <li> <p><b>insertTail (Object Object)</b> -> Método booleano el cual asigna al nodo “cola” el objeto ingresado en el parámetro (Desplaza a lo largo de la lista al anterior nodo cola como a todos sus “sucesores”); Si el proceso sale bien, retorna true, si no, retorna false</p></li><br>
+                        <li> <p><b>isEmpty ()</b> -> Método booleano que va a ser muy utilizado a lo largo del desarrollo la estructura para verificar si está vacía o no.</p></li><br>
+                        <li> <p><b>clear ()</b> -> Método void el cual elimina todo el contenido de la lista (Además de que el valor del atributo size se convierte en 0).</p></li><br>
+                        <li> <p><b>getHead ()</b> -> Método Object el cual retorna la cabeza de la lista.</p></li><br>
+                        <li> <p><b>getTail ()</b> -> Método Object el cual retorna la cola de la lista.</p></li><br>
+                        <li> <p><b>search (Object object)</b> -> Método el cual retorna el nodo que contenga el elemento introducido en el parámetro, si no este elemento no se encuentra se retornará null .</p></li><br>
+                        <li> <p><b>add (Object object)</b> -> Método booleano el cual utiliza el método InserTail para agregar un objeto a la lista por la cola; Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>insert (ListNode node, Object object)</b> -> Método booleano el cual busca un nodo y en esa posición inserta el objeto del parámetro (El contenido del nodo anterior simplemente se desplaza); Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>insert (Object b, Object object)</b> -> Método booleano el cual busca el objeto b dentro de la lista y lo reemplaza por el objecto object; Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>insertHead (Object Object)</b> -> Método booleano el cual asigna al nodo “cabeza” el objeto ingresado en el parámetro (Desplaza a lo largo de la lista al anterior nodo cabeza como a todos sus “sucesores”); Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>insertTail (Object object)</b> -> Método booleano el cual asigna al nodo “cola” el objeto ingresado en el parámetro (Desplaza a lo largo de la lista al anterior nodo cola como a todos sus “sucesores”); Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>remove (ListNode node)</b> -> Método booleano el cual borra el nodo ingresado en el parámetro de la lista si esta; Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>remove (Object object)</b> -> Método booleano el cual busca al nodo que contenga el objeto ingresado y si lo encuentra, lo sobrescribe con el Nodo anterior (Elimina); Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>contains (Object object)</b> -> Método booleano el cual busca al nodo que contenga al objeto ingresado en el parámetro, Si lo encuentra retorna true indicando que si esta en la lista, y si no, retorna false.</p></li><br>
+                        <li> <p><b>toArray()</b> -> Método array  el cual se encarga de transformar la lista en un Array para posteriormente retornarla.</p></li><br>
+                        <li> <p><b>toArray(Object [] object)</b> -> Método array el cual se encarga de almacenar la lista en el array ingresado en el parámetro.</p></li><br>
+                        <li> <p><b>getBeforeTo ()</b> -> Método object el cual retorna el objeto del penúltimo nodo.</p></li><br>
+                        <li> <p><b>getBeforeTo (ListNode node)</b> -> Método object el cual retorna el nodo anterior del nodo ingresado en el parámetro.</p></li><br>
+                        <li> <p><b>getNextTo ()</b> -> Método object el cual retorna el contenido del nodo posterior de la cabeza.</p></li><br>
+                        <li> <p><b>getNextTo (ListNode nodo)</b> -> Método object el cual retorna el nodo posterior del nodo ingresado en el parámetro.</b></p></li><br>
+                        <li> <p><b>subList ()</b> -> Método List el cual retorna una lista de los nodos deseados, desde el primer parámetro (Nodo que actuará de cabeza) hasta el segundo parámetro (Nodo que actuara de cola) y todos los nodos que están entre ellos.</b></p></li><br>
+                        <li> <p><b>sortList ()</b> -> Método List el cual retorna una lista, pero con los nodos organizado por su contenido.</p></li><br>
+                        <li> <p><b>rec (ListNode node)</b> -> Un método void el cual se encarga de recorrer la lista y expresarla en un String.</p></li><br>
+                    </ul>
+                </article>
+
+                <article>
+                    <h2 id="java">Implementación de la estructura en Java</h2>
+                    <br>
+                    <h3 id="nodoJava">Nodo de la lista enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+public class ListNode {
+
+    private Object object; //Objeto a almacenar
+    public ListNode next; //Puntero o dirección para ir al siguiente nodo
+
+    public ListNode() {
+        this.object = null; //Solo creo un nodo pero no le paso nada
+        this.next = null;
+    }
+
+    public ListNode(Object object) {
+        this.object = object; //Solo creo un nodo y le paso el objeto más no el nodo
+        this.next = null;
+    }
+
+    public ListNode(Object object, ListNode next) {
+        this.object = object; //Solo creo un nodo y le paso ambos valores
+        this.next = next;
+    }
+
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
+
+    public boolean isEquals(Object object) {
+        if (this.getObject().toString().equals(object.toString())) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isEquals(ListNode node) {
+        if (this.toString().equals(node.toString())) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "ListNode{" + "object=" + object + ", next=" + next + '}';
+    }
+}                            
+                        </code>
+                    </pre>
+                    <br>
+                    <h3 id="implementacionJava">Lista enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+import java.util.Iterator;
+import static java.lang.System.*;
+
+public class List implements IList, Iterable< ListNode >{
+
+    private ListNode inode; //Nodo iterable
+    private int size;
+
+    public ListNode head; //Punteros para saber donde está el inicio y el fin
+    public ListNode tail;
+
+    /**
+        * List
+        */
+    public List() { //Constructor para borrar el contenido
+        clear();
+    }
+
+    /*
+    ok
+        */
+    public List(Object object) {
+        add(object); // Constructor para agregar contenido
+    }
+
+    /*
+    ok
+        */
+    public boolean isEmpty() { // Un metodo boleano que va a ser muy utilizado a lo largo de la estructura para verificar si esta vacia o no
+        return head == null; // Si la cabeza es null , retorna false , esto significa que no existe ningún elemento que tome esta posición y por consecuente , la estructura esta vacia
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public int getSize() {
+        return size; // Retornamos la variable la cual va a ser modificada alrededor de los demas metodos
+    }
+
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public void clear() { // Se elimina tanto la cola como la cabeza , eliminando así todo el contenido de la estructura , además de igualar el tamaño del contenido a "0" por naturalidad del caso
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public Object getHead() {
+        return head;// Retorna el contenido de la cabeza
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public Object getTail() {
+        return tail; // Retorna el contenido de la cola
+    }
+
+    /*
+    ok
+        */
+        // Si la cola y la cabeza son la misma , retornara el mismo contenido
+    @Override
+    public ListNode search(Object object) {
+        Iterator< ListNode > i = this.iterator();
+        ListNode inode;
+        while ((inode = i.next()) != null) { //Itera hasta encontrar al contenido de un nodo que sea igual al objeto ingresado con el fin de retornarlo
+            if (inode.getObject().toString().equals(object.toString())) {
+                return inode;
+            }
+        }
+        return null; // Y en caso que no lo encuentre , retornara Null
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public boolean add(Object object) {
+        return insertTail(object); //El metodo .add funciona con la lógica de la inserción de la cola
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public boolean insert(ListNode node, Object object) { //Un método boolean el cual busca un nodo y en esa posición inserta el objeto del parámetro (El contenido del nodo anterior simplemente se desplaza)
+        try {
+            if (node.next == null) { // Primera dirección donde simplemente se agrega a lo ultimo
+                add(object);
+            } else {
+                ListNode newNode = new ListNode(object); // Segunda direción donde se tiene que mover el nodo para almacenar el valor del parametro y así no perder el anterior elemento que estaba en esa posición
+                newNode.next = node.next;
+                node.next = newNode;
+                this.size++; // El tamaño aumenta debido a la integración del nuevo nodo
+            }
+            return true;
+        } catch (Exception e) {
+            return false; // Retorna falso si detecta algún error
+        }
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public boolean insert(Object ob, Object object) { // Un método boolean el cual busca el objeto b dentro de la lista y lo reemplaza por el objecto object
+        try {
+            if (ob != null) {
+                ListNode node = this.search(ob); // Mediante el metodo .search se asegura que el objeto esta dentro de la lista y retorna su valor para su posterior uso
+                if (node != null) {
+                    return insert(node, object);
+                } else {
+                    return false; // Retorna falso si el objeto ingresado es igual a null
+                }
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+// Como sustituyo al contentido de cierto nodo , la lista no se le suma ni resta ya que aunque cambio internamente , estructuralmente sigue igual
+    /*
+    ok
+        */
+    @Override
+    public boolean insertHead(Object object) { // Se añade y asigna al objeto ingresado como la cabeza de la estructura
+        try {
+            if (isEmpty()) {
+                head = new ListNode(object); //Se crea el nodo
+                tail = head; // como esta vacia , al insertar por este metodo , la cabeza se convierte en el nodo que contiene al objeto del parametro y como solo existe un nodo , la cabeza es igual a la cola
+            } else {
+                head = new ListNode(object, head); // Se le asigna como cabeza de la estructura al nodo ingresado
+            }
+            this.size++;// Aumenta ya que siempre se va a ingresar un nuevo nodo 
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public boolean insertTail(Object object) { // Se añade y asigna al objeto ingresado como la cola de la estructura
+        try {
+            if (isEmpty()) {
+                head = new ListNode(object); //Se crea el nodo
+                tail = head; //como esta vacia , al insertar por este metodo , la cola se convierte en el nodo que contiene al objeto del parametro y como solo existe un nodo , la cabeza es igual a la cola
+            } else {
+                tail.next = new ListNode(object); //tail hace referencia al nodo completo, tail.next hace referencia a la cajita del puntero
+                tail = tail.next;
+            }
+            this.size++; // Aumenta ya que siempre se va a ingresar un nuevo nodo 
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public boolean remove(ListNode node) { // convierte y elimina un nodo mediante la lógica del siguiente metodo
+        remove(node.getObject());
+        return  true;
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public boolean remove(Object object) {// Remueve un elemento de la lista
+        if (!isEmpty()){//Verifica que la lista tenga elementos
+            if(head == tail && object == head.getObject()){// En caso de que la cabeza sea igual que la cola y el objeto ingresado sea igual a la cabeza , se vacia la estructura
+                head=null;
+                tail=null;
+            }
+            else if(object == head.getObject()){// En caso de que el objeto sea igual a la cabeza , la cabeza actual desaparece dejando este cargo al siguiente nodo (Se sobreescribe)
+                head = head.next;
+            }
+            else{
+                ListNode previous = head,temp = head.next;
+                while (temp != null && temp.getObject() != object){
+                    previous = previous.next;
+                    temp = temp.next;
+                }
+                if (temp != null){
+                    previous.next = temp.next;// Se asigna el contenido del nodo anterior al nodo que acaba de perder su elemento
+                    if (temp == tail){
+                        tail = previous;// En caso de que sea la cola , simplemente se toma el nodo anterior a la misma para asginarle este rol
+                    }
+                }
+            }
+            this.size--;
+            return true;// Retorna verdadero para avisar que elimino efectivamente un elemento de la lista
+        }
+        return false;// Retorna falso para avisar que no se hizo ningún procedimiento a causa de que la lista estaba vacia
+
+    }
+
+    @Override
+    public boolean contains(Object object) {// Metodo booleano el cual se encarga de verficar unicamente si existe el objeto ingresado en el parametro en la lista
+        inode = head;
+        while (inode != null){
+            if (inode.getObject() == object){
+                return true;// En caso de que el contenido de un nodo sea igual al parametro ingresado , se rompe el ciclo y retorna verdadero , así avisando que este si existe dentro de la lista
+            }
+            inode = inode.next;// El nodo se convierte en el nodo posterior para así recorrer la estructura y alcanzar un momento el null para romper el ciclo
+        }
+        return false;// Si nunca detecta un parametro igual y rompe el ciclo gracias a que el nodo se "convirtio" en null , se retorna false así avisando que el objeto no existe dentro de la lista
+    }
+
+
+    public Object[] toArray() { // Metodo para convertir la lista en un array
+    {
+        Object[] object = new Object[size];// Crea un Array con el tamaño de la lista , gracias al atributo "size"
+        return toArray(object);// Utiliza el siguiente metodo (To.array con parametros) para así almacenar la lista en el Array anteriormente creado
+    }
+
+    @Override
+    public Object[] toArray(Object[] object) {// Metodo para convertir la lista en un array
+        try{
+            inode = head;
+            for (int i=0; i < size; i++){
+                object[i] = inode.getObject(); // Almacena y convierte en objeto el nodo cabeza mediante el anterior ciclo
+                inode = inode.next;// Se recorre los nodos así cambiando el contenido según la lista en cada iteración del nodo
+            }
+            return object;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public Object getBeforeTo() {
+        return getBeforeTo(tail).getObject(); //Si invocan al método getBeforeTo que se encuentra sin parámetro se asume que me están pidiendo el objeto que se encuentra antes de la cola
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public ListNode getBeforeTo(ListNode node) {
+        if (!isEmpty()){
+            if (head == tail){
+                return null; // Retorna null ya que significa que la lista solo posee un elemento
+            }
+            else if(node == null){
+                return tail; // Retorna la cola debido que si el nodo es null , el anterior será la cola
+            }
+            else {
+                ListNode previous = null;
+                inode = head;
+                while (inode != null){
+                    if (inode.getObject() == node.getObject()){
+                        return previous;
+                    }
+                    else {
+                        previous = inode;
+                        inode = inode.next;
+                    }
+                }
+                // Identifica el nodo y retorna el anterior 
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Object getNextTo() {
+        return getNextTo(head); //Si invocan al método getNextTo que se encuentra sin parámetro se asume que me están pidiendo el objeto que se encuentra después de la cabeza, claro está en caso de haya una cabeza o haya algo después de la cabeza
+    }
+
+    @Override
+    public Object getNextTo(ListNode node) {
+        if (!isEmpty()){
+            if (head == tail){
+                return null; // Retorna null ya que significa que la lista solo posee un elemento
+            }
+            else {
+                ListNode previous = head;
+                inode = head.next;
+                while (previous != null){
+                    if (previous.getObject() == node.getObject()){
+                        return inode.getObject();
+                    }
+                    else {
+                        previous = inode;
+                        inode = inode.next;
+                    }
+                }
+                // Identifica el nodo y retorna el posterior 
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List subList(ListNode from, ListNode to) { // Metodo para crear una Sublista mediante dos nodos (El inicial y el final), digitado por el parametro
+        List out = new List(); // Se crea la lista que posteriormente se va a retornar 
+        if (!isEmpty()){
+            inode = head;
+            boolean itsInRange = false;
+            for (int i=0; i < size; i++){
+                if ( inode.getObject() == from.getObject() || itsInRange){
+                    if (inode.getObject() != to.getObject()){ // Se empieza a recorrer desde el nodo ingresado , almacenando todos los nodos hasta que se tope con el segundo nodo del parametro que indica la cola
+                        out.add(inode.getObject());
+                        itsInRange = true;
+                    }
+                    else {
+                        out.add(inode.getObject());
+                        break; // Cuando añade la cola , se rompe el ciclo
+                    }
+                    inode = inode.next;
+                }
+            }
+        }
+        return out;
+    }
+
+    @Override
+    public List sortList() { // Metodo para organizar la lista
+        try{
+            Object previous;
+            Object actual;
+            int cont = 0;
+            do{
+                inode = head;
+                while(inode.next != null)
+                {
+                    previous = inode.getObject();
+                    actual = inode.next.getObject();
+                    if((previous.toString().compareTo(actual.toString()) > 0)// Mediante el metodo .compare y la transformaciones de estos a Strings , se organiza la lista iniciando con la cabeza como el Nodo principal y siguiendo con los Nodos de manera descendente hasta llegar a la cola siendo este el ultimo según la organización del metodo
+                    {
+                        this.remove(previous);
+                        this.insertTail(previous);
+                        inode = inode.next;
+                    }
+                    else
+                    {
+                        inode = inode.next; //Si el nodo por .compare resulta ser "menor" al nodo actual , se le asigne el siguiente
+                    }
+                }
+                cont++; // El count sirve para evitar que exceda la cantidad de elementos de la lista original
+            }while(cont < size);
+            return null;
+        }catch (Exception e){
+            return null;
+        }
+
+    }
+
+    @Override
+    public Iterator< ListNode > iterator() {
+        inode = head;
+        return new Iterator<>() {
+            @Override
+            public boolean hasNext() {
+                return inode.next != null;
+            }
+
+            @Override
+            public ListNode next() {
+                if (inode != null) {
+                    ListNode tmp = inode;
+                    inode = inode.next;
+                    return tmp;
+                } else {
+                    return null;
+                }
+            }
+        };
+    }
+
+    public void rec(ListNode node) { // Metodo para recorrer la lista 
+        try{
+            if (node.next != null) {
+                rec(node.next);
+                // <- ;) ->
+            }
+            out.println(node.toString());
+        }catch (Exception e){
+            out.println("¡Ha ocurrido un error!");
+        }
+    }
+}                                                     
+                        </code>
+                    </pre>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="c++">Implementación de la estructura en C++</h2>
+                    <br>
+                    <h3 id="nodoc++">Nodo de la lista enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#include "ListNode.h"
+#include < iostream >
+#pragma once
+#include < vector >
+#include < any >
+using namespace std;
+
+class ListNode{
+    
+    private:
+        std::any object; //Objeto a almacenar
+    public:
+        ListNode *next; //Puntero o direccin para ir al siguiente nodo
+    
+    ListNode::ListNode()
+    {
+        this->object = std::any(); //Solo creo un nodo pero no le paso nada
+        this->next = nullptr;
+    }
+
+    ListNode::ListNode(std::any object)
+    {
+        this->object = object; //Solo creo un nodo y le paso el objeto ms no el nodo
+        this->next = nullptr;
+    }
+
+    ListNode::ListNode(std::any object, ListNode *next)
+    {
+        this->object = object; 
+        this->next = next; // Crea el espacio para el siguiente nodo
+    }
+
+    std::any ListNode::getObject()
+    {
+        return object; // Retorna el objeto del nodo
+    }
+
+    void ListNode::setObject(std::any object)
+    {
+        this->object = object;
+    }
+
+    bool ListNode::isEquals(std::any object)
+    {
+        if (this->getObject().toString().equals(object.toString())) // Compara en nodo con un objeto a ingresar
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool ListNode::isEquals(ListNode *node)
+    {
+        if (this->toString() == node->toString()) // Compara en nodo con un nodo a ingresar
+        {
+            return true;
+        }
+        return false;
+    }
+
+    std::wstring ListNode::toString() // Genera una expresin "String" donde convierte se almacenan todos los nodos de la estructura
+    {
+        return L"ListNode{" + L"object=" + object + L", next=" + next + L'}';
+    }
+}                            
+                        </code>
+                    </pre>
+
+                    <br>
+                    <h3 id="implementacionC++">Lista enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#include < iostream >
+#pragma once
+#include < vector >
+#include < any >
+using namespace std;
+
+class List : public IList, public std::vector< ListNode* >
+{
+    private:
+        ListNode *inode; //Nodo iterable
+        int size = 0;
+    public:
+        ListNode *head; //Punteros para saber donde está el inicio y el fin
+        ListNode *tail;
+    
+    List::List() //Constructor para borrar el contenido
+    {
+        clear();
+    }
+    
+    List::List(std::any object)
+    {
+        push_back(object); // Constructor para agregar contenido
+    }
+    
+    bool List::empty() // Un metodo boleano que va a ser muy utilizado a lo largo de la estructura para verificar si esta vacia o no
+    {
+        return head == nullptr; // Si la cabeza es null , retorna false , esto significa que no existe ningún elemento que tome esta posición y por consecuente , la estructura esta vacia
+    }
+    
+    int List::getSize()
+    {
+        return size; // Retornamos la variable la cual va a ser modificada alrededor de los demas metodos
+    }
+    
+    void List::clear() // Se elimina tanto la cola como la cabeza , eliminando así todo el contenido de la estructura , además de igualar el tamaño del contenido a "0" por naturalidad del caso
+    {
+        head = nullptr;
+        tail = nullptr;
+        size = 0;
+    }
+    
+    std::any List::getHead() 
+    {
+        return head; // Retorna el contenido de la cabeza
+    }
+    
+    std::any List::getTail()
+    {
+        return tail; // Retorna el contenido de la cola
+    }
+    
+    // Si la cola y la cabeza son la misma , retornara el mismo contenido
+    
+    ListNode *List::search(std::any object)
+    {
+        List::const_iterator i = this->begin();
+        ListNode *inode;
+        while ((inode = i->next()) != nullptr) //Itera hasta encontrar al contenido de un nodo que sea igual al objeto ingresado con el fin de retornarlo
+        {
+            if (inode->getObject()->toString().equals(object.toString()))
+            {
+                return inode;
+            }
+        }
+        return nullptr; // Y en caso que no lo encuentre , retornara Null
+    }
+    
+    bool List::add(std::any object)
+    {
+        return insertTail(object); //El metodo .add funciona con la lógica de la inserción de la cola
+    }
+    
+    bool List::insert(ListNode *node, std::any object) //Un método boolean el cual busca un nodo y en esa posición inserta el objeto del parámetro (El contenido del nodo anterior simplemente se desplaza)
+    {
+        try
+        {
+            if (node->next == nullptr)
+            {
+                push_back(object); // Primera dirección donde simplemente se agrega a lo ultimo
+            }
+            else
+            {
+                ListNode *newNode = new ListNode(object); // Segunda direción donde se tiene que mover el nodo para almacenar el valor del parametro y así no perder el anterior elemento que estaba en esa posición
+                newNode->next = node->next;
+                node->next = newNode;
+                this->size++; // El tamaño aumenta debido a la integración del nuevo nodo
+            }
+            return true;
+        }
+        catch (const std::runtime_error &e)
+        {
+            return false; // Retorna falso si detecta algún error
+        }
+    }
+    
+    bool List::insert(std::any ob, std::any object) // Un método boolean el cual busca el objeto b dentro de la lista y lo reemplaza por el objecto object
+    {
+        try
+        {
+            if (ob.has_value())
+            {
+                ListNode *node = this->search(ob); // Mediante el metodo .search se asegura que el objeto esta dentro de la lista y retorna su valor para su posterior uso
+                if (node != nullptr)
+                {
+                    return insert(node, object); 
+                }
+                else
+                {
+                    return false; // Retorna falso si el objeto ingresado es igual a null
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (const std::runtime_error &e)
+        {
+            return false; // Retorna falso si detecta algún error
+        }
+    } // Como sustituyo al contentido de cierto nodo , la lista no se le suma ni resta ya que aunque cambio internamente , estructuralmente sigue igual
+    
+    bool List::insertHead(std::any object) // Se añade y asigna al objeto ingresado como la cabeza de la estructura
+    {
+        try
+        {
+            if (empty())
+            {
+                head = new ListNode(object);  // Se crea el nodo
+                tail = head; // como esta vacia , al insertar por este metodo , la cabeza se convierte en el nodo que contiene al objeto del parametro y como solo existe un nodo , la cabeza es igual a la cola
+            }
+            else
+            {
+                head = new ListNode(object, head); // Se le asigna como cabeza de la estructura al nodo ingresado
+            }
+            this->size++; // Aumenta ya que siempre se va a ingresar un nuevo nodo 
+            return true;
+        }
+        catch (const std::runtime_error &e)
+        {
+            return false;
+        }
+    }
+    
+    bool List::insertTail(std::any object) // Se añade y asigna al objeto ingresado como la cola de la estructura
+    {
+        try
+        {
+            if (empty())
+            {
+                head = new ListNode(object);  // Se crea el nodo
+                tail = head; //como esta vacia , al insertar por este metodo , la cola se convierte en el nodo que contiene al objeto del parametro y como solo existe un nodo , la cabeza es igual a la cola
+            }
+            else
+            {
+                tail->next = new ListNode(object); 
+                tail = tail->next;
+            }
+            this->size++; // Aumenta ya que siempre se va a ingresar un nuevo nodo 
+            return true;
+        }
+        catch (const std::runtime_error &e)
+        {
+            return false;
+        }
+    }
+    
+    bool List::remove(ListNode *node) // convierte y elimina un nodo mediante la lógica del siguiente metodo
+    {
+        remove(node->getObject());
+        return true;
+    }
+    
+    bool List::remove(std::any object) // Remueve un elemento de la lista
+    {
+        if (!empty()) //Verifica que la lista tenga elementos
+        {
+            if (head == tail && object == head->getObject()) // En caso de que la cabeza sea igual que la cola y el objeto ingresado sea igual a la cabeza , se vacia la estructura
+            {
+                head = nullptr;
+                tail = nullptr;
+            }
+            else if (object == head->getObject()) // En caso de que el objeto sea igual a la cabeza , la cabeza actual desaparece dejando este cargo al siguiente nodo (Se sobreescribe)
+            {
+                head = head->next;
+            }
+            else 
+            {
+                ListNode *previous = head, *temp = head->next;
+                while (temp != nullptr && temp->getObject() != object)
+                {
+                    previous = previous->next;
+                    temp = temp->next;
+                }
+                if (temp != nullptr)
+                {
+                    previous->next = temp->next; // Se asigna el contenido del nodo anterior al nodo que acaba de perder su elemento
+                    if (temp == tail)
+                    {
+                        tail = previous; // En caso de que sea la cola , simplemente se toma el nodo anterior a la misma para asginarle este rol
+                    }
+                }
+            }
+            this->size--; 
+            return true; // Retorna verdadero para avisar que elimino efectivamente un elemento de la lista
+        }
+        return false; // Retorna falso para avisar que no se hizo ningún procedimiento a causa de que la lista estaba vacia
+    }
+    
+    bool List::contains(std::any object) // Metodo booleano el cual se encarga de verficar unicamente si existe el objeto ingresado en el parametro en la lista
+    {
+        inode = head;
+        while (inode != nullptr)
+        {
+            if (inode::getObject() == object) 
+            {
+                return true; // En caso de que el contenido de un nodo sea igual al parametro ingresado , se rompe el ciclo y retorna verdadero , así avisando que este si existe dentro de la lista
+            }
+            inode = inode->next; // El nodo se convierte en el nodo posterior para así recorrer la estructura y alcanzar un momento el null para romper el ciclo
+        }
+        return false; // Si nunca detecta un parametro igual y rompe el ciclo gracias a que el nodo se "convirtio" en null , se retorna false así avisando que el objeto no existe dentro de la lista
+    }
+    
+    std::vector< std::any > List::toArray() // Metodo para convertir la lista en un array
+    {
+        std::vector< std::any > object(size); // Crea un Array con el tamaño de la lista , gracias al atributo "size"
+        return toArray(object); // Utiliza el siguiente metodo (To.array con parametros) para así almacenar la lista en el Array anteriormente creado
+    }
+    
+    std::vector< std::any > List::toArray(std::vector< std::any > &object) // Metodo para convertir la lista en un array
+    {
+        try
+        {
+            inode = head;
+            for (int i = 0; i < size; i++) 
+            {
+                object[i] = inode::getObject(); // Almacena y convierte en objeto el nodo cabeza mediante el anterior ciclo
+                inode = inode->next; // Se recorre los nodos así cambiando el contenido según la lista en cada iteración del nodo
+            }
+            return object; 
+        }
+        catch (const std::runtime_error &e)
+        {
+            return std::vector< std::any >();
+        }
+    }
+    
+    std::any List::getBeforeTo()
+    {
+        return getBeforeTo(tail)->getObject(); // invocan al método getBeforeTo que se encuentra sin parámetro se asume que me están pidiendo el objeto que se encuentra antes de la cola
+    }
+    
+    ListNode *List::getBeforeTo(ListNode *node)
+    {
+        if (!isEmpty())
+        {
+            if (head == tail)
+            {
+                return nullptr; // Retorna null ya que significa que la lista solo posee un elemento
+            }
+            else if (node == nullptr)
+            {
+                return tail; // Retorna la cola debido que si el nodo es null , el anterior será la cola
+            }
+            else
+            {
+                ListNode *previous = nullptr;
+                inode = head;
+                while (inode != nullptr)
+                {
+                    if (inode::getObject() == node->getObject())
+                    {
+                        return previous;
+                    }
+                    else
+                    {
+                        previous = inode;
+                        inode = inode->next;
+                    }
+                } // Identifica el nodo y retorna el anterior 
+            }
+        }
+        return nullptr;
+    }
+    
+    std::any List::getNextTo()
+    {
+        return getNextTo(head); //invocan al método getNextTo que se encuentra sin parámetro se asume que me están pidiendo el objeto que se encuentra después de la cabeza, claro está en caso de haya una cabeza o haya algo después de la cabeza
+    }
+    
+    std::any List::getNextTo(ListNode *node)
+    {
+        if (!isEmpty())
+        {
+            if (head == tail)
+            {
+                return nullptr; // Retorna null ya que significa que la lista solo posee un elemento
+            }
+            else
+            {
+                ListNode *previous = head;
+                inode = head->next;
+                while (previous != nullptr)
+                {
+                    if (previous->getObject() == node->getObject())
+                    {
+                        return inode::getObject();
+                    }
+                    else
+                    {
+                        previous = inode;
+                        inode = inode->next;
+                    }
+                }
+                // Identifica el nodo y retorna el posterior  
+            }
+        }
+        return nullptr;
+    }
+    
+    List *List::subList(ListNode *from, ListNode *to) // Metodo para crear una Sublista mediante dos nodos (El inicial y el final), digitado por el parametro
+    {
+        List *out = new List(); // Se crea la lista que posteriormente se va a retornar 
+        if (!isEmpty())
+        {
+            inode = head;
+            bool itsInRange = false;
+            for (int i = 0; i < size; i++)
+            {
+                if (inode::getObject() == from->getObject() || itsInRange)
+                {
+                    if (inode::getObject() != to->getObject()) // Se empieza a recorrer desde el nodo ingresado , almacenando todos los nodos hasta que se tope con el segundo nodo del parametro que indica la cola
+                    {
+                        out->add(inode::getObject());
+                        itsInRange = true;
+                    }
+                    else
+                    {
+                        out->add(inode::getObject()); 
+                        break; // Cuando añade la cola , se rompe el ciclo
+                    }
+                    inode = inode->next;
+                }
+            }
+        }
+        return out;
+    }
+    
+    List *List::sortList() // Metodo para organizar la lista
+    {
+        try
+        {
+            std::any previous;
+            std::any actual;
+            int cont = 0;
+            do
+            {
+                inode = head;
+                while (inode->next != nullptr)
+                {
+                    previous = inode::getObject();
+                    actual = inode->next.getObject();
+                    if ((previous.toString().compareTo(actual.toString()) > 0)) // Mediante el metodo .compare y la transformaciones de estos a Strings , se organiza la lista iniciando con la cabeza como el Nodo principal y siguiendo con los Nodos de manera descendente hasta llegar a la cola siendo este el ultimo según la organización del metodo
+                    {
+                        this->remove(previous);
+                        this->insertTail(previous);
+                        inode = inode->next;
+                    }
+                    else
+                    {
+                        inode = inode->next; //Si el nodo por .compare resulta ser "menor" al nodo actual , se le asigne el siguiente
+                    }
+                }
+                cont++; // El count sirve para evitar que exceda la cantidad de elementos de la lista original
+            }while (cont < size);
+            return nullptr;
+        }
+        catch (const std::runtime_error &e)
+        {
+            return nullptr;
+        }
+    }
+
+        
+    Iterator< ListNode* > *List::iterator()
+    {
+        inode = head;
+        return new IteratorAnonymousInnerClass(this);
+    }
+    
+    List::IteratorAnonymousInnerClass::IteratorAnonymousInnerClass(List *outerInstance) : outerInstance(outerInstance)
+    {
+    }
+    
+    bool List::IteratorAnonymousInnerClass::hasNext()
+    {
+        return inode->next != nullptr;
+    }
+    
+    ListNode *List::IteratorAnonymousInnerClass::next()
+    {
+        if (inode != nullptr)
+        {
+            ListNode *tmp = inode;
+            inode = inode->next;
+            return tmp;
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+    
+    void List::rec(ListNode *node) // Metodo para recorrer la lista 
+    {
+        try
+        {
+            if (node->next != nullptr)
+            {
+                rec(node->next);
+                // <- ;) ->
+            }
+            out::println(node->toString());
+        }
+        catch (const std::runtime_error &e)
+        {
+            out::println(L"¡Ha ocurrido un error!");
+        }
+    }	
+}                                                  
+                        </code>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="python">Implementación de la estructura en Python</h2>
+                    <br>
+                    <h3 id="nodopython">Nodo de la lista enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+class ListNode():
+
+__object = None #Variable para almacenar el objeto del nodo
+next = None  #Indicador de nodo siguiente
+
+
+"""
+Constructor de la clase, el unico parametro obligatorio es el Objeto 
+"""
+def __init__ (self, objectt = None, next = None): 
+    self.__object = objectt
+    self.next = next
+
+"""
+Los 2 siguientes metodos permiten la encapsulacion de la variable __object
+"""
+def getObject(self):
+    try:
+        return self.__object
+    except Exception:
+        return None
+
+def setObject(self,objectt):
+    self.__object = objectt
+
+"""
+Evaluar si un nodo o objeto, es equivalente al nodo, esto se hace comparando
+unicamente las __object con el parametro dado
+"""
+def isEquals(self, objectt):
+    if(type(objectt)==ListNode):
+        if(self.__object == objectt.getObject()):#Si el elemento entregado como parametro "objectt" no es un nodo, se genera error y se va al try donde si se puede evaluar si esta en la Lista
+            return True
+    else:
+        if(self.__object == objectt):
+            return True
+    return False
+
+
+"""
+Imprimir un nodo
+"""
+def __str__(self):
+    return "ListNode[Object: {0}, Next: {1}]".format(self.__object,self.next)                        
+                        </code>
+                    </pre>
+
+                    <br>
+                    <h3 id="implementacionPython">Lista enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+from listNode import ListNode
+from collections import Iterator
+
+
+class List(ListNode):
+
+    __inode = ListNode() #Nodo necesario para iterar la lista
+    __size = 0  #Entero para almacenar el tamaño de la lista
+    
+    head = None #Nodo cabeza
+    tail = None #Nodo cola
+
+    """
+    Constructor de la clase, puede recibir un objeto como parametro, que en cuyo
+    caso, seria el primer nodo de la lista.
+    """
+    def __init__(self, objectt=None):  
+        if(objectt != None):
+            self.add(objectt)
+
+    """
+    Retorna True si la lista esta vacia
+    """
+    def isEmpty(self):  
+        return self.head == None
+
+    """
+    Retorna tamaño de la lista
+    """
+    def getSize(self): 
+        return self.__size
+
+    """
+    Limpia la lista
+    """
+    def clear(self): 
+        self.head = None
+        self.tail = None
+        self.__size = 0
+
+    """
+    Retorna nodo cabeza
+    """
+    def getHead(self):  
+        return self.head
+
+    """
+    Retorna nodo cola
+    """
+    def getTail(self):  
+        return self.tail
+
+    """
+    Busca un objeto o nodo en la lista, si retorna este nodo
+    """
+    def search(self, objectt):
+
+        """
+        Las 2 siguientes lineas nos permiten recorrer la lista, en la variable
+        it, se crea e inicializa el iterador, y la variable inode almacena el nodo
+        con el que se hace la iteracion.
+        """
+        it = iter(self)  
+        inode = next(it)    
+        while(inode != None): #Cuando inode sea igual a None, significa que se ha llegado al final de la lista
+            if(inode.isEquals(objectt)):
+                return inode
+            inode = next(it)
+        return None
+
+    """
+    Agrega un nodo, insertandolo por la cola de la lista
+    """
+    def add(self, objectt):
+        self.insertTail(objectt)
+
+    """
+    Inserta un objeto, en la posicion siguiente al nodo u objeto dado. 
+    """
+    def insert(self, node, objectt):
+        if(type(node) == ListNode): #Proceso a realizar si se entrega un nodo, en el parametro node
+            try:
+                #Para que el se inserte al lado del nodo dado, este debe estar en la lista
+                if(node.next == None):
+                    self.add(objectt)
+                else:
+                    newNode = ListNode(objectt, node.next)
+                    node.next = newNode
+                self.__size
+                return True
+            except Exception:
+                return False
+        else: #Proceso a realizar si se entrega un objeto, en el parametro node
+            try:
+                if(node != None):
+                    node = self.search(node)
+                    if(node != None):
+                        return self.insert(node, objectt)
+                    else:
+                        return False
+            except Exception:
+                return False
+
+    """
+    Inserta un objeto, en la cabeza de la cola. 
+    """
+    def insertHead(self,  objectt):  
+        try:
+            if(self.isEmpty()):
+                self.head = ListNode(objectt)
+                self.tail = self.head
+            else:
+                self.head = ListNode(objectt, self.head)
+            self.__size += 1
+            return True
+        except Exception:
+            return False
+
+    """
+    Inserta un objeto, en la al final de la lista, es decir, la cola. 
+    """
+    def insertTail(self, objectt):  
+        try:
+            if(self.isEmpty()):
+                self.head = ListNode(objectt)
+                self.tail = self.head
+            else:
+                self.tail.next = ListNode(objectt)
+                self.tail = self.tail.next
+            self.__size += 1
+            return True
+        except Exception:
+            return False
+
+    """
+    Elimina el objeto dado como parametro, siempre y cuando este este en la lista.
+    """
+    def remove(self, objectt):
+
+        if(type(objectt) == ListNode): #Proceso a realizar si se entrega un nodo, en el parametro objectt
+            nodeB = self.search(objectt.getObject())
+
+            if(nodeB != None):
+                """
+                Para eliminar un nodo hay que tener en cuenta tres situaciones, que este este en la 
+                cabeza, en el cuerpo o la cola de la lista. 
+                """
+
+                if(nodeB.isEquals(self.head)): #Si objectt esta en la cabeza 
+                    self.head = self.head.next
+                elif(nodeB.isEquals(self.tail)): #Si objectt esta en la cola
+                    self.getBeforeTo(nodeB).next = None;
+                else: #Si objectt esta en el cuerpo
+                    self.getBeforeTo(nodeB).next = nodeB.next;
+                    nodeB.next = None;
+                self.__size -= 1
+                return True
+            else:
+                return False
+        else: #Proceso a realizar si se entrega un nodo, en el parametro objectt
+            lNode = ListNode(objectt)
+            return self.remove(lNode)
+
+    """
+    Busca el nodo u objeto en la lista, y si este se encuentra retorna True
+    """
+    def contains(self, objectt):  # Comprobar si existe un objeto en la lista
+        if(self.search(objectt) == None):
+            return False
+        return True
+
+    """
+    Convierte la lista en un arreglo, y si se desea, se puede entregar otro arreglo como parametro 
+    para agregar al arreglo a retornar. Debido a que en python no hay arreglos predefinidos, se 
+    retorna una lista.
+    """
+    def toArray(self, objectt=None):  
+        if(objectt == None): #En el caso que no se entrega un arreglo adicional
+            arreglo = [None]*(self.__size)  
+            it = iter(self)
+            inode = next(it)
+            cont = 0
+
+            while(inode != None):
+                arreglo[cont] = inode.getObject()
+                cont += 1
+                inode = next(it)
+            return arreglo
+        else: #En el caso que se entrega un arreglo adicional
+            arreglo = [None]*(self.__size + len(objectt))
+            arreglo2 = self.toArray()
+
+            cont = 0
+            while(cont < len(objectt)+self.__size):
+                if(cont == self.__size):
+                    for i in objectt:
+                        arreglo[cont] = i
+                        cont += 1
+                    break
+                else:
+                    arreglo[cont] = arreglo2[cont]
+                cont += 1
+            return arreglo
+
+    """
+    Metodo para convertir un arreglo (lista de python) en una lista enlazada sencilla
+    """
+    def backToList(self, array): 
+        head = List()
+        for i in array:
+            head.add(i)
+        return head
+    
+    """
+    Retorna el nodo previo a al nodo entregado como parametro.
+    """
+    def getBeforeTo(self, node): #Obtener nodo, previo a un nodo u objeto ingresado como parametro
+        if(type(node)==ListNode):
+            it = iter(self)
+            inode = next(it)
+
+            while(inode != None):
+                if(inode.next!= None):
+                    if(inode.next.getObject()==node.getObject()):
+                        return inode
+                inode = next(it)
+            return None
+        else:
+            return self.getBeforeTo(ListNode(node))
+
+    """
+    Retorna el nodo posterior a al nodo entregado como parametro.
+    """
+    def getNextTo(self, node):
+        if(type(node)==ListNode):
+            node.getObject()
+            it = iter(self)
+            inode = next(it)
+
+            while(inode != None):
+                if(inode.getObject()== node.getObject()):
+                    return inode.next
+                inode = next(it)
+            return None
+        else:
+            node = ListNode(node)
+            return self.getNextTo(node)
+    
+    """
+    Crea una sublista desde el primer parametro dado hasta el segundo, solo si estos se encuentran en
+    la lista.
+    """
+    def subList(self,fromm,to): #Retorna una sublista, desde el parametro fromm hasta el parametro to, si es que estos parametros existen
+        if(type(fromm) == ListNode and type(to) == ListNode):
+            if(self.contains(fromm) and self.contains(to)):
+                array = self.toArray()
+                return self.backToList(array[array.index(fromm.getObject()):array.index(to.getObject())+1])
+            return None
+        else:
+            beg = ListNode(fromm)
+            end = ListNode(to)
+
+            return self.subList(beg,end)
+
+    """
+    Ordena la lista usando metodos predefinidos de una lista de python
+    """
+    def sortList(self): 
+        
+        array = self.toArray();
+        array.sort()
+        bk = self.backToList(array)
+        self.head = bk.head
+        self.tail = bk.tail
+
+    """
+    Sobreescribir el metodo __str__ para imprimir la Lista
+    """
+    def __str__(self):
+        return  self.head.__str__() 
+
+    """
+    Metodo __iter__ sobreescrito para recorrer la Lista
+    """
+    def __iter__(self): #Metodo para crear iteradores
+        self.__inode = self.head
+        return self
+    
+    """
+    Metodo __next__ sobreescrito para obtener cada nodo de la lista
+    """
+    def __next__(self):  #Metodo para moverse en el iterador de la lista
+        if(self.__inode!=None):
+            tmp = self.__inode
+            self.__inode = self.__inode.next
+            return tmp
+        else:
+            return None 
+                        </code>
+                    </pre>
+                </article>      
+            </section>
+            
+            <section class="implementacion">
+                <article>
+                    <h2 id="aplicacion">Ejercicio de aplicación de la lista enlazada sencilla</h2>
+                    <br>
+                    <p> La empresa Robot.SA esta desarrollando un robot para Amazon el cual se encarga de localizar elementos específicos con el fin de optimizar el proceso industrial; El programa se encargará mediante un mapa virtual (Compuesto de 0 y 1), encontrar la ruta más óptima para que el robot "m" llegue al punto "e”, evitando los obstáculos ("1").<br><br>Ejemplo Mapa Virtual: Ancho 11</p><br>            
+                        <p>1 1 1 1 1 1 1 1 1 1 1</p>
+                        <p>1 0 0 0 0 0 1 0 0 0 1</p>
+                        <p>1 0 1 0 0 0 1 0 1 0 1</p>
+                        <p>e 0 1 0 0 0 0 0 1 0 1</p>
+                        <p>1 0 1 1 1 1 1 0 1 0 1</p>
+                        <p>1 0 1 0 1 0 0 0 1 0 1</p>
+                        <p>1 0 0 0 1 0 1 0 0 0 1</p>
+                        <p>1 1 1 0 1 0 1 0 0 0 1</p>
+                        <p>1 0 1 m 1 0 1 0 0 0 1</p>
+                        <p>1 0 0 0 0 0 1 0 0 0 1</p>
+                        <p>1 1 1 1 1 1 1 1 1 1 1</p><br>
+
+                    <pre>
+                        <code id="showCode" class="language-java">
+//DESARROLLADO EN JAVA
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner l = new Scanner(System.in);
+        int cont1 = 0;
+        String p;
+        String data = "";
+        boolean pared = false;
+        do {
+            p = l.nextLine();
+            for (int r = 0; r < p.length(); r++) {
+                char o = p.charAt(r);
+                if (o == 'e' || o == 'm' || o == '0' || o == '1') {
+                    data += o;
+                } // Se asignan los valores del mapa al String data para su posterior manipulación
+            }
+            if (cont1 != 0) {
+                for (int j = 0; j < p.length(); j++) {
+                    char k = p.charAt(j);
+                    if (k == '0' || k == 'm' || k == 'e') {
+                        pared = false; // Parametros para completar el mapa
+                        break;
+                    } else if (k == '1') {
+                        pared = true;
+                    }
+                }
+            }
+            cont1++;
+        } while (pared != true);
+        System.out.println("Digite el ancho de la matriz");
+        int a = l.nextInt(); // Asignación del ancho
+        //Metodo para encontrar las coordenadas e
+        int coordxe = 0;
+        int coordye = 0;
+        int ind1 = 0;
+        char gg1 = 'x';
+        do {
+            ind1++;
+            gg1 = data.charAt(ind1);
+            coordxe++;
+            if (coordxe >= a) { // si el valor de x es mayor que el ancho , esto significa que se salio del mapa , por lo cual se le restablece a 0 para así pasar a la siguiente fila
+                coordxe = 0;
+                coordye++; // Cada vez que esto pasa se le suma ++1 a ala coordenada en "Y" debido al salto que da
+            }
+        } while (gg1 != 'e'); // Este proceso nunca para hasta encontrar el Char 'e' en el String data
+        System.out.println("Las coordenas de e son \n" + "[" + coordye + "," + coordxe + "]");
+
+        //Metodo para encontrar M (Es la misma lógica del metodo para encontrar e)
+        int coordxm = 0;
+        int coordym = 0;
+        int ind2 = 0;
+        char gg2 = 'x';
+        do {
+            ind2++;
+            gg2 = data.charAt(ind2);
+            coordxm++;
+            if (coordxm >= a) {
+                coordxm = 0;
+                coordym++;
+            }
+        } while (gg2 != 'm'); // Este proceso nunca para hasta encontrar el Char 'm' en el String data
+        System.out.println("Las coordenas de m son \n" + "[" + coordym + "," + coordxm + "]");
+        //System.out.println(data);
+
+        //Camino de m a e
+        char rev;
+        char cond = data.charAt(coordxm+(a*coordym)); // Posición dentro del String de 'm'
+        List structure = new List();
+        Object rute;
+        while (cond != 'e'){ // Hasta que la posición de 'm' no sea igual a 'e' , se repite este bucle con el fin de igualar las coordenas de estos mismos
+            if(coordxm!=coordxe){
+                if(coordxm>coordxe){
+                    coordxm--;
+                    rev = data.charAt(coordxm+(a*coordym));
+                    if(rev=='1'){
+                        coordxm++;
+                    }
+                }else if (coordxm < coordxe) {
+                    coordxm++;
+                    rev = data.charAt(coordxm+(a*coordym));
+                    if(rev=='1'){
+                        coordxm--;
+                    }
+                }
+                //Las lineas anteriores se encargan de ver si las coordenadas de "m" con respecto a "e" en "x"
+                //con mayores o menores para posteriormente sumarle o restarle y verificar si la nueva posición no es un '1' , si este es el caso , deshace esta operación
+            }
+            rute = "[" + coordym + "," + coordxm + "]"; // Se crea un Object el cual almacena una concatenación con las coordenadas de ese entonces
+            structure.add(rute); // Se le agrega a la lista para dejar un registro
+            if(coordym!=coordye){
+                if(coordym>coordye){
+                    coordym--;
+                    rev = data.charAt(coordxm+(a*coordym));
+                    if(rev=='1'){
+                        coordym++;
+                    }
+                }else if (coordym < coordye) {
+                    coordym++;
+                    rev = data.charAt(coordxm+(a*coordym));
+                    if(rev=='1'){
+                        coordym--;
+                    }
+                }
+            }
+            //De igual forma es el mismo proceso para las coordenadas en "Y"
+            rute = "[" + coordym + "," + coordxm + "]";
+            structure.add(rute);
+            cond = data.charAt(coordxm+(a*coordym));
+        }
+
+        System.out.println("El camino a seguir es");
+        for (Object u : structure){
+            System.out.println(u);
+        }
+    }
+}
+                        </code>
+                    </pre>
+                <p id="descripcionImagen">EJERCICIO PROPUESTO  POR LENIN JAVIER SERRANO</p>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+            
+            <footer id="pie">
+                Universidad Pontificia Bolivariana - Seccional Bucaramanga
+            </footer>
+        </div>
+        <script src="Estilos, scripts e imagenes/prism.js"></script>
+</body>
+</html>

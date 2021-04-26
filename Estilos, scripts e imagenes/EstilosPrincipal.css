@@ -1,0 +1,438 @@
+/*Formateo inicial del css de la página web*/
+
+*{
+    margin: 0px;
+    padding:0px;
+}
+nav,section,aside,footer,article,hgroup{
+    display: block;
+}
+
+/*Etiqueta h1*/
+
+h1{
+    font: bolder 24px sans-serif;
+    margin: 5px;
+    font-style: unset;
+    text-align: center;
+    color: #E0DFD5;
+}
+#titulo{
+    margin-top: 15px;
+    margin-bottom: 0px;
+    color: #000;
+}
+#tituloTrasOutPut{
+    margin: 0px 0px 15px 85px;
+    color: #000;
+}
+#tituloTrasInput{
+    margin: 15px auto 0px auto;
+    color: #000;
+    align-content: center;
+}
+#tituloReferencia{
+    margin: 15px 0px 0px 20px;
+    color: #000;
+}
+
+/*Etiqueta h2*/
+
+h2{
+    text-align: center;
+    font: bold 16px sans-serif;
+    color: #E0DFD5;
+}
+#tituloIndice{
+    text-align: center;
+    margin-bottom: 10px;
+}
+#tituloReferencias{
+    text-align: center;
+    margin: 10px;
+}
+h2.codigoPartes{
+    text-align: center;
+    font: bolder 18px sans-serif;
+    color: black;
+    margin-top: 12px;
+}
+#metalenguaje{
+    text-align: center;
+    font: bold 22px sans-serif;
+    color: #E0DFD5;
+    margin-bottom: 15px;
+}
+
+/*Etiqueta h3*/
+
+h3{
+    text-align: left;
+    font: bold 14px sans-serif;
+    color: #E0DFD5;
+}
+
+/*Etiqueta p*/
+
+p{
+    font: normal 14px sans-serif;
+    color: #E0DFD5;
+    text-align: justify;
+}
+p.PBotones{
+    font: bold 18px sans-serif;
+    font-style: italic;
+    text-shadow: -2px -2px 1px #000;
+    color: white;
+    position: relative;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+#descripcionImagen{
+    text-align: center;
+}
+p.descripcionReferencia{
+    text-align: left;
+}
+p.PBotonesTras{
+    font: bolder 18px sans-serif;
+    font-style: italic;
+    color: black;
+    position: relative;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+#parametro2{
+    visibility: hidden;
+}
+#parametro3{
+    visibility: hidden;
+}
+
+/*Etiquetas ul, ol y li*/
+
+ol{
+    padding-left: 15px;
+    color: #E0DFD5;
+}
+ul{
+    text-align: left;
+    padding-left: 15px;
+    list-style: none;
+}
+#ulindice{
+    color: #E0DFD5;
+    text-decoration: underline;
+}
+#referencias{
+    padding: 0px 10px 0px 10px;
+    list-style: none;
+}
+li{
+    font-family: sans-serif;
+    padding-bottom: 3px;
+    font-size: 14px;
+}
+/*Etiqueta li que están dentro dle nav*/
+
+nav li{
+    list-style: none;
+    padding: 5px;
+    font: bold 14px verdana;
+    display: inline-block;
+}
+
+/*Etiqueta a */
+
+a{
+    color: #000;
+    text-decoration: none;
+}
+a.liindice{
+    color: #E0DFD5;
+    text-decoration: none;
+}
+#pgActual{
+    text-decoration: underline;
+    color: #000;
+}
+#pgTrasformaciones{
+    text-decoration: underline;
+    color: #000;
+}
+#repositorio{
+    text-decoration: underline;
+    color: #551A8B;
+}
+#linkReferencia{
+    text-decoration: underline;
+    color: #551A8B;
+    margin: auto;
+    font: italic 16px 'Times New Roman';
+}
+
+/*Inicio de la declaración de las etiquetas de la estructura principal de la página web*/
+
+/*Etiqueta header*/
+header{
+    display: block;
+    background: #395965;
+    border: 1px solid black;
+    padding: 20px;
+    text-align: center;
+}
+
+/*Etiqueta nav*/
+nav{
+    background: #dae1e9;
+    padding: 5px 15px;
+    text-align: left;
+    border: 1px solid black;
+}
+
+/*Etiqueta body*/
+body{
+    text-align: center;
+    background: #dae1e9;
+}
+
+/*Etiqueta section*/
+section{
+    margin: 20px;
+    width: 600px;
+    float: left;
+}
+#sectionEstructura{
+    margin: 0% 7%;
+    width: 800px;
+}
+#nuevoSection{
+    width: 600px;
+    margin: 20px;
+    float: right;
+}
+section.implementacion{
+    margin-top: 10px;
+    width: 920px;
+    float: inline-start;
+}
+#SectionBotones{
+    margin: 20px;
+    width: 920px;
+    float: center;
+    align-content: center;
+    align-items: center;
+}
+#sectionOutput{
+    width: 1200px;
+    height: 1330px;
+    margin-bottom: 5%;
+}
+#sectionOutput2{
+    width: 1200px;
+    height: 690px;
+    margin-bottom: 5%;
+}
+
+/*Etiqueta aside*/
+aside{
+    margin: 20px 0px;
+    width: 300px;
+    float: left;
+    background-color: #395965;
+}
+#indice{
+    margin-left: 20px;
+    width: 258px;
+    border: 1px solid black;
+    padding: 20px;
+    float: left;
+    background-color: #395965;
+}
+
+/*Etiqueta article*/
+article{
+    background: #395965;
+    border: 1px solid black;
+    padding: 30px;
+    margin-bottom: 15px;
+}
+article footer{
+    text-align: right;
+    margin-top: 20px;
+}
+article.tras{
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    background: #395965;
+    margin-bottom: 0px;
+    width: 1200px;
+}
+#especialTras{
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    background: #395965;
+    margin-bottom: 0px;
+    height: 600px;
+    width: 1200px;
+}
+#referenciasIEEE{
+    background: #395965;
+    border: 1px solid black;
+    padding: 30px;
+    margin-bottom: 15px;
+    width: 860px;
+    text-align: left;
+}
+
+/*Etiqueta footer*/
+#pie{
+    clear:both;
+    padding: 20px;
+    background: #2d3436;
+    color: white
+}
+
+/*Fin de la declaración de las etiquetas de la estructura principal de la página web*/
+
+/*Etiqueta div*/
+
+div{
+    width: 960px;
+    border: 1px solid black;
+    margin: 15px auto;
+    background: white;
+}
+div.Orientacion{
+    margin: 2% 0px 5% 7%;
+    width: 370px;
+    height: 70px;
+    float: left;
+    opacity: 0.65;
+    background: url(Fondo.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    border-radius: 3px;
+    box-shadow: 0 2.5px 7.5px #000;
+    overflow: hidden;
+    color: white;
+}
+#input{
+    height: 460px;
+}
+#output{
+    width: 915px;
+    height: 1065px;
+    background: #395965;
+}
+div.forms{
+    margin: 2% 3% 5% 2%;
+    width: 470px;
+    height: 125px;
+    display:inline-block;
+    background-attachment: fixed;
+    background-size: cover;
+    border-radius: 3px;
+    box-shadow: 0 2.5px 7.5px #000;
+    overflow: hidden;
+    color: white;
+}
+#trasformaciones{
+    width: 1300px;
+    border: 1px solid black;
+    margin: 15px auto;
+    background: white;
+}
+div.divtrasformar{
+    margin: 2% 2% 3% 2%;
+    width: 350px;
+    height: 70px;
+    display:inline-block;
+    background-attachment: fixed;
+    background-size: cover;
+    border-radius: 3px;
+    box-shadow: 0 2.5px 7.5px #000;
+    overflow: hidden;
+    color: black;
+}
+
+/*Etiqueta img*/
+
+img{
+    width: 65%;
+    height: 20%;
+    display: block;
+    margin: 10px auto;
+}
+#imgEstructura{
+    width: 90%;
+}
+#botonArriba{
+    position: fixed;
+    bottom: 20px;
+    right: -100px;
+    height: 40px;
+    width: 40px;
+    transition: all 1s;
+}
+#imgTras{
+    width: 70%;
+}
+#imgs{
+    width: 100%;
+}
+
+/*Etiqueta input*/
+
+#btninput{
+    color: #395965;
+    margin: 18px 0px 15px 152.5px;  
+}
+
+/*Etiqueta button*/
+
+#btnEnviar{
+    width: 80px;
+    height: 25px;
+    margin: 0px 0px 15px 0px;
+}
+#btnDeleteG{
+    width: 100px;
+    height: 25px;
+    margin: 10px 0px 15px 0px
+}
+
+/*Etiqueta canvas*/
+
+#lienzo{
+    background-color: white;
+    margin-top: 40px;
+}
+
+/*Etiqueta code*/
+
+#code{
+    height: 510px;
+}
+#inputCode{
+    margin: 0px;
+    width: 95%;
+    height: 400px;
+}
+#showCode{
+    width: 95%;
+    height: 500px;
+}
+
+/*Etiqueta textarea*/
+
+#outputCode{
+visibility: hidden;
+}

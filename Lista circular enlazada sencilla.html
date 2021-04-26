@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <head>
+        <meta charset="utf-8"/>
+        <title>LVaED</title>
+        <meta name="description" content="Este es un aporte hacia el aprendizaje de las estructuras de datos"/>
+        <meta name="author" content="Cristian Julian Muñoz Buenahora, John Jairo Corzo Calderon, Santiago Andres DelValle Pinilla"/>
+        <meta name="keywords" content="Estructuras de datos"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/EstilosPrincipal.css"/>
+        <link rel="stylesheet" href="/Estilos, scripts e imagenes/prism.css"/>
+        <script src="Estilos, scripts e imagenes/botonArriba.js"></script>
+    </head>
+    <body>
+        <div id="principio">
+            <header>
+                <h1>Laboratorio virtual para el aprendizaje de estructuras de datos - LVaED</h1> 
+            </header>
+
+            <nav> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="EstructurasDeDatos.html">Estructura de datos</a></li>
+                    <li><a href="Trasformaciones.html">Trasformaciones</a></li>
+                </ul>
+            </nav>
+
+            <h1 id="titulo">Lista circular enlazada sencilla</h1>
+            <section id="nuevoSection">
+                <article>
+                    <h2 id="definicion">Definición</h2><br>
+                    <p>Listas circulares enlazadas sencillas, como su nombre lo dice, derivan de las listas enlazadas sencillas, solo que a diferencia de estas, el ultimo nodo, no es nulo, sino que este conecta el nodo final con nodo el inicial (Ver figura 3) [2].</p><br>
+                    <p>Al trabajar con las listas circulares encadenadas se debe ser cuidadoso, para evitar caer en un bucle infinito, es por esto, que se recomienda implementar una condición que controle el recorrido de la lista, un ejemplo de esto, puede ser implementar un nodo de cabecera, este tendrá propiedades distintas, que permitan diferenciarlo del resto de nodos, de modo que se pueda identificar e indicar el comienzo de la lista [2].</p><br>
+                    <img id="imgEstructura" src="Estilos, scripts e imagenes/Listas circulares encadenadas.png" alt="Lista circular encadenada sencilla">
+                    <p id="descripcionImagen">Figura 3: Representación de una lista circular enlazada sencilla</p>
+                </article>
+            </section>
+            
+            <aside id="indice">
+                <h2 id="tituloIndice">Índice</h2>
+                <ul id="ulindice">
+                    <li><a class="liindice" href="#definicion">1. Definición de una lista circular enlazada sencilla</a></li>
+                    <li><a class="liindice" href="#principalesMetodos">2. Principales métodos</a></li>
+                    <li> <a class="liindice" href="#java">3. Implementación en Java</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodoJava">3.1 Nodo de la lista</a></li>
+                            <li><a class="liindice" href="#implementacionJava">3.2 Desarrollo de la lista</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#c++">4. Implementación en C++</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodoc++">4.1 Nodo de la lista</a></li>
+                            <li><a class="liindice" href="#implementacionC++">4.2 Desarrollo de la lista</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#python"> 5. Implementación en Python</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodopython">5.1 Nodo de la lista</a></li>
+                            <li><a class="liindice" href="#implementacionPython">5.2 Desarrollo de la lista</a></li>
+                        </ul>
+                    </li>  
+                    <li><a class="liindice" href="#aplicacion">6. Ejercicio de aplicación de la estructura</a></li>         
+                </ul>
+            </aside>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="principalesMetodos">Principales métodos</h2><br>
+                    <ul>
+                        <li> <p><b>insertTail (Object Object)</b> -> Método booleano el cual asigna al nodo “cola” el objeto ingresado en el parámetro (Desplaza a lo largo de la lista al anterior nodo cola como a todos sus “sucesores”); Si el proceso sale bien, retorna true, si no, retorna false</p></li><br>
+                        <li> <p><b>isEmpty ()</b> -> Método booleano que va a ser muy utilizado a lo largo del desarrollo la estructura para verificar si está vacía o no.</p></li><br>
+                        <li> <p><b>clear ()</b> -> Método void el cual elimina todo el contenido de la lista (Además de que el valor del atributo size se convierte en 0).</p></li><br>
+                        <li> <p><b>getHead ()</b> -> Método Object el cual retorna la cabeza de la lista.</p></li><br>
+                        <li> <p><b>getTail ()</b> -> Método Object el cual retorna la cola de la lista.</p></li><br>
+                        <li> <p><b>search (Object object)</b> -> Método el cual retorna el nodo que contenga el elemento introducido en el parámetro, si no este elemento no se encuentra se retornará null .</p></li><br>
+                        <li> <p><b>add (Object object)</b> -> Método booleano el cual utiliza el método InserTail para agregar un objeto a la lista por la cola; Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>insert (ListNode node, Object object)</b> -> Método booleano el cual busca un nodo y en esa posición inserta el objeto del parámetro (El contenido del nodo anterior simplemente se desplaza); Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>insert (Object b, Object object)</b> -> Método booleano el cual busca el objeto b dentro de la lista y lo reemplaza por el objecto object; Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>insertHead (Object Object)</b> -> Método booleano el cual asigna al nodo “cabeza” el objeto ingresado en el parámetro (Desplaza a lo largo de la lista al anterior nodo cabeza como a todos sus “sucesores”); Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>insertTail (Object object)</b> -> Método booleano el cual asigna al nodo “cola” el objeto ingresado en el parámetro (Desplaza a lo largo de la lista al anterior nodo cola como a todos sus “sucesores”); Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>remove (ListNode node)</b> -> Método booleano el cual borra el nodo ingresado en el parámetro de la lista si esta; Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>remove (Object object)</b> -> Método booleano el cual busca al nodo que contenga el objeto ingresado y si lo encuentra, lo sobrescribe con el Nodo anterior (Elimina); Si el proceso sale bien, retorna true, si no, retorna false.</p></li><br>
+                        <li> <p><b>contains (Object object)</b> -> Método booleano el cual busca al nodo que contenga al objeto ingresado en el parámetro, Si lo encuentra retorna true indicando que si esta en la lista, y si no, retorna false.</p></li><br>
+                        <li> <p><b>toArray()</b> -> Método array  el cual se encarga de transformar la lista en un Array para posteriormente retornarla.</p></li><br>
+                        <li> <p><b>toArray(Object [] object)</b> -> Método array el cual se encarga de almacenar la lista en el array ingresado en el parámetro.</p></li><br>
+                        <li> <p><b>getBeforeTo ()</b> -> Método object el cual retorna el objeto del penúltimo nodo.</p></li><br>
+                        <li> <p><b>getBeforeTo (ListNode node)</b> -> Método object el cual retorna el nodo anterior del nodo ingresado en el parámetro.</p></li><br>
+                        <li> <p><b>getNextTo ()</b> -> Método object el cual retorna el contenido del nodo posterior de la cabeza.</p></li><br>
+                        <li> <p><b>getNextTo (ListNode nodo)</b> -> Método object el cual retorna el nodo posterior del nodo ingresado en el parámetro.</b></p></li><br>
+                        <li> <p><b>subList ()</b> -> Método List el cual retorna una lista de los nodos deseados, desde el primer parámetro (Nodo que actuará de cabeza) hasta el segundo parámetro (Nodo que actuara de cola) y todos los nodos que están entre ellos.</b></p></li><br>
+                        <li> <p><b>sortList ()</b> -> Método List el cual retorna una lista, pero con los nodos organizado por su contenido.</p></li><br>
+                        <li> <p><b>rec (ListNode node)</b> -> Un método void el cual se encarga de recorrer la lista y expresarla en un String.</p></li><br>
+                    </ul>
+                </article>
+
+                <article>
+                    <h2 id="java">Implementación de la estructura en Java</h2>
+                    <br>
+                    <h3 id="nodoJava">Nodo de la lista circular enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+import java.util.Iterator;
+
+public class ListNode implements  Iterable< ListNode > {
+
+    /*
+
+    La lógica de esta estructura cabe en saber cuando la lista ya hizo el recorrido completo con el fin de parar este proceso ; Por lo cual a la hora de implementar los métodos el atributo .Next va a ser fundamental para identificar la cabeza o la cola (Según el recorrido implementado) ,así parando el proceso y eliminando los nulls
+
+    */
+
+    private Object object;
+    public ListNode next; 
+
+    private ListNode inode;
+
+    public ListNode() {
+        this.object = null;
+        this.next = null;
+    }
+
+    public ListNode(Object object) {
+        this.object = object;
+        this.next = null;
+    }
+
+    public ListNode(Object object, ListNode next) {
+        this.object = object;
+        this.next = next;
+    }
+
+    public Object getObject() {
+        try{
+            return object;
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
+
+    public boolean isEquals(Object object) {
+        if (this.getObject().toString().equals(object.toString())) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isEquals(ListNode node) {
+        if (this.toString().equals(node.toString())) {
+            return true;
+        }
+        return false;
+    }
+    
+
+
+    @Override
+    public String toString() {
+
+        ListaCircular ls = new ListaCircular();
+
+        Iterator< ListNode > i = this.iterator();
+        ListNode inode;
+        do {
+            inode=i.next();
+            ls.add(inode.getObject());
+        } while (inode.next != this);
+
+        return ls.toString();
+    }
+
+    @Override
+    public Iterator< ListNode > iterator() {
+        inode = this;
+        return new Iterator<>() {
+            @Override
+            public boolean hasNext() {
+                return inode.next != null;
+            }
+
+            @Override
+            public ListNode next() {
+                if (inode != null) {
+                    ListNode tmp = inode;
+                    inode = inode.next;
+                    return tmp;
+                } else {
+                    return null;
+                }
+            }
+        }
+    }
+}                                                                        
+                        </code>
+                    </pre>
+                    <br>
+                    <h3 id="implementacionJava">Lista circular enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+import java.util.Iterator;
+import java.util.Arrays;
+import static java.lang.System.*;
+
+/*
+
+La caracteristica mas llamativa con respecto a las listas ciclicas es a la hora de recorrer la estructura ya que como su nombre lo indica 
+esta en constante ciclo , es decir , no tiene final ; Por lo cual el termino "Null" donde significaba anteriormente el final, desaparecio.
+
+Si no hay un "Stop" , la lista nunca para de recorrerse , en consecuencia siendo una estructura inutilizable (Siendo el recorrido una fundamento para los demas métodos) ; Para solucionar este problema , se tiene que tener en cuenta el Nodo cabeza y el Nodo cola para así cuando pase de cola a cabeza para el proceso (Esto en el caso de la Lista Enlazada Circular Sencilla).
+
+*/
+
+public class ListaCircular implements ListInterface, Iterable< ListNode >{
+
+    private ListNode inode;
+    private int size;
+
+    public ListNode head;
+    public ListNode tail;
+
+    /**
+        * List
+        */
+    public ListaCircular() {
+        clear();
+    }
+
+    /*
+    ok
+        */
+    public ListaCircular(Object object) {
+        add(object);
+    }
+
+    /*
+    ok
+        */
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public void clear() {
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public Object getHead() {
+        return head;
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public Object getTail() {
+        return tail;
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public ListNode search(Object object) {
+        
+        Iterator< ListNode > i = this.iterator();
+        ListNode inode;
+
+        for(int x = 0; x < size; x++){
+            inode = i.next();
+            if (inode.getObject().equals(object)) {
+            
+                return inode;
+            }
+        }
+        return null;
+    }
+
+    
+    public ListNode search(ListNode object) {
+        
+        return search(object.getObject());
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public boolean add(Object object) {
+        return insertTail(object);
+    }
+
+    /*
+    ok 
+        */
+    @Override
+    public boolean insert(ListNode node, Object object) {
+        try {
+            if (node.next == null) {
+                add(object);
+            } else {
+                
+                ListNode newNode = new ListNode(object);
+                newNode.next = node.next;
+                node.next = newNode;
+
+            }
+            this.size ++;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public boolean insert(Object ob, Object object) {
+        try {
+            if (ob != null) {
+                ListNode node = this.search(ob);
+                if (node != null) {
+                    return insert(node, object);
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public boolean insertHead(Object object) {
+        try {
+            if (isEmpty()) {
+                head = new ListNode(object);
+                tail = head;
+            } else {
+                head = new ListNode(object, head);
+                tail.next = head;
+            }
+            this.size++;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /*
+    ok
+        */
+    @Override
+    public boolean insertTail(Object object) {
+        try {
+            if (isEmpty()) {
+                head = new ListNode(object);
+                tail = head;
+            } else {
+                tail.next = new ListNode(object);
+                tail = tail.next;
+                tail.next = head; // El Nodo posterior a la cola es la cabeza por lo cual al momento de insertar una nueva cola este objeto quedaría entre la cola anterior y la cabeza (Depende de como el programador lo implemente , esto puede variar)
+            }
+            this.size++;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean remove(ListNode node) {
+
+        ListNode nodeB = this.search(node.getObject());
+        
+        if(nodeB != null){
+            if(nodeB.getObject()==head.getObject()){
+                ListNode temp = this.head.next;
+                this.tail.next = temp;
+                this.head = temp;    
+                // En este caso como el Nodo a eliminar es la cabeza , el Nodo anterior es la cola , por lo cual esta se le asigna como la nueva cabeza 
+            }
+            else if(nodeB.getObject()==tail.getObject()){
+                this.getBeforeTo(nodeB).next = head; // En este caso como el Nodo a eliminar es la cola , se establece como la nueva cola el nodo anterior 
+            }
+            else{
+                this.getBeforeTo(nodeB).next = nodeB.next;
+                nodeB.next = null;
+                
+            } 
+
+            this.size--;
+            return true;       
+        }
+        return false;
+    }
+
+
+    @Override
+    public boolean remove(Object object) {
+        ListNode lNode = new ListNode(object);
+        return remove(lNode);
+    }
+    
+    @Override
+    public boolean contains(Object object) {
+
+        if(search(object)==null)
+            return false;
+        
+        return true;
+
+    }
+
+    @Override
+    public Object[] toArray() {
+        Object[] arreglo = new Object[size];
+
+        Iterator< ListNode > i = this.iterator();
+        ListNode inode;
+        int cont = 0;
+
+        for(int x = 0; x < size; x++){
+            inode = i.next();
+            arreglo[cont] = inode.getObject();            
+            cont++;
+        }
+
+
+        return arreglo;
+    }
+
+    @Override
+    public Object[] toArray(Object[] object) {
+
+        Object[] arreglo = new Object[size + object.length];
+        Object[] arreglo2 = toArray();
+
+        int cont = 0;
+        while(cont < object.length+size){
+            if(cont == size){
+                for (Object object2 : object) {
+                    arreglo[cont] = object2;
+                    cont++;
+                }
+
+                break;
+            }
+            else{
+                arreglo[cont] = arreglo2[cont];
+            }
+            cont++;
+        }
+        return arreglo;
+    }
+
+    public ListaCircular backToList(Object[] objects){ // Un nuevo método el cual se encarga de recorrer un arreglo y almacenar estos valores en la lista
+        ListaCircular lista = new ListaCircular();
+        for (Object object : objects) {
+            lista.add(object);
+        }
+        return lista;
+    }
+
+    @Override
+    public Object getBeforeTo() {
+        
+        Iterator< ListNode > i = this.iterator();
+        ListNode inode;
+
+        while ((inode = i.next()) != null) {
+            
+            if (inode.next.getObject()==this.tail.getObject()) {
+                return inode.getObject();
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public ListNode getBeforeTo(ListNode node) {
+        Iterator< ListNode > i = this.iterator();
+        ListNode inode;
+
+        while ((inode = i.next()) != null) {
+
+            if (inode.next.getObject()==node.getObject()) {
+                return inode;
+            }
+
+            
+        }
+
+        return null;
+    }
+
+    @Override
+    public Object getNextTo() {
+        return head.next;
+    }
+
+    @Override
+    public Object getNextTo(ListNode node) {
+        Iterator< ListNode > i = this.iterator();
+        ListNode inode;
+
+        while ((inode = i.next()) != null) {
+            
+            if (inode.getObject()==node.getObject()) {
+                return inode.next.getObject();
+            }
+        }
+
+        return null;
+    }
+
+    public ListNode getnextTo(ListNode node) {
+        Iterator< ListNode > i = this.iterator();
+        ListNode inode;
+
+        while ((inode = i.next()) != null) {
+            
+            if (inode.getObject()==node.getObject()) {
+                return inode.next;
+            }
+        }
+
+        return null;
+    }
+    
+
+    @Override
+    public ListaCircular subList(ListNode from, ListNode to) {
+        try {
+            ListaCircular sublist = new ListaCircular();
+            if(from != null && to != null){
+                Iterator< ListNode > i = this.iterator();
+                ListNode inode;
+                boolean frExist = false;
+                while ((inode = i.next()) != null) {
+                    if(inode.getObject().equals(to.getObject())){
+                        sublist.add(inode.getObject());
+                        return sublist;
+                    }
+                    else if(inode.getObject().equals(from.getObject())|| frExist){
+                        sublist.add(inode.getObject());
+                        frExist = true;
+                    }
+                    
+
+                }                
+            }
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public ListaCircular subList(Object from, Object to) {
+        ListNode nfrom = new ListNode(from);
+        ListNode nto = new ListNode(to);
+        return this.subList(nfrom, nto);
+    } 
+
+    @Override
+    public ListaCircular sortList() {
+        try{
+            Object[] array = toArray(); //Almacena la lista en un arreglo
+
+            Arrays.sort(array); //Utiliza el método .sort tipicos de los arreglos para organizar la estructura 
+
+            return backToList(array); // Convierte el arreglo a una lista
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public String toString() {
+        String output = ""; 
+
+        Iterator< ListNode > i = this.iterator();
+        ListNode inode;
+        for(int x = 0; x < size; x++){
+            inode = i.next();
+
+            if(inode.next == this.head && x !=0 ){
+                output += "ListNode{" +
+                "object=" + inode.getObject() +
+                ", next=" + inode.next.getObject() + "(head)";
+                for(int z = 0; z < size; z++){
+                    output += '}';
+                }
+
+            }
+            else{
+                output += "ListNode{" +
+                "object=" + inode.getObject() +
+                ", next=";
+            }
+
+            
+        }
+
+        return output;
+    }
+
+    @Override
+    public Iterator< ListNode > iterator() {
+        inode = head;
+        return new Iterator<>() {
+            @Override
+            public boolean hasNext() {
+                return inode.next != null;
+            }
+
+            @Override
+            public ListNode next() {
+                if (inode != null) {
+                    ListNode tmp = inode;
+                    inode = inode.next;
+                    return tmp;
+                } else {
+                    return null;
+                }
+            }
+        };
+    }
+
+    public void rec(ListNode node) {
+        if (node.next != null) {
+            rec(node.next);
+            // <- ;) ->
+        }
+        out.println(node.toString());
+    }
+}                                               
+                        </code>
+                    </pre>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="c++">Implementación de la estructura en C++</h2>
+                    <br>
+                    <h3 id="nodoc++">Nodo de la lista circular enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#include < iostream >
+#pragma once
+#include < vector >
+#include < any >
+using namespace std;
+class ListNode {
+    
+        /*
+
+    La lógica de esta estructura cabe en saber cuando la lista ya hizo el recorrido completo con el fin de parar este proceso ; Por lo cual a la hora de implementar los métodos el atributo .Next va a ser fundamental para identificar la cabeza o la cola (Según el recorrido implementado) ,así parando el proceso y eliminando los nulls
+
+    */
+
+    private:
+    std::any object;
+    ListNode *inode;
+    public:
+    ListNode *next;
+    
+    ListNode::ListNode()
+    {
+        this->object = std::any();
+        this->next = nullptr;
+    }
+    
+    ListNode::ListNode(std::any object)
+    {
+        this->object = object;
+        this->next = nullptr;
+    }
+    
+    ListNode::ListNode(std::any object, ListNode *next)
+    {
+        this->object = object;
+        this->next = next;
+    }
+    
+    std::any ListNode::getObject()
+    {
+        try
+        {
+            return object;
+        }
+        catch (const std::runtime_error &e)
+        {
+            return std::any();
+        }
+    }
+    
+    void ListNode::setObject(std::any object)
+    {
+        this->object = object;
+    }
+    
+    bool ListNode::isEquals(std::any object)
+    {
+        if (this->getObject().toString().equals(object.toString()))
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    bool ListNode::isEquals(ListNode *node)
+    {
+        if (this->toString() == node->toString())
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    std::wstring ListNode::toString()
+    {
+    
+        ListaCircular *ls = new ListaCircular();
+    
+        ListNode::const_iterator i = this->begin();
+        ListNode *inode;
+        do
+        {
+            inode = i->next();
+            ls->push_back(inode->getObject());
+        } while (inode->next != this);
+    
+        delete ls;
+        return ls->toString();
+    }
+    
+    Iterator< ListNode* > *ListNode::iterator()
+    {
+        inode = this;
+        return new IteratorAnonymousInnerClass(this);
+    }
+    
+    
+    bool ListNode::IteratorAnonymousInnerClass::hasNext()
+    {
+        return !outerInstance->inode->next->empty();
+    }
+    
+    ListNode *ListNode::IteratorAnonymousInnerClass::next()
+    {
+        if (!outerInstance->inode->empty())
+        {
+            ListNode *tmp = outerInstance->inode;
+            outerInstance->inode = outerInstance->inode->next;
+            return tmp;
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+};                                                            
+                        </code>
+                    </pre>
+
+                    <br>
+                    <h3 id="implementacionC++">Lista circular enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#pragma once
+#include "ListNode.h"
+#include "ListaCircular.h"
+#include < vector >
+#include < any >
+using namespace std
+
+/*
+
+La caracteristica mas llamativa con respecto a las listas ciclicas es a la hora de recorrer la estructura ya que como su nombre lo indica 
+esta en constante ciclo , es decir , no tiene final ; Por lo cual el termino "Null" donde significaba anteriormente el final, desaparecio.
+
+Si no hay un "Stop" , la lista nunca para de recorrerse , en consecuencia siendo una estructura inutilizable (Siendo el recorrido una fundamento para los demas métodos) ; Para solucionar este problema , se tiene que tener en cuenta el Nodo cabeza y el Nodo cola para así cuando pase de cola a cabeza para el proceso (Esto en el caso de la Lista Enlazada Circular Sencilla).
+
+*/
+
+
+class ListaCircular : public ListInterface, public std::vector< ListNode* >{
+    
+    private:
+    ListNode *inode;
+    int size = 0;
+
+    public:
+    ListNode *head;
+    ListNode *tail;
+    
+    ListaCircular::ListaCircular()
+    {
+    clear();
+    }
+
+    ListaCircular::ListaCircular(std::any object)
+    {
+        push_back(object);
+    }
+    
+    bool ListaCircular::empty()
+    {
+        return head->empty();
+    }
+    
+    int ListaCircular::getSize()
+    {
+        return size;
+    }
+    
+    void ListaCircular::clear()
+    {
+        head = nullptr;
+        tail = nullptr;
+        size = 0;
+    }
+    
+    std::any ListaCircular::getHead()
+    {
+        return head;
+    }
+    
+    std::any ListaCircular::getTail()
+    {
+        return tail;
+    }
+    
+    ListNode *ListaCircular::search(std::any object)
+    {
+    
+        ListaCircular::const_iterator i = this->begin();
+        ListNode *inode;
+    
+        for (int x = 0; x < size; x++)
+        {
+            inode = i->next();
+            if (inode->getObject().equals(object))
+            {
+    
+                return inode;
+            }
+        }
+        return nullptr;
+    }
+    
+    ListNode *ListaCircular::search(ListNode *object)
+    {
+    
+        return search(object->getObject());
+    }
+    
+    bool ListaCircular::add(std::any object)
+    {
+        return insertTail(object);
+    }
+    
+    bool ListaCircular::insert(ListNode *node, std::any object)
+    {
+        try
+        {
+            if (node->next->empty())
+            {
+                push_back(object);
+            }
+            else
+            {
+    
+                ListNode *newNode = new ListNode(object);
+                newNode->next = node->next;
+                node->next = newNode;
+            }
+            this->size++;
+            return true;
+        }
+        catch (const std::runtime_error &e)
+        {
+            return false;
+        }
+    }
+    
+    bool ListaCircular::insert(std::any ob, std::any object)
+    {
+        try
+        {
+            if (ob.has_value())
+            {
+                ListNode *node = this->search(ob);
+                if (!node->empty())
+                {
+                    return insert(node, object);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (const std::runtime_error &e)
+        {
+            return false;
+        }
+    }
+    
+    bool ListaCircular::insertHead(std::any object)
+    {
+        try
+        {
+            if (empty())
+            {
+                head = new ListNode(object);
+                tail = head;
+            }
+            else
+            {
+                head = new ListNode(object, head);
+                tail->next = head;
+            }
+            this->size++;
+            return true;
+        }
+        catch (const std::runtime_error &e)
+        {
+            return false;
+        }
+    }
+    
+    bool ListaCircular::insertTail(std::any object)
+    {
+        try
+        {
+            if (empty())
+            {
+                head = new ListNode(object);
+                tail = head;
+            }
+            else
+            {
+                tail->next = new ListNode(object);
+                tail = tail->next;
+                tail->next = head; // El Nodo posterior a la cola es la cabeza por lo cual al momento de insertar una nueva cola este objeto quedaría entre la cola anterior y la cabeza (Depende de como el programador lo implemente , esto puede variar)
+            }
+            this->size++;
+            return true;
+        }
+        catch (const std::runtime_error &e)
+        {
+            return false;
+        }
+    }
+    
+    bool ListaCircular::remove(ListNode *node)
+    {
+    
+        ListNode *nodeB = this->search(node->getObject());
+    
+        if (!nodeB->empty())
+        {
+            if (nodeB->getObject() == head->getObject())
+            {
+                ListNode *temp = this->head->next;
+                this->tail->next = temp;
+                this->head = temp;
+                // En este caso como el Nodo a eliminar es la cabeza , el Nodo anterior es la cola , por lo cual esta se le asigna como la nueva cabeza 
+            }
+            else if (nodeB->getObject() == tail->getObject())
+            {
+                this->getBeforeTo(nodeB)->next = head; // En este caso como el Nodo a eliminar es la cola , se establece como la nueva cola el nodo anterior 
+            }
+            else
+            {
+                this->getBeforeTo(nodeB)->next = nodeB->next;
+    
+                nodeB->next = nullptr;
+            }
+    
+            this->size--;
+            return true;
+        }
+        return false;
+    }
+    
+    bool ListaCircular::remove(std::any object)
+    {
+        ListNode *lNode = new ListNode(object);
+        delete lNode;
+        return remove(lNode);
+    }
+    
+    bool ListaCircular::contains(std::any object)
+    {
+
+        if (search(object) == nullptr)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    std::vector< std::any > ListaCircular::toArray()
+    {
+        std::vector< std::any > arreglo(size);
+
+        ListaCircular::const_iterator i = this->begin();
+        ListNode *inode;
+        int cont = 0;
+
+        for (int x = 0; x < size; x++)
+        {
+            inode = i->next();
+            arreglo[cont] = inode->getObject();
+            cont++;
+        }
+        return arreglo;
+    }
+
+    std::vector< std::any > ListaCircular::toArray(std::vector< std::any > &object)
+    {
+
+        std::vector< std::any > arreglo(size + object.size());
+        std::vector< std::any > arreglo2 = toArray();
+        int cont = 0;
+        
+        while (cont < object.size() + size)
+        {
+            if (cont == size)
+            {
+                for (auto object2 : object)
+                {
+                    arreglo[cont] = object2;
+                    cont++;
+                }
+
+                break;
+            }
+            else
+            {
+                arreglo[cont] = arreglo2[cont];
+            }
+            cont++;
+        }
+        return arreglo;
+    }
+
+    ListaCircular *ListaCircular::backToList(std::vector< std::any > &objects)// Un nuevo método el cual se encarga de recorrer un arreglo y almacenar estos valores en la lista
+    {
+        ListaCircular *lista = new ListaCircular();
+        for (auto object : objects)
+        {
+            lista->add(object);
+        }
+        return lista;
+    }
+
+    std::any ListaCircular::getBeforeTo()
+    {
+
+        ListaCircular::const_iterator i = this->begin();
+        ListNode *inode;
+        while ((inode = i->next()) != nullptr)
+        {
+
+            if (inode->next.getObject() == this->tail.getObject())
+            {
+                return inode->getObject();
+            }
+        }
+
+        return std::any();
+    }
+
+    ListNode *ListaCircular::getBeforeTo(ListNode *node)
+    {
+        ListaCircular::const_iterator i = this->begin();
+        ListNode *inode;
+        while ((inode = i->next()) != nullptr)
+        {
+
+            if (inode->next.getObject() == node->getObject())
+            {
+                return inode;
+            }
+
+
+        }
+
+        return nullptr;
+    }
+
+    std::any ListaCircular::getNextTo()
+    {
+        return head->next;
+    }
+
+    std::any ListaCircular::getNextTo(ListNode *node)
+    {
+        ListaCircular::const_iterator i = this->begin();
+        ListNode *inode;
+        while ((inode = i->next()) != nullptr)
+        {
+            if (inode->getObject() == node->getObject())
+            {
+                return inode->next.getObject();
+            }
+        }
+
+        return std::any();
+    }
+
+    ListNode *ListaCircular::getnextTo(ListNode *node)
+    {
+        ListaCircular::const_iterator i = this->begin();
+        ListNode *inode;
+        while ((inode = i->next()) != nullptr)
+        {
+
+            if (inode->getObject() == node->getObject())
+            {
+                return inode->next;
+            }
+        }
+        return nullptr;
+    }
+
+    ListaCircular *ListaCircular::subList(ListNode *from, ListNode *to)
+    {
+        try
+        {
+            ListaCircular *sublist = new ListaCircular();
+            if (from != nullptr && to != nullptr)
+            {
+                ListaCircular::const_iterator i = this->begin();
+                ListNode *inode;
+                bool frExist = false;
+                while ((inode = i->next()) != nullptr)
+                {
+                    if (inode->getObject().equals(to->getObject()))
+                    {
+                        sublist->add(inode->getObject());
+                        return sublist;
+                    }
+                    else if (inode->getObject().equals(from->getObject()) || frExist)
+                    {
+                        sublist->add(inode->getObject());
+                        frExist = true;
+                    }
+
+
+                }
+            }
+            return nullptr;
+        }
+        catch (const std::runtime_error &e)
+        {
+            return nullptr;
+        }
+    }
+
+    ListaCircular *ListaCircular::subList(std::any from, std::any to)
+    {
+        ListNode *nfrom = new ListNode(from);
+        ListNode *nto = new ListNode(to);
+
+        delete nto;
+        delete nfrom;
+        return this->subList(nfrom, nto);
+    }
+
+    ListaCircular *ListaCircular::sortList()
+    {
+        try
+        {
+            std::vector< std::any > array = toArray(); //Almacena la lista en un arreglo
+            Arrays::sort(array);//Utiliza el método .sort tipicos de los arreglos para organizar la estructura 
+
+            return backToList(array); // Convierte el arreglo a una lista
+        }
+        catch (const std::runtime_error &e)
+        {
+            return nullptr;
+        }
+    }
+    
+        std::wstring ListaCircular::toString()
+    {
+        std::wstring output = L"";
+        ListaCircular::const_iterator i = this->begin();
+        ListNode *inode;
+        for (int x = 0; x < size; x++)
+        {
+            inode = i->next();
+
+            if (inode->next == this->head && x != 0)
+            {
+                output += L"ListNode{" + L"object=" + inode->getObject() + L", next=" + inode->next.getObject() + L"(head)";
+                for (int z = 0; z < size; z++)
+                {
+                    output += L'}';
+                }
+
+            }
+            else
+            {
+                output += L"ListNode{" + L"object=" + inode->getObject() + L", next=";
+            }
+        }
+
+        return output;
+    }
+
+    Iterator< ListNode* > *ListaCircular::iterator()
+    {
+        inode = head;
+        return new IteratorAnonymousInnerClass(this);
+    }
+
+    ListaCircular::IteratorAnonymousInnerClass::IteratorAnonymousInnerClass(ListaCircular *outerInstance) : outerInstance(outerInstance)
+    {
+    }
+
+    bool ListaCircular::IteratorAnonymousInnerClass::hasNext()
+    {
+        return inode->next != nullptr;
+    }
+
+    ListNode *ListaCircular::IteratorAnonymousInnerClass::next()
+    {
+        if (inode != nullptr)
+        {
+            ListNode *tmp = inode;
+            inode = inode->next;
+            return tmp;
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+
+    void ListaCircular::rec(ListNode *node)
+    {
+        if (node->next != nullptr)
+        {
+            rec(node->next);
+            // <- ;) ->
+        }
+        out::println(node->toString());
+    }
+};                                                        
+                        </code>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="python">Implementación de la estructura en Python</h2>
+                    <br>
+                    <h3 id="nodopython">Nodo de la lista circular enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+class ListNode():
+
+__object = None #Variable para almacenar el objeto del nodo
+next = None  #Indicador de nodo siguiente
+
+
+"""
+Constructor de la clase, el unico parametro obligatorio es el Objeto 
+"""
+def __init__ (self, objectt = None, next = None): 
+    self.__object = objectt
+    self.next = next
+
+"""
+Los 2 siguientes metodos permiten la encapsulacion de la variable __object
+"""
+def getObject(self):
+    try:
+        return self.__object
+    except Exception:
+        return None
+
+def setObject(self,objectt):
+    self.__object = objectt
+
+"""
+Evaluar si un nodo o objeto, es equivalente al nodo, esto se hace comparando
+unicamente las __object con el parametro dado
+"""
+def isEquals(self, objectt):
+    if(type(objectt)==ListNode):
+        if(self.__object == objectt.getObject()):#Si el elemento entregado como parametro "objectt" no es un nodo, se genera error y se va al try donde si se puede evaluar si esta en la Lista
+            return True
+    else:
+        if(self.__object == objectt):
+            return True
+    return False
+
+
+"""
+Imprimir un nodo
+"""
+def __str__(self):
+    return "ListNode[Object: {0}, Next: {1}]".format(self.__object,self.next.getObject())                        
+                        </code>
+                    </pre>
+
+                    <br>
+                    <h3 id="implementacionPython">Lista circular enlazada sencilla</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+from listNode import ListNode
+from collections import Iterator
+
+
+class CircularList(ListNode):
+
+    __inode = ListNode() #Nodo necesario para iterar la lista
+    __size = 0  #Entero para almacenar el tamaño de la lista
+    
+    head = None #Nodo cabeza
+    tail = None #Nodo cola
+
+    """
+    Constructor de la clase, puede recibir un objeto como parametro, que en cuyo
+    caso, seria el primer nodo de la lista.
+    """
+    def __init__(self, objectt=None):  
+        if(objectt != None):
+            self.add(objectt)
+
+    """
+    Retorna True si la lista esta vacia
+    """
+    def isEmpty(self):  # No recibe parametros
+        return self.head == None
+
+    """
+    Retorna tamaño de la lista
+    """
+    def getSize(self): # No recibe parametros
+        return self.__size
+
+    """
+    Limpia la lista sin retorno
+    """
+    def clear(self): # No recibe parametros
+        self.head = None
+        self.tail = None
+        self.__size = 0
+
+    """
+    Retorna nodo cabeza
+    """
+    def getHead(self):  # No recibe parametros
+        return self.head
+
+    """
+    Retorna nodo cola
+    """
+    def getTail(self):  # No recibe parametros
+        return self.tail
+
+    """
+    Busca un objeto o nodo en la lista, si se encuentra en la lista, retorna este nodo
+    """
+    def search(self, objectt): # Recibe como parametro objectt, que puede ser Objeto o Nodo
+
+        """
+        Las 2 siguientes lineas nos permiten recorrer la lista, en la variable
+        it, se crea e inicializa el iterador, y la variable inode almacena el nodo
+        con el que se hace la iteracion.
+        
+        Como se esta trabajando con una lista circular es importante controlar las 
+        que se hacen, porque de otra forma, se puede entrar en un bucle sin fin.
+        Por esto se hace uso de un bucle for
+        """
+        it = iter(self)  
+
+        for i in range(0,self.__size):
+            inode = next(it) 
+            if(inode.isEquals(objectt)):
+                return inode
+        return None
+
+
+    """
+    Agrega un nodo, insertandolo por la cola de la lista, no hay retorno
+    """
+    def add(self, objectt): # Recibe como parametro objectt, que puede ser Objeto o Nodo
+        self.insertTail(objectt)
+
+    """
+    Inserta un objeto, en la posicion siguiente al nodo u objeto dado, retorna True solo si el proceso es ejecutado exitosamente.  
+    """
+    def insert(self, node, objectt): # Recibe como parametro node y objectt, donde, node puede ser Objeto o Nodo y objectt es un objeto
+
+        if(type(node) == ListNode): #Proceso a realizar si se entrega un nodo, en el parametro node
+            try:
+                #Para que el se inserte al lado del nodo dado, este debe estar en la lista
+                if(node.next == None):
+                    self.add(objectt)
+                else:
+                    newNode = ListNode(objectt, node.next)
+                    node.next = newNode
+                self.__size +=1
+                return True
+            except Exception:
+                return False
+        else: #Proceso a realizar si se entrega un objeto, en el parametro node
+            try:
+                if(node != None):
+                    node = self.search(node)
+                    if(node != None):
+                        return self.insert(node, objectt)
+                    else:
+                        return False
+            except Exception:
+                return False
+
+    """
+    Inserta un objeto, en la cabeza de la lista, retorna True solo si el proceso es ejecutado exitosamente. 
+    """
+    def insertHead(self,  objectt):  # Recibe como parametro objectt, que puede ser Objeto o Nodo
+        try:
+            if(self.isEmpty()):
+                self.head = ListNode(objectt)
+                self.tail = self.head
+            else:
+                self.head = ListNode(objectt, self.head)
+            self.__size += 1
+            return True
+        except Exception:
+            return False
+
+    """
+    Inserta un objeto, en la al final de la lista, es decir, la cola, retorna True solo si el proceso es ejecutado exitosamente. 
+    """
+    def insertTail(self, objectt):  # Recibe como parametro objectt, que puede ser Objeto o Nodo
+        try:
+            if(self.isEmpty()):
+                self.head = ListNode(objectt)
+                self.tail = self.head
+            else:
+                self.tail.next = ListNode(objectt)
+                self.tail = self.tail.next
+                self.tail.next = self.head
+            self.__size += 1
+            return True
+        except Exception:
+            return False
+
+    """
+    Elimina el objeto dado como parametro, siempre y cuando este este en la lista, retorna True
+    si el proceso es ejecutado exitosamente.
+    """
+    def remove(self, objectt):
+
+        if(type(objectt) == ListNode): #Proceso a realizar si se entrega un nodo, en el parametro objectt
+            nodeB = self.search(objectt.getObject())
+
+            if(nodeB != None):
+                """
+                Para eliminar un nodo hay que tener en cuenta tres situaciones, que este este en la 
+                cabeza, en el cuerpo o la cola de la lista. 
+                """
+
+                if(nodeB.isEquals(self.head)): #Si objectt esta en la cabeza 
+                    
+                    self.tail.next = self.head.next
+                    self.head = self.head.next
+
+                elif(nodeB.isEquals(self.tail)): #Si objectt esta en la cola
+                    temp = self.getBeforeTo(nodeB)
+                    self.tail = temp
+                    self.tail.next = self.head
+
+                else: #Si objectt esta en el cuerpo
+                    self.getBeforeTo(nodeB).next = nodeB.next;
+                    nodeB.next = None;
+                self.__size -= 1
+                return True
+            else:
+                return False
+        else: #Proceso a realizar si se entrega un nodo, en el parametro objectt
+            lNode = ListNode(objectt)
+            return self.remove(lNode)
+
+    """
+    Busca el nodo u objeto en la lista, y si este se encuentra retorna True
+    """
+    def contains(self, objectt):  # Recibe como parametro un objeto o Nodo
+        if(self.search(objectt) == None):
+            return False
+        return True
+
+    """
+    Debido a que en python no hay arreglos predefinidos, se retorna una lista con
+    los datos de la Lista Circular.
+    """
+    def toArray(self):  
+        arreglo = [None]*(self.__size)  
+        it = iter(self)
+        cont = 0
+            
+        for i in range(0,self.__size):
+            inode = next(it)
+            arreglo[cont] = inode.getObject()
+            cont += 1
+
+        return arreglo
+
+
+    """
+    Metodo para convertir un arreglo (lista de python) en una lista enlazada sencilla
+    """
+    def backToList(self, array): #Retorna una Lista Circular y recibe un arreglo como parametro
+        head = CircularList()
+        for i in array:
+            head.add(i)
+        return head
+    
+    """
+    Retorna el nodo previo a al nodo entregado como parametro.
+    """
+    def getBeforeTo(self, node): #Parametro Node puede ser un nodo u objeto 
+        if(type(node)==ListNode):
+            it = iter(self)
+            inode =ListNode()
+
+            for i in range(0,self.__size):
+                inode = next(it)
+                if(inode.next!= None):
+                    if(inode.next.getObject()==node.getObject()):
+                        return inode
+                inode = next(it)
+            return None
+        else:
+            return self.getBeforeTo(ListNode(node))
+
+    """
+    Retorna el nodo posterior a al nodo entregado como parametro.
+    """
+    def getNextTo(self, node): #Parametro Node puede ser un nodo u objeto 
+        if(type(node)==ListNode):
+            node.getObject()
+            it = iter(self)
+            inode =ListNode()
+
+            for i in range(0,self.__size):
+                inode = next(it)
+                if(inode.getObject()== node.getObject()):
+                    return inode.next
+                inode = next(it)
+            return None
+        else:
+            return self.getNextTo(ListNode(node))
+    
+    """
+    Crea una sublista desde el primer parametro dado hasta el segundo, solo si estos se encuentran en
+    la lista.
+    """
+    def subList(self,fromm,to): #Retorna una sublista, desde el parametro fromm hasta el parametro to, si es que estos parametros existen, estos
+                                # parametros pueden ser nodos u objetos
+        if(type(fromm) == ListNode and type(to) == ListNode):
+            if(self.contains(fromm) and self.contains(to)):
+                array = self.toArray()
+                return self.backToList(array[array.index(fromm.getObject()):array.index(to.getObject())+1])
+            return None
+        else:
+            beg = ListNode(fromm)
+            end = ListNode(to)
+
+            return self.subList(beg,end)
+
+    """
+    Ordena la lista usando metodos predefinidos de una lista de python
+    """
+    def sortList(self): # No recibe parametros
+        
+        array = self.toArray();
+        array.sort()
+        bk = self.backToList(array)
+        self.head = bk.head
+        self.tail = bk.tail
+
+    """
+    Sobreescribir el metodo __str__ para imprimir la Lista, retorna un string
+    """
+    def __str__(self):
+        output = ""
+        it = iter(self)
+        inode = ListNode()
+        
+        for i in range(0,self.__size):
+            inode = next(it)
+            if(inode.next == self.head and i!= 0):
+                output += ("ListNode[ object= {0}, next= {1} (head)".format(inode.getObject(),inode.next.getObject()))
+                for x in range(0,self.__size):
+                    output += "]"
+            else:
+                output += ("ListNode[ object= {0}, next=".format(inode.getObject()))
+        
+        return  output
+
+    """
+    Metodo __iter__ sobreescrito para recorrer la Lista
+    """
+    def __iter__(self): #Metodo para crear iteradores
+        self.__inode = self.head
+        return self
+    
+    """
+    Metodo __next__ sobreescrito para obtener cada nodo de la lista
+    """
+    def __next__(self):  #Metodo para moverse en el iterador de la lista
+        if(self.__inode!=None):
+            tmp = self.__inode
+            self.__inode = self.__inode.next
+            return tmp
+        else:
+            return None                            
+                        </code>
+                    </pre>
+                </article>
+            </section>
+            
+            <section class="implementacion">
+                <article>
+                    <h2 id="aplicacion">Ejercicio de aplicación de la lista circular enlazada sencilla</h2>
+                    <br>
+                    <p>Crear una lista circular con las palabras leídas en el teclado; El programa debe presentar estas opciones:<br><br>
+                        •	Mostrar las cadenas que forman la lista<br>
+                        •	Borrar una palabra dada<br>
+                        •	Al terminar la ejecución, recorrer e imprimir la lista                        
+                    </p><br>
+
+                    <pre>
+                        <code id="showCode" class="language-java">
+//DESARROLLADO EN JAVA
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        List data = new List(); // Lista doblemente enlazada en donde se almacenara el String
+        Scanner p = new Scanner(System.in);
+        System.out.println("Digite la cadena de texto");
+        String name = p.nextLine(); // String digitado por el usuario
+        for(int i = 0 ; i < name.length() ; i++){
+            char u = name.charAt(i); //Se recorre el String y posteriormente se le añade a la lista
+            data.add(u);
+        }
+        data.sortList(); // Se utiliza el método .sortList de las listas para organizar los caracteres
+        System.out.println("Esta es la siguiente lista con los caracteres organizados \n" );
+        System.out.println(data.head); // Se imprime la lista
+
+    }
+}
+                        
+                        </code>
+                    </pre>
+                    <p id="descripcionImagen">EJERCICIO TOMADO DE [3]</p>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+
+            <footer id="pie">
+                Universidad Pontificia Bolivariana - Seccional Bucaramanga
+            </footer>
+        </div>
+        <script src="Estilos, scripts e imagenes/prism.js"></script>
+    </body>
+</html>

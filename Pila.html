@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <head>
+        <meta charset="utf-8"/>
+        <title>LVaED</title>
+        <meta name="description" content="Este es un aporte hacia el aprendizaje de las estructuras de datos"/>
+        <meta name="author" content="Cristian Julian Muñoz Buenahora, John Jairo Corzo Calderon, Santiago Andres DelValle Pinilla"/>
+        <meta name="keywords" content="Estructuras de datos"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/EstilosPrincipal.css"/>
+        <link rel="stylesheet" href="/Estilos, scripts e imagenes/prism.css"/>
+        <script src="Estilos, scripts e imagenes/botonArriba.js"></script>
+    </head>
+    <body>
+        <div id="principio">
+            <header>
+                <h1>Laboratorio virtual para el aprendizaje de estructuras de datos - LVaED</h1> 
+            </header>
+
+            <nav> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="EstructurasDeDatos.html">Estructura de datos</a></li>
+                    <li><a href="Trasformaciones.html">Trasformaciones</a></li>
+                </ul>
+            </nav>
+
+            <h1 id="titulo">Pilas basadas en listas</h1>
+            <section id="nuevoSection">
+                <article>
+                    <h2 id="definicion">Definición</h2><br>
+                    <p>Son conocidas como una estructura LIFO (del inglés: “Last Input, First Output”, cuya respectiva traducción al español sería:  ́"Último en entrar, Primero en salir"), esto ocurre, debido a que, la  ́unica forma de eliminar datos de una pila es por el mismo extremo que son ingresados (Ver figura 5).</p><br>
+                    <p>Las pilas también son estructuras de datos lineales, por lo que, los datos de una pila se encuentran ordenados sucesivamente, causando, que los predecesores y antecesores de un dato, sean  ́unicos para cada uno de estos. Las pilas no se encuentran definidas en los lenguajes de programación, debido a esto, se debe recurrir a estructuras ya definidas, tales como, los arreglos o listas, para hacer uso de estas [2].</p><br>
+                    <img id="imgEstructura" src="Estilos, scripts e imagenes/Pilas.png" alt="Pilas">
+                    <p id="descripcionImagen">Figura 5: Representación de una pila</p>
+                </article>
+            </section>
+
+            <aside id="indice">
+                <h2 id="tituloIndice">Índice</h2>
+                <ul id="ulindice">
+                    <li><a class="liindice" href="#definicion">1. Definición de una pila</a></li>
+                    <li><a class="liindice" href="#principalesMetodos">2. Principales métodos</a></li>
+                    <li> <a class="liindice" href="#java">3. Implementación en Java</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionJava">3.1 Desarrollo de la pila</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#c++">4. Implementación en C++</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionC++">4.1 Desarrollo de la pila</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#python"> 5. Implementación en Python</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionPython">5.1 Desarrollo de la pila</a></li>
+                        </ul>
+                    </li>   
+                    <li><a class="liindice" href="#aplicacion">6. Ejercicio de aplicación de la estructura</a></li>    
+                </ul>
+            </aside>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="principalesMetodos">Principales métodos</h2><br>
+                    <ul>
+                        <li><p><b>clear()</b> -> Método void el cual se encarga de vaciar (Eliminar todos los elementos) la pila.</p></li><br>
+                        <li><p><b>IsEmpty ()</b> -> Método booleano el cual se encarga de verificar que la pila contenga al menos un elemento; Si no es así, retornara un false indicando que esta vacía.</p></li><br>
+                        <li><p><b>peek()</b> -> Método object el cual se encarga de retornar el ultimo elemento ingresado a la pila , siendo este su “Top”.</p></li><br>
+                        <li><p><b>pop ()</b> -> Método object el cual se encarga de retornar el “Top” de la pila, además de eliminarlo de la estructura.</p></li><br>
+                        <li><p><b>push (Object object)</b> -> Método booleano el cual se encarga de ingresar el objeto ingresado en el parámetro a la pila, convirtiéndose ese su “Top”; Si el proceso resulta exitoso, retornara un true indicando su correcto uso.</p></li><br>
+                        <li><p><b>size ()</b> -> Método int el cual se encarga de retornar el tamaño de la pila.</p></li><br>
+                        <li><p><b>search (Object object)</b> -> Método booleano el cual se encarga de verificar si el objeto ingresado en el parámetro existe en la pila; Retornara un true si lo está, o un false si no existe dentro de la estructura.</p></li><br>
+                        <li><p><b>sort ()</b> -> Método void el cual se encarga organizar la pila.</p></li><br>
+                        <li><p><b>reverse ()</b> -> Método void el cual se encarga de invertir las posiciones de la pila (“Volteándola”), ocasionando que los últimos elementos ingresados sean los últimos en salir (Los que están al fondo de la pila) y que lo primeros elementos ingresados sean los primeros en salir.</p></li><br>
+                    </ul>
+                </article>
+
+                <article>
+                    <h2 id="java">Implementación de la estructura en Java</h2>
+                    <br>
+                    
+                    <h3 id="implementacionJava">Pila basada en listas</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+public class Pila implements IPila{
+
+    /*
+
+    Nota : la pila basada en listas , es especifico se constituye por las Listas Doblemente Enlazadas (Explicadas anteriormente) , así volviendo dinamica esta estructura
+
+    */
+
+    private List lista;
+
+    public Pila(){ // Constructor para crear una nueva pila
+        lista = new List();
+    }
+
+    public Pila(Object o){ // Constructor para crear una nueva pila con el parametro o
+        lista = new List(o);
+    }
+
+    @Override
+    public void clear() { 
+        if (isEmpty()!=true) {
+            lista.clear(); // Se utiliza el método de las listas .clear para vaciar el contenido de la estructura
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        if (lista.isEmpty()){ // Mediante el método isEmpty de las listas , se verifica que la pila tenga o no contenido
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public Object peek() { // El método retorna el "Top" de las pilas que básicamente en este caso es la cola de la lista ya que fue el ultimo elemento en ingresar a la estructura
+        if (lista.isEmpty() != true){ // Se verifica que la pila tenga almenos un elemento
+            return lista.tail.getObject(); // Retorna la cola de la lista
+        }
+        else {
+            return null; // Retorna null ya que no tiene top al estar vacia
+        }
+    }
+
+    @Override
+    public Object pop() { //El método retorna el "Top" y lo elimina de la estructura
+        if (lista.isEmpty() != true){ 
+            Object object = this.peek(); // Se le asigna a la variable object el top de la pila
+            lista.remove(lista.tail); // elimina el "top" de la pila (La cola de la lista)
+            return object; // Retorna la variable que contenia el antiguo top de la pila
+        }
+        else {
+            return null; 
+        }
+    }
+
+    @Override
+    public boolean push(Object object) { // El método de agregación de elementos a la pila mediante el .add de las listas
+        lista.insertTail(object);
+        return true;
+    }
+
+    @Override
+    public int size() { // Retorna el tamaño de la pila
+        return lista.getSize();
+    }
+
+    @Override
+    public boolean search(Object object) { 
+        if (lista.search(object).getObject() == object){ //Busca el objeto del parametro y si esta dentro de la pila (Mediante el .search de las listas) , retorna true
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public void sort() {
+        //Se modifica el metodo sort de la lista
+        List sort = lista;
+        sort.sortList();
+        lista.clear();
+        ListNode node = sort.head;
+        for (int i=0;i < sort.getSize();i++){
+            lista.add(node.getObject());
+            node = node.next;
+        }
+    }
+
+    @Override
+    public void reverse() { // Crea una lista , almacena el contenido desde el top (Hace que los ultimos que ingresaron sean los ultimos que salgan y viceversa) y posteriormente lo vuelve a almacenar en la lista original que es la pila
+        List reverse = new List(); 
+        ListNode node = lista.head;
+        for (int i=0; i < lista.getSize(); i++){ 
+            reverse.insertHead(pop());
+            node = node.next;
+        }
+        lista = reverse;
+    }
+}                                  
+                        </code>
+                    </pre>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="c++">Implementación de la estructura en C++</h2>
+                    <br>
+                    <h3 id="implementacionC++">Pila basada en listas</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#include < iostream >
+#pragma once
+#include < vector >
+#include < any >
+using namespace std;
+
+class Pila : public IPila{
+    
+    /*
+
+    Nota : la pila basada en listas , es especifico se constituye por las Listas Doblemente Enlazadas (Explicadas anteriormente) , así volviendo dinamica esta estructura
+
+    */
+
+    private:
+    List *lista;
+    
+    Pila::Pila() // Constructor para crear una nueva pila
+    {
+        lista = new List();
+    }
+
+    Pila::Pila(std::any o) // Constructor para crear una nueva pila con el parametro o
+    {
+        lista = new List(o);
+    }
+
+    void Pila::clear()
+    {
+        if (isEmpty() != true)
+        {
+            lista->clear(); // Se utiliza el método de las listas .clear para vaciar el contenido de la estructura
+        }
+    }
+
+    bool Pila::isEmpty()
+    {
+        if (lista->empty()) // Mediante el método isEmpty de las listas , se verifica que la pila tenga o no contenido
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    std::any Pila::peek() // El método retorna el "Top" de las pilas que básicamente en este caso es la cola de la lista ya que fue el ultimo elemento en ingresar a la estructura
+    {
+        if (lista->empty() != true) // Se verifica que la pila tenga almenos un elemento
+        {
+            return lista->tail->getObject(); // Retorna la cola de la lista
+        }
+        else
+        {
+            return std::any(); // Retorna null ya que no tiene top al estar vacia
+        }
+    }
+
+    std::any Pila::pop() //El método retorna el "Top" y lo elimina de la estructura
+    {
+        if (lista->empty() != true)
+        {
+            std::any object = this->peek(); // Se le asigna a la variable object el top de la pila
+            lista->remove(lista->tail); // elimina el "top" de la pila (La cola de la lista)
+            return object;// Retorna la variable que contenia el antiguo top de la pila
+        }
+        else
+        {
+            return std::any();
+        }
+    }
+
+    bool Pila::push(std::any object) // El método de agregación de elementos a la pila mediante el .add de las listas
+    {
+        lista->insertTail(object);
+        return true;
+    }
+
+    int Pila::size() // Retorna el tamaño de la pila
+    {
+        return lista->getSize();
+    }
+
+    bool Pila::search(std::any object)
+    {
+        if (lista->search(object)->getObject() == object) //Busca el objeto del parametro y si esta dentro de la pila (Mediante el .search de las listas) , retorna true
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    void Pila::sort()
+    {
+        //Se modifica el metodo sort de la lista
+        List *sort = lista;
+        sort->sortList();
+        lista->clear();
+        ListNode *node = sort->head;
+        for (int i = 0;i < sort->getSize();i++)
+        {
+            lista->push_back(node->getObject());
+            node = node->next;
+        }
+    }
+
+    void Pila::reverse() // Crea una lista , almacena el contenido desde el top (Hace que los ultimos que ingresaron sean los ultimos que salgan y viceversa) y posteriormente lo vuelve a almacenar en la lista original que es la pila
+    {
+        List *reverse = new List();
+        ListNode *node = lista->head;
+        for (int i = 0; i < lista->getSize(); i++)
+        {
+            reverse->insertHead(pop());
+            node = node->next;
+        }
+        lista = reverse;
+    }
+};                                
+                        </code>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="python">Implementación de la estructura en Python</h2>
+                    <br>
+                    <h3 id="implementacionPython">Pila basada en listas</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+from listNode import ListNode
+from collections import Iterator
+
+
+class ListStack(ListNode):
+
+    __top = None #Nodo en la cabeza o cima de la pila
+    __size = 0  #Entero para almacenar el tamaño de la lista
+    
+    __inode = ListNode() #Nodo necesario para iterar la lista
+
+
+    """
+    Constructor de la clase, puede recibir un objeto como parametro, que en cuyo
+    caso, seria el primer nodo de la lista.
+    """
+    def __init__(self, objectt=None):  
+        if(objectt != None):
+            self.push(objectt)
+
+    """
+    Limpia la lista
+    """
+    def clear(self): #No recibe parametro ni tiene retorno
+        self.__size = 0
+        self.__top = None
+
+    """
+    Retorna True si la lista esta vacia
+    """
+    def isEmpty(self):  #No recibe parametro y retorna un boleano
+        return self.__size == 0
+
+    """
+    Retorna el objeto en el nodo top, sin eliminarlo de la pila
+    """
+    def peek(self):  #No recibe parametro y retorna un objeto 
+        return self.__top.getObject() if (not self.isEmpty()) else None
+
+
+    """
+    Elimina el objeto en la cabeza de la pila y lo retorna
+    """
+    def pop(self): #No recibe parametro y retorna un objeto 
+        try:
+            if(not self.isEmpty()):
+                temp = self.__top.getObject()
+                self.__top = self.__top.next
+                self.__size -=1
+                return temp
+            else:
+                return None
+        except Exception:
+            return None
+    
+    
+    """
+    Agrega objetos a la pila
+    """
+    def push(self, ob): #Recibe como parametro un objeto y retorna un booleano
+        try:
+            if(self.isEmpty()):
+                self.__top = ListNode(ob)
+            else:
+                self.__top = ListNode(ob, self.__top)
+            self.__size += 1
+        except Exception:
+            return None
+
+    """
+    Retorna la cantidad de elementos en la lista
+    """
+    def size(self): #Retorna un entero
+        return self.__size
+
+    """
+    Buscar un objeto en la pila
+    """
+    def search(self, ob): #Recibe como parametro un objeto y retorna un booleano
+        tempArr = ListStack(self.__size)
+
+        temp = object
+        cont = 0
+        find = False
+
+        for i in range(0, self.__size):
+            temp = self.pop()
+            if(temp == ob):
+                self.push(temp)
+                find = True
+            else:
+                tempArr.push(temp)
+                cont += 1
+        
+        for x in range(0, cont):
+            self.push(tempArr.pop())
+
+        return find
+
+    """
+    Ordenar la lista
+    """
+    def sort(self): #No recibe parametros ni tiene retorno
+        it = iter(self)
+        inode = next(it)
+        arrStack = [None]*(self.__size)
+        cont = 0
+
+        while inode != None:
+            arrStack[cont] = inode.getObject()
+            inode = next(it)
+            cont += 1
+
+        self.clear()
+        arrStack.sort()
+
+        for i in arrStack:
+            self.push(i)
+
+    """
+    Invierte los elementos de la pila
+    """
+    def reverse(self): #No recibe parametros ni tiene retorno
+        tempArr = [None]*(self.__size)
+        
+        for i in  range(0,len(tempArr)):
+            tempArr[i] = self.pop()
+        
+        for x in range(0,len(tempArr)):
+            self.push(tempArr[x])
+
+
+
+    """
+    Sobreescribir el metodo __str__ para imprimir la Lista
+    """
+    def __str__(self):
+        return  "[TOP]" + self.__top.__str__() + "Size: {0}".format(self.__size) 
+
+    """
+    Metodo __iter__ sobreescrito para recorrer la Lista
+    """
+    def __iter__(self): #Metodo para crear iteradores
+        self.__inode = self.__top
+        return self
+    
+    """
+    Metodo __next__ sobreescrito para obtener cada nodo de la lista
+    """
+    def __next__(self):  #Metodo para moverse en el iterador de la lista
+        if(self.__inode!=None):
+            tmp = self.__inode
+            self.__inode = self.__inode.next
+            return tmp
+        else:
+            return None                            
+                        </code>
+                    </pre>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="aplicacion">Ejercicio de aplicación de la pila basada en listas</h2>
+                    <br>
+                    <p> La empresa HordaElectronics en la creación de su página web acerca de operaciones básicas desde diferentes sistemas, requiere una calculadora que se encargue de traducir expresiones aritméticas desde la notación infija (Comúnmente utilizada) a prefija y postfija.</p><br>            
+                    <pre>
+                        <code id="showCode" class="language-java">
+//DESARROLLADO EN JAVA
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+
+    //Aplicación mediante el uso de pilas por lista//
+    // Conversión de expresiones aritmeticas desde infija (comunmente utilizadas) a otras expresiones como la postfija o prefija//
+
+    public static String prefija(String c){
+        // (1*(2-3))+(4+5)
+        // Rta : *1-23+45
+        ArrayList post = new ArrayList(); // Se crea una pila por listas para almacenar las variables o números
+        ArrayStack h = new ArrayStack(c.length()); // Se crea una pila por Array con la longitud del String ingresado en el parámetro para almacenar los parentesis u otros caracteres
+        for (int i = c.length () -1 ; i>= 0; i--){ // Se crea un for con el fin de recorrer cada Char del String
+            char k = c.charAt(i); // Se asigna en el char k cada caracter del String con el fin de evaluarlo posteriormente
+            if (k == 'x' || k == 'y' || k == 'z' || k =='w' || k == '0' || k == '1' || k == '2' || k == '3' || k == '4' || k == '5' || k == '6' || k == '7' || k == '8' || k == '9') {
+                // Se almacena en la pila básada por listas las variables o números
+                post.add(k);
+            } else {
+                h.push(k); // Se almacena en la pila básada por arreglos los otros caracteres (Operaciones y parentesis)
+                if (k == '(') { // Cuando se identifica el caracter '(' recorre al siguiente camino
+                    while (!h.isEmpty()){  // Se empieza a vaciar la pila (Desde el top claramente) , para posteriormente almacenarla en la pila que contiene las variables y números
+                        h.pop();
+                        post.add(h.pop());
+                    }
+                }
+            }
+        }while (!h.isEmpty()) // Se utiliza este while para vaciar los residuos de la pila que almacenada los caracteres para concluir con los ultimos elementos aritmeticos
+            post.add(h.pop());
+
+        String result = ""; // Se crea un String
+        for (Object asig : post){ // Se recorre la pila por lista con todos sus elementos
+            if(asig != null ){
+                result += asig; // Se almacena la pila en este String
+            }
+        }
+        String resultc = "";
+        for(int m=0 ; m < result.length() ; m++){
+            char n = result.charAt(m);
+            if(n != '(' && n !=')'){
+                resultc += n; //Para eliminar paréntesis (Caracteres no permitidos en la notación prefija) , se recorre el string anterior y solo se almacena los caracteres distintos a esos en este nuevo String
+            }
+        }
+
+        String iresult = "";
+        for (int j=resultc.length()-1;j>=0;j--){
+            iresult = iresult + resultc.charAt(j); // Y se voltea la expresión debido a la naturaleza de la expresión
+        }
+
+        return iresult;
+    }
+
+    public static String postfija(String c){
+        // (1*(2-3))+(4+5)
+        // Rta : 123-*45++
+        ArrayList post = new ArrayList();
+        ArrayStack h = new ArrayStack(c.length());
+        for(int i=0 ; i < c.length() ; i++) {
+            char k = c.charAt(i);
+            if (k == 'x' || k == 'y' || k == 'z' || k =='w' || k == '0' || k == '1' || k == '2' || k == '3' || k == '4' || k == '5' || k == '6' || k == '7' || k == '8' || k == '9') {
+                post.add(k);
+            } else {
+                h.push(k);
+                if (k == ')') { // La diferencia con la notación prefija con respecto a la postfija es que se empieza a contar desde izquierda a derecha
+                    do {
+                        h.pop();
+                        post.add(h.pop());
+                    } while (!h.isEmpty());
+                }
+            }
+        }while (!h.isEmpty())
+            post.add(h.pop());
+        String result = "";
+        for (Object asig : post){
+            if(asig != null){
+                result += asig;
+            }
+        }
+
+        return result; // No es necesario voltear la expresión por efectos prácticos de la notación
+    }
+
+    //Main el cual se encarga de validar los datos para posteriormente utilizarlos en los parametros de las funciones//
+    public static void main(String[] args) {
+        Scanner entradaEscaner = new Scanner (System.in);
+        String exp = new String();
+        System.out.println("Escriba una expresión algebraica (Si va a utilizar variables que estas sean solo x,y,z y/o w)");
+        exp = entradaEscaner.nextLine();
+        System.out.println("¿Quiere pasar de infija a prefija? / 1 para Si , 0 para No");
+        int des1 = entradaEscaner.nextInt();
+        if(des1==1){
+            String d = prefija(exp);
+            System.out.println("La notación prefija de la expresión ingresada es \n" + d);
+        }
+        System.out.println("¿Quiere pasar de infija a postfija?/ 1 para Si , 0 para No");
+        int des2 = entradaEscaner.nextInt();
+        if(des2==1){
+            String p = postfija(exp);
+            System.out.println("La notación postfija de la expresión ingresada es \n" + p);
+        }
+        System.out.println("Gracias por utilizar el programa");
+    }
+
+    // El usuario se encarga de digitar la expresión en infija para posteriormente mediante la consola , preguntarle si quiere convertirla a una de las dos opciones o a las dos//
+}
+                        </code>
+                    </pre>
+                <p id="descripcionImagen">EJERCICIO PROPUESTO  POR LENIN JAVIER SERRANO</p>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+            
+            <footer id="pie">
+                Universidad Pontificia Bolivariana - Seccional Bucaramanga
+            </footer>
+        </div>
+        <script src="Estilos, scripts e imagenes/prism.js"></script>
+    </body>
+</html>

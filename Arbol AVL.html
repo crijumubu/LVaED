@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <head>
+        <meta charset="utf-8"/>
+        <title>LVaED</title>
+        <meta name="description" content="Este es un aporte hacia el aprendizaje de las estructuras de datos"/>
+        <meta name="author" content="Cristian Julian Muñoz Buenahora, John Jairo Corzo Calderon, Santiago Andres DelValle Pinilla"/>
+        <meta name="keywords" content="Estructuras de datos"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/EstilosPrincipal.css"/>
+        <link rel="stylesheet" href="/Estilos, scripts e imagenes/prism.css"/>
+        <script src="Estilos, scripts e imagenes/botonArriba.js"></script>
+    </head>
+    <body>
+        <div id="principio">
+            <header>
+                <h1>Laboratorio virtual para el aprendizaje de estructuras de datos - LVaED</h1> 
+            </header>
+
+            <nav> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="EstructurasDeDatos.html">Estructura de datos</a></li>
+                    <li><a href="Trasformaciones.html">Trasformaciones</a></li>
+                </ul>
+            </nav>
+
+            <h1 id="titulo">Árbol AVL</h1>
+            <section id="nuevoSection">
+                <article>
+                    <h2 id="definicion">Definición</h2><br>
+                    <p>Es un árbol binario que satisface la condición de estar equilibrado, es decir, debe poseer la misma estructura de los nodos tanto izquierdos como derechos.</p><br>
+                    <p>Retomandonos a uno definición más formal podemos obervar: “Un Árbol Binario de Búsqueda respeta la propiedad de orden en todos sus nodos, es decir, todas las claves en su subárbol izquierdo son menores que la clave del nodo y todas las claves en el subárbol derecho son mayores” [5].</p><br>
+                    <p>Fue el primer árbol binario de búsqueda “Auto-balanceable” que se ideó, consiste en que la altura de la rama izquierda no difiere en más de una unidad de la altura de la rama derecha o viceversa, así reduciendo la complejidad a la formula “log n”.</p><br>
+                    <p>Los árboles Avl más reconocidos son los de Fibonacci y su nombre como tal vino de sus inventores Adelson-Velskii y Landis por las primeras letras de sus nombres [6].</p>
+                    <img id="imgEstructura" src="Estilos, scripts e imagenes/Arbol AVL.png" alt="Árbol AVL">
+                    <p id="descripcionImagen">Figura 11: Representación de un árbol AVL</p>
+                </article>
+            </section>
+
+            <aside id="indice">
+                <h2 id="tituloIndice">Índice</h2>
+                <ul id="ulindice">
+                    <li><a class="liindice" href="#definicion">1. Definición de un árbol AVL</a></li>
+                    <li><a class="liindice" href="#principalesMetodos">2. Principales métodos</a></li>
+                    <li> <a class="liindice" href="#java">3. Implementación en Java</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodoJava">3.1 Nodo del árbol AVL</a></li>
+                            <li><a class="liindice" href="#implementacionJava">3.2 Desarrollo del árbol AVL</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#c++">4. Implementación en C++</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodoc++">4.1 Nodo del árbol AVL</a></li>
+                            <li><a class="liindice" href="#implementacionC++">4.2 Desarrollo del árbol AVL</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#python"> 5. Implementación en Python</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodopython">5.1 Nodo del árbol AVL</a></li>
+                            <li><a class="liindice" href="#implementacionPython">5.2 Desarrollo del árbol AVL</a></li>
+                        </ul>
+                    </li>  
+                    <li><a class="liindice" href="#aplicacion">6. Ejercicio de aplicación de la estructura</a></li>      
+                </ul>
+            </aside>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="principalesMetodos">Principales métodos</h2><br>
+                    <ul>
+                        <li><p><b>IsEmpty ()</b> -> Método Boolean el cual se encarga de verificar si el árbol contiene al menos un elemento (En este caso que exista su raíz); Retornara un true si es así y un false si la estructura está vacía.</p></li><br>
+                        <li><p><b>insert (Object object,int id)</b> -> Método Boolean el cual se encarga de insertar un nodo dentro del árbol acorde a el id que se es solicitado como parámetro; Retornara un true si el proceso es completado, o un false si la raíz no existe o capte cualquier otro error.</p></li><br>
+                        <li><p><b>preOrder (Node root)</b> -> Método String el cual se encarga de retornar un conjunto de caracteres los cuales representan el contenido completo del árbol según cierto orden; En este caso se expresa de izquierda a derecha el contenido de la raíz, el sub árbol izquierdo y finalmente el sub árbol derecho.</p></li><br>
+                        <li><p><b>inOrder (Node root)</b> -> Método String el cual se encarga de retornar un conjunto de caracteres los cuales representan el contenido completo del árbol según cierto orden; En este caso se expresa de izquierda a derecha el contenido del sub árbol izquierdo, la raíz y finalmente el sub árbol derecho.</p></li><br>
+                        <li><p><b>posOrder (Node root)</b> -> Método String el cual se encarga de retornar un conjunto de caracteres los cuales representan el contenido completo del árbol según cierto orden; En este caso se expresa de izquierda a derecha el contenido del sub árbol izquierdo, el sub árbol derecho y finalmente la raíz.</p></li><br>
+                        <li><p><b>search (Object u)</b> -> Método Boolean el cual se encarga de recorrer el árbol y verificar que el elemento ingreso en el parámetro este en la estructura; Retornara un true si lo encuentra o un false si no está.</p></li><br>
+                        <li><p><b>remove (int o, Object object)</b> -> Método void el cual se encarga de eliminar el nodo con el id ingresado en el parámetro (Para el funcionamiento de este método se debe saber que: Si es una hoja, se elimina; Si es una rama con un solo hijo, se reemplaza la rama por el hijo; Si es una rama con dos hijos, se debe que tomar dos caminos, irse por el sub árbol izquierdo y tomar el nodo que esta más por la derecha o irse por el sub árbol derecho y tomar el nodo que este más por la izquierda).</p></li><br>
+                    </ul>
+                </article>
+
+                <article>
+                    <h2 id="java">Implementación de la estructura en Java</h2>
+                    <br>
+                    <h3 id="nodoJava">Nodo de un árbol AVL</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+public class Node {
+
+    //ATRIBUTOS
+
+    private Object object;
+    public Node right;
+    public Node left;
+    private int id;
+    private int balance;
+
+    //MÉTODOS Y CONSTRUCTORES
+
+    //Constructores
+    public Node(Object o, int id){
+        this.object = o;
+        this.right = null;
+        this.left = null;
+        this.id = id;
+        this.balance = 0;
+    }
+
+    public Node(Node left,Object object, Node right, int id) {
+        this.object = object;
+        this.left = left;
+        this.right = right;
+        this.id = id;
+        this.balance = 0;
+    }
+
+    public int GetID(){
+        return id;
+    }
+
+    public int GetBalance(){
+        return balance;
+    }
+    public void SetBalance(int balance){
+        this.balance = balance;
+    }
+
+    //Getter deL atributo object
+    public Object GetObject() {
+        return object;
+    }
+
+    //Método del cálculo del grado de un nodo
+    public int Grado(){
+        if (right==null & left==null){
+            return 0;
+        }else if ((right == null & left!=null) | (right != null & left==null)){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+
+    //Método toString
+    @Override
+    public String toString() {
+        return "Node{ left=" + left + ", right=" + right + ", object=" + object + ", id=" + id + '}';
+    }
+}                             
+                        </code>
+                    </pre>
+                    <br>
+                    <h3 id="implementacionJava">Árbol AVL</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+public class AVLTree {
+
+    //ATRIBUTOS
+
+    private String preorder = "", inorder = "", posorder = "";
+    public Node root;
+
+    //MÉTODOS Y CONSTRUCTORES
+
+    //Constructores
+    public AVLTree(){
+        this.root = null;
+    }
+
+    public AVLTree(Object o, int id){
+        this.root = new Node(null, o, null, id);
+    }
+
+    //Método IsEmpty
+    public boolean IsEmpty(){
+        if (root == null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //Método InsertBalanced, propio de los arboles balanceados como el árbol AVL
+
+    private Node InsertBalanced(Node insert, Node main){
+        Node newMain = main;
+        if (insert.GetID() < main.GetID()){
+            if (main.left ==null){
+                main.left = insert;
+            }else{
+                main.left = InsertBalanced(insert, main.left);
+                if (Getfe(main.left) - Getfe(main.right) == 2){
+                    if (insert.GetID() < main.left.GetID()){
+                        newMain = Rsi(main);
+                    }else{
+                        newMain = Rdi(main);
+                    }
+                }
+            }
+        }else if(insert.GetID()> main.GetID()){
+            if (main.right == null){
+                main.right = insert;
+            }else{
+                main.right = InsertBalanced(insert, main.right);
+                if (Getfe(main.right) - Getfe(main.left) == 2) {
+                    if (insert.GetID() > main.right.GetID()) {
+                        newMain = Rsd(main);
+                    } else {
+                        newMain = Rdd(main);
+                    }
+                }
+            }
+        }else{
+            return null;
+        }
+
+        if (main.left == null & main.right != null){
+            main.SetBalance(main.right.GetBalance()+1);
+        }else if(main.right == null & main.left != null){
+            main.SetBalance(main.left.GetBalance()+1);
+        }else{
+            main.SetBalance(Math.max(Getfe(main.left),Getfe(main.right))+1); //Se le suma 1 ya que el factor de equilibrio hace referencia al nivel más 1
+        }
+        return newMain;
+    }
+
+    //Método Insert
+
+    public boolean Insert(Object o, int id){
+        Node n = new Node(null,o,null,id);
+        if (!IsEmpty()){
+            Node newMain = InsertBalanced(n, root);
+            if (newMain != null){
+                root = newMain;
+            }else{
+                return false;
+            }
+        }else{
+            root = n;
+        }
+        return true;
+    }
+
+    //Método de obtención del factor de equilibrio
+
+    public int Getfe(Node n){
+        if (n!=null){
+            return n.GetBalance();
+        }else{
+            return -1;
+        }
+    }
+
+    //Métodos de las rotaciones
+
+    //Rotación simple a la izquierda
+    public Node Rsi(Node n){
+        Node nl = n.left;
+        n.left = nl.right;
+        nl.right = n;
+        n = nl;
+        n.SetBalance(0);
+        nl.SetBalance(0);
+        return nl;
+    }
+
+    //Rotación simple a la derecha
+    public Node Rsd(Node n){
+        Node nl = n.right;
+        n.right= nl.left;
+        nl.left = n;
+        n = nl;
+        n.SetBalance(0);
+        nl.SetBalance(0);
+        return nl;
+    }
+
+    //Rotación doble a la izquierda
+    public Node Rdi(Node n){
+        Node nl = n.right;
+        Node nt = nl.left;
+        nl.left = nt.right;
+        nt.right = nl;
+        n.right = nt.left;
+        nt.left = n;
+        n = nt;
+
+        if (nt.GetBalance()==-1){
+            n.SetBalance(0);
+            nl.SetBalance(1);
+            nt.SetBalance(0);
+        }else if (nt.GetBalance()==0){
+            n.SetBalance(0);
+            nl.SetBalance(0);
+            nt.SetBalance(0);
+        }else if(nt.GetBalance()==1){
+            n.SetBalance(-1);
+            nl.SetBalance(0);
+            nt.SetBalance(0);
+        }
+        return nt;
+    }
+
+    //Rotación doble a la derecha
+    public Node Rdd(Node n){
+        Node nl = n.left;
+        Node nt = nl.right;
+        nl.right = nt.left;
+        nt.left = nl;
+        n.left = nt.right;
+        nt.right = n;
+        n = nt;
+
+        if (nt.GetBalance()==-1){
+            n.SetBalance(1);
+            nl.SetBalance(0);
+            nt.SetBalance(0);
+        }else if (nt.GetBalance()==0){
+            n.SetBalance(0);
+            nl.SetBalance(0);
+            nt.SetBalance(0);
+        }else if(nt.GetBalance()==1){
+            n.SetBalance(0);
+            nl.SetBalance(-1);
+            nt.SetBalance(0);
+        }
+        return nt;
+    }
+
+    //Métodos necesarios para realizar el search
+
+    private Node search(Node root, int value) {
+        if (root != null) {
+            if (root.GetID() == value) {
+                return root;
+            } else if (root.GetID() < value) {
+                return search(root.right, value);
+            } else {
+                return search(root.left, value);
+            }
+        }
+
+        return null;
+    }
+
+    public Node search(int value) {
+        return search(this.root, value);
+    }
+
+    //Método remove
+
+    public boolean Remove(int id){
+        if (!IsEmpty()){
+            Node inode = root;
+            Node preInode = root;
+            while(inode.GetID() != id){
+                preInode = inode;
+                if (inode.GetID()>id){
+                    inode = inode.left;
+                }else{
+                    inode = inode.right;
+                }
+                if (inode == null){
+                    return false;
+                }
+            }
+            if (inode.right == null & inode.left== null){
+                if (inode == root){
+                    root = null;
+                }else if(preInode.left == inode){
+                    preInode.left = null;
+                }else{
+                    preInode.right = null;
+                }
+            }else if(inode.right == null){
+                if (inode == root){
+                    root = root.left;
+                }else if (preInode.left == inode){
+                    preInode.left = inode.left;
+                }
+                else{
+                    preInode.right = inode.left;
+                }
+            }else if(inode.left == null){
+                if (inode == root){
+                    root = root.right;
+                }else if (preInode.left == inode){
+                    preInode.left = inode.right;
+                }
+                else{
+                    preInode.right = inode.right;
+                }
+            }else{
+                Node rePre = inode, re = inode, aux = inode.right;
+                while (aux != null){
+                    rePre = re;
+                    re = aux;
+                    aux = aux.left;
+                }
+                if (re != inode.right){
+                    rePre.left = re.right;
+                    re.right = inode.right;
+                }
+
+                if (inode==root){
+                    root = re;
+                }else if(preInode.left == inode){
+                    preInode.left = re;
+                }else{
+                    preInode.right = re;
+                }
+                re.left = inode.left;
+            }
+        }else{
+            return false;
+        }
+        return true;
+    }
+
+    //Métodos necesarios para realizar el preorder
+
+    private void PreOrder(Node n){
+        if (!IsEmpty()){
+            preorder += (String) n.GetObject();
+            if (n.left!=null){
+                PreOrder(n.left);
+            }
+            if (n.right!=null){
+                PreOrder(n.right);
+            }
+        }
+    }
+
+    public String GetPreOrder(){
+        PreOrder(root);
+        return preorder;
+    }
+
+    //Métodos necesarios para realizar el inorder
+
+    private void InOrder(Node n){
+        if (!IsEmpty()){
+            if (n.left!=null){
+                InOrder(n.left);
+            }
+            inorder += (String) n.GetObject();
+            if (n.right!=null){
+                InOrder(n.right);
+            }
+        }
+    }
+
+    public String GetInOrder(){
+        InOrder(root);
+        return inorder;
+    }
+
+    //Métodos necesarios para realizar el posorder
+
+    private void PosOrder(Node n){
+        if (!IsEmpty()){
+            if (n.left!=null){
+                PosOrder(n.left);
+            }
+            if (n.right!=null){
+                PosOrder(n.right);
+            }
+            posorder += (String) n.GetObject();
+        }
+    }
+
+    public String GetPosOrder(){
+        PosOrder(root);
+        return posorder;
+    }
+}                            
+                        </code>
+                    </pre>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="c++">Implementación de la estructura en C++</h2>
+                    <br>
+                    <h3 id="nodoc++">Nodo de un árbol AVL</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#include "Node.h"
+#include < string >
+#include < any >
+
+Using namespace std
+
+    //ATRIBUTOS
+    class Node{
+        
+        private:
+            std::any object;
+        public:
+            Node *right;
+            Node *left;
+        private:
+            int id = 0;
+            int balance = 0;
+
+        //MÉTODOS Y CONSTRUCTORES
+        Node::Node(std::any o, int id)
+        {
+            this->object = o;
+            this->right = nullptr;
+            this->left = nullptr;
+            this->id = id;
+            this->balance = 0;
+        }
+    
+        Node::Node(Node *left, std::any object, Node *right, int id)
+        {
+            this->object = object;
+            this->left = left;
+            this->right = right;
+            this->id = id;
+            this->balance = 0;
+        }
+    
+        int Node::GetID()
+        {
+            return id;
+        }
+    
+        int Node::GetBalance()
+        {
+            return balance;
+        }
+    
+        void Node::SetBalance(int balance)
+        {
+            this->balance = balance;
+        }
+    
+        std::any Node::GetObject()
+        {
+            return object;
+        }
+        
+        //Método del cálculo del grado de un nodo
+        int Node::Grado()
+        {
+            if (right == nullptr & left == nullptr)
+            {
+                return 0;
+            }
+            else if ((right == nullptr & left != nullptr) | (right != nullptr & left == nullptr))
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
+        }
+    
+        std::wstring Node::toString()
+        {
+            return L"Node{ left=" + left + L", right=" + right + L", object=" + object + L", id=" + std::to_wstring(id) + StringHelper::toString(L'}');
+        }
+    };                                                       
+                        </code>
+                    </pre>
+
+                    <br>
+                    <h3 id="implementacionC++">Árbol AVL</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#include "AVLTree.h"
+#pragma once
+#include "Node.h"
+#include < string >
+#include < any >
+
+Using namespace std
+
+
+class AVLTree{
+
+    //ATRIBUTOS
+    private:
+        std::wstring preorder = L"", inorder = L"", posorder = L"";
+        bool search = false;
+    public:
+        Node *root;
+    
+    //MÉTODOS Y CONSTRUCTORES
+
+    AVLTree::AVLTree()
+    {
+        this->root = nullptr;
+    }
+
+    AVLTree::AVLTree(std::any o, int id)
+    {
+        this->root = new Node(nullptr, o, nullptr, id);
+    }
+
+    bool AVLTree::IsEmpty()
+    {
+        if (root == nullptr)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    //Método InsertBalanced, propio de los arboles balanceados como el árbol AVL
+    Node *AVLTree::InsertBalanced(Node *insert, Node *main)
+    {
+        Node *newMain = main;
+        if (insert->GetID() < main->GetID())
+        {
+            if (main->left == nullptr)
+            {
+                main->left = insert;
+            }
+            else
+            {
+                main->left = InsertBalanced(insert, main->left);
+                if (Getfe(main->left) - Getfe(main->right) == 2)
+                {
+                    if (insert->GetID() < main->left->GetID())
+                    {
+                        newMain = Rsi(main);
+                    }
+                    else
+                    {
+                        newMain = Rdi(main);
+                    }
+                }
+            }
+        }
+        else if (insert->GetID() > main->GetID())
+        {
+            if (main->right == nullptr)
+            {
+                main->right = insert;
+            }
+            else
+            {
+                main->right = InsertBalanced(insert, main->right);
+                if (Getfe(main->right) - Getfe(main->left) == 2)
+                {
+                    if (insert->GetID() > main->right->GetID())
+                    {
+                        newMain = Rsd(main);
+                    }
+                    else
+                    {
+                        newMain = Rdd(main);
+                    }
+                }
+            }
+        }
+        else
+        {
+            return nullptr;
+        }
+
+        if (main->left == nullptr & main->right != nullptr)
+        {
+            main->SetBalance(main->right->GetBalance() + 1);
+        }
+        else if (main->right == nullptr & main->left != nullptr)
+        {
+            main->SetBalance(main->left->GetBalance() + 1);
+        }
+        else
+        {
+            main->SetBalance(std::max(Getfe(main->left),Getfe(main->right)) + 1); //Se le suma 1 ya que el factor de equilibrio hace referencia al nivel ms 1
+        }
+        return newMain;
+    }
+
+    //Método Insert
+    bool AVLTree::Insert(std::any o, int id)
+    {
+        Node *n = new Node(nullptr,o,nullptr,id);
+        if (!IsEmpty())
+        {
+            Node *newMain = InsertBalanced(n, root);
+            if (newMain != nullptr)
+            {
+                root = newMain;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            root = n;
+        }
+        return true;
+    }
+    //Método de obtención del factor de equilibrio
+    int AVLTree::Getfe(Node *n)
+    {
+        if (n != nullptr)
+        {
+            return n->GetBalance();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    //Métodos de las rotaciones
+
+    //Rotación simple a la izquierda
+    Node *AVLTree::Rsi(Node *n)
+    {
+        Node *nl = n->left;
+        n->left = nl->right;
+        nl->right = n;
+        n->SetBalance(std::max(Getfe(n->left), Getfe(n->right)) + 1); //Se le suma 1 ya que el factor de equilibrio hace referencia al nivel ms 1
+        nl->SetBalance(std::max(Getfe(nl->left), Getfe(nl->right)) + 1);
+        return nl;
+    }
+
+    //Rotación simple a la derecha
+    Node *AVLTree::Rsd(Node *n)
+    {
+        Node *nl = n->right;
+        n->right = nl->left;
+        nl->left = n;
+        n->SetBalance(std::max(Getfe(n->left), Getfe(n->right)) + 1); //Se le suma 1 ya que el factor de equilibrio hace referencia al nivel ms 1
+        nl->SetBalance(std::max(Getfe(nl->left), Getfe(nl->right)) + 1);
+        return nl;
+    }
+
+    //Rotación doble a la izquierda
+    Node *AVLTree::Rdi(Node *n)
+    {
+        Node *nl;
+        n->left = Rsd(n->left);
+        nl = Rsi(n);
+        return nl;
+    }
+    //Rotación doble a la derecha
+    Node *AVLTree::Rdd(Node *n)
+    {
+        Node *nl;
+        n->right = Rsi(n->right);
+        nl = Rsd(n);
+        return nl;
+    }
+    //Métodos necesarios para realizar el search en el árbol AVL
+    Node search(Node root, int value)
+    {
+        if (root != nullptr)
+        {
+            if (root::GetID() == value)
+            {
+                return root;
+            }
+            else if (root::GetID() < value)
+            {
+                return search(root::right, value);
+            }
+            else
+            {
+                return search(root::left, value);
+            }
+        }
+        return nullptr;
+    }	
+
+    Node search(int value)
+    {
+        return search(this->root, value);
+    }
+
+    //Método remove
+    bool AVLTree::Remove(int id)
+    {
+        if (!IsEmpty())
+        {
+            Node *inode = root;
+            Node *preInode = root;
+            while (inode->GetID() != id)
+            {
+                preInode = inode;
+                if (inode->GetID() > id)
+                {
+                    inode = inode->left;
+                }
+                else
+                {
+                    inode = inode->right;
+                }
+                if (inode == nullptr)
+                {
+                    return false;
+                }
+            }
+            if (inode->right == nullptr & inode->left == nullptr)
+            {
+                if (inode == root)
+                {
+                    root = nullptr;
+                }
+                else if (preInode->left == inode)
+                {
+                    preInode->left = nullptr;
+                }
+                else
+                {
+                    preInode->right = nullptr;
+                }
+            }
+            else if (inode->right == nullptr)
+            {
+                if (inode == root)
+                {
+                    root = root::left;
+                }
+                else if (preInode->left == inode)
+                {
+                    preInode->left = inode->left;
+                }
+                else
+                {
+                    preInode->right = inode->left;
+                }
+            }
+            else if (inode->left == nullptr)
+            {
+                if (inode == root)
+                {
+                    root = root::right;
+                }
+                else if (preInode->left == inode)
+                {
+                    preInode->left = inode->right;
+                }
+                else
+                {
+                    preInode->right = inode->right;
+                }
+            }
+            else
+            {
+                Node *rePre = inode, *re = inode, *aux = inode->right;
+                while (aux != nullptr)
+                {
+                    rePre = re;
+                    re = aux;
+                    aux = aux->left;
+                }
+                if (re != inode->right)
+                {
+                    rePre->left = re->right;
+                    re->right = inode->right;
+                }
+
+                if (inode == root)
+                {
+                    root = re;
+                }
+                else if (preInode->left == inode)
+                {
+                    preInode->left = re;
+                }
+                else
+                {
+                    preInode->right = re;
+                }
+                re->left = inode->left;
+            }
+        }
+        else
+        {
+            return false;
+        }
+        return true;
+    }
+
+    //Métodos necesarios para realizar el preorder
+    void AVLTree::PreOrder(Node *n)
+    {
+        if (!IsEmpty())
+        {
+            preorder += static_cast< std::wstring >(n->GetObject());
+            if (n->left != nullptr)
+            {
+                PreOrder(n->left);
+            }
+            if (n->right != nullptr)
+            {
+                PreOrder(n->right);
+            }
+        }
+    }
+
+    std::wstring AVLTree::GetPreOrder()
+    {
+        PreOrder(root);
+        return preorder;
+    }
+
+    //Métodos necesarios para realizar el inorder
+    void AVLTree::InOrder(Node *n)
+    {
+        if (!IsEmpty())
+        {
+            if (n->left != nullptr)
+            {
+                InOrder(n->left);
+            }
+            inorder += static_cast< std::wstring >(n->GetObject());
+            if (n->right != nullptr)
+            {
+                InOrder(n->right);
+            }
+        }
+    }
+
+    std::wstring AVLTree::GetInOrder()
+    {
+        InOrder(root);
+        return inorder;
+    }
+    //Métodos necesarios para realizar el posorder
+    void AVLTree::PosOrder(Node *n)
+    {
+        if (!IsEmpty())
+        {
+            if (n->left != nullptr)
+            {
+                PosOrder(n->left);
+            }
+            if (n->right != nullptr)
+            {
+                PosOrder(n->right);
+            }
+            posorder += static_cast< std::wstring >(n->GetObject());
+        }
+    }
+
+    std::wstring AVLTree::GetPosOrder()
+    {
+        PosOrder(root);
+        return posorder;
+    }
+};                                                  
+                        </code>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="python">Implementación de la estructura en Python</h2>
+                    <br>
+                    <h3 id="nodopython">Nodo de un árbol AVL</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+class Node():
+
+__object = None #Variable para almacenar el objeto del nodo
+__key = 0
+__balance = 0
+right = None  #Indicador de nodo derecho siguiente
+left = None  #Indicador de nodo izquierdo siguiente
+
+"""
+Inicializador, recibe un objeto, y puede recibir los enlaces de este. 
+"""
+def __init__(self, ob,key, left = None , right = None):
+    self.__object = ob
+    self.__key = key
+    self.right = right
+    self.left = left
+
+
+"""
+Retorna el objeto del nodo, no recibe parametros. 
+"""
+def GetObject(self):
+    return self.__object
+
+"""
+Retorna la llave o id del nodo, no recibe parametros. 
+"""
+def GetKey(self):
+    return self.__key
+
+
+"""
+Getter y setter del atributo balance
+"""
+def GetBalance(self):
+    return self.__balance
+
+def SetBalance(self, balance):
+    self.__balance = balance
+"""
+Evaluar si un nodo u objeto, es equivalente al nodo, esto se hace comparando
+unicamente las __object con el parametro dado
+"""
+def isEquals(self, objectt):
+    if(type(objectt)==Node):
+        if(self.__object == objectt.getObject()):#Si el elemento entregado como parametro "objectt" no es un nodo, se genera error y se va al try donde si se puede evaluar si esta en la Lista
+            return True
+    else:
+        if(self.__object == objectt):
+            return True
+    return False
+
+
+"""
+Retorna el grado del nodo, no recibe parametros. 
+"""
+def Grado(self):
+    if(self.right == None and self.left==None):
+        return 0
+    elif((self.right == None and self.left!=None) or (self.right != None and self.left==None)):
+        return 1
+    else:
+        return 2
+
+"""
+Metodo para imprimir un nodo, no recibe parametros.  
+"""
+def __str__(self):
+    return "Node [left: {0}, right: {1}, object {2}]".format(self.left,self.right,self.GetObject())                        
+                        </code>
+                    </pre>
+
+                    <br>
+                    <h3 id="implementacionPython">Árbol AVL</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+from Node import Node
+
+
+class AVLTree(Node):
+
+    __search = False
+    root = None#Node()
+
+
+    """
+    Inicializador de la clase.
+    """
+    def __init__(self, ob = None, key = None):
+        if(ob != None and key == None):
+            raise Exception("No key given for the node")
+            self.root = Node(ob,key)
+        else:
+            self.root = None
+
+
+    """
+    Como cada nodo de un arbol binario, puede ser a la misma vez un arbol binario
+    con este metodo se crean sub arboles binarios, recibe un objeto, y los nodos
+    derechos e izquierdos, y retorna un nodo con estos atributos.
+    """
+    def SubAVLTree(self,left, ob, right):
+        temp = Node(ob, left, right)
+        # CalcularGradoArbol(temp)
+        return temp;
+    
+    """
+    Retorna True si la lista esta vacia
+    """
+    def IsEmpty(self):
+        return self.root == None
+
+    """
+    Inserta un Nodo, y si es necesario realiza rotaciones para mantener equilibrado
+    el arbol, este metodo es privado
+    """
+    def _Insert(self,nNode, root):
+        newMain = root
+        if(nNode.GetKey() < root.GetKey()):
+            if(root.left == None):
+                root.left = nNode
+            else:
+                root.left = self._Insert(nNode, root.left)
+                if(self.GetFe(root.left)- self.GetFe(root.left)==2):
+                    if(nNode.GetKey() < nNode.left.GetKey()):
+                        newMain = self.Rsi(root)
+                    else:
+                        newMain = self.Rdi(root)
+        elif(nNode.GetKey()>root.GetKey()):
+            if(root.right == None):
+                root.right = nNode
+            else:
+                root.right = self._Insert(nNode, root.right)
+                if(self.GetFe(root.right)- self.GetFe(root.left)==2):
+                    if(nNode.GetKey() < nNode.right.GetKey()):
+                        newMain = self.Rsd(root)
+                    else:
+                        newMain = self.Rdd(root)
+        else:
+            return None
+        
+        if(root.left == None and root.right != None):
+            root.SetBalance(root.right.GetBalance()+1)
+        elif(root.right == None and root.left != None):
+            root.SetBalance(root.left.GetBalance()+1)
+        else:
+            root.SetBalance(max([self.GetFe(root.left), self.GetFe(root.right)]))
+        return newMain
+
+    """
+    Inserta un Nodo, y si es necesario realiza rotaciones para mantener equilibrado
+    el arbol
+    """
+    def Insert(self, ob, key):
+        n = Node(ob,key)
+        if(not self.IsEmpty()):
+            
+            newRoot = self._Insert(n,self.root)
+            if(newRoot != None):
+                self.root = newRoot
+            else:
+                return False
+        else:
+            newRoot = n
+        return True
+
+    """
+    Rotacion simple a la izquierda, con centro en el parametro node.
+    """
+    def Rsi(self,node):
+        nl = node.left
+        node.left = nl.right
+        nl.right = node
+        node.SetBalance(max([self.GetFe(node.left), self.GetFe(node.right)])+1)
+        nl.SetBalance(max([self.GetFe(nl.left), self.GetFe(nl.right)])+1)
+        return nl
+    
+    """
+    Rotacion simple a la derecha, con centro en el parametro node.
+    """
+    def Rsd(self,node):
+        nl = node.right
+        node.right = nl.left
+        nl.left = node
+        node.SetBalance(max([self.GetFe(node.left), self.GetFe(node.right)])+1)
+        nl.SetBalance(max([self.GetFe(nl.left), self.GetFe(nl.right)])+1)
+        return nl
+    
+    """
+    Rotacion doble a la izquierda, con centro en el parametro node.
+    """
+    def Rdi(self,node):
+        node.left = self.Rsd(node.left)
+        nl = self.Rsi(node)
+
+        return nl
+
+    """
+    Rotacion doble a la derecha, con centro en el parametro node.
+    """
+    def Rdd(self,node):
+        node.left = self.Rsi(node.left)
+        nl = self.Rsd(node)
+
+        return nl
+
+    """
+    Obtiene el equilibrio del nodo, y evita el error en caso de que el nodo sea 
+    vacio y retorna -1.
+    """
+    def GetFe(self, n):
+        if(n!=None):
+            return n.GetBalance()
+        else:
+            return -1
+
+    """
+    Busca un elemento en el arbol de forma recursiva, de acuerdo con la llave dada,
+    este es un metodo privado.
+    """
+    def _Search(self,root, key):
+        if(root != None):
+            if(root.GetKey() == key):
+                return root
+            elif(root.GetKey() < key):
+                return self._Search(root.right,key)
+            else:
+                return self._Search(root.left,key)
+        return None
+
+    """
+    Busca un elemento en el arbol de acuerdo a la llave dada como parametro,
+    utilizando _Search.
+    """
+    def Search(self, key):
+        return self._Search(self.root,key)
+
+    """
+    Remueve un nodo del arbol, de acuerdo al id o llave dada como parametro
+    retorna True si fue eliminado.
+    """
+    def Remove(self,key):
+        if(not self.IsEmpty()):
+            """
+            Recorre el arbol y si la llave existe, obtiene el nodo al que 
+            pertenece.
+            """
+            inode = self.root
+            preinode = self.root
+            while(inode.GetKey()!= key):
+                preinode = inode
+                if(inode.GetKey()>key):
+                    inode = inode.left
+                else:
+                    inode = inode.right
+                if(inode==None):
+                    return False
+            """
+            Elimina el nodo.
+            """
+            if(inode.right==None and inode.left==None): #No tiene hijos
+                if(inode == self.root):
+                    self.root = None
+                elif(preinode.left == inode):
+                    preinode.left = None
+                else:
+                    preinode.right = None
+            elif(inode.right == None): #Es una rama con un hijo
+                if(inode ==self.root):
+                    self.root = self.root.left
+                elif(preinode.left == inode):
+                    preinode.left = inode.left
+                else:
+                    preinode.right = inode.left
+            elif(inode.left == None): #Es una rama con un hijo
+                if(inode ==self.root):
+                    self.root = self.root.right
+                elif(preinode.left == inode):
+                    preinode.left = inode.right
+                else:
+                    preinode.right = inode.right
+            else: #Es una rama con 2 hijos
+                rePre = inode
+                re = inode
+                aux = inode.right
+                """
+                Hallar 
+                """
+                while(aux != None):
+                    rePre = re
+                    re = aux
+                    aux = aux.left
+
+                if(re != inode.right):
+                    rePre.left = re.right
+                    re.right = inode.right
+                
+                if(inode == self.root):
+                    self.root = re
+                elif(preinode.left == inode):
+                    preinode.left = re
+                else:
+                    preinode.right = re
+                re.left = inode.left
+                return True
+        else:
+            return False
+
+
+    """
+    Realiza el recorrido preOrder de forma recursiva, y lo almacena en una variable de tipo string, metodo privado
+    """
+    def _preOrder(self,root):
+        if(root != None):
+            print((str(root.GetObject()) + " " if (root != None) else ""), end ="")
+            self._preOrder(root.left)
+            self._preOrder(root.right)
+    
+    """
+    Imprime el resultado del recorrido _preOrder
+    """
+    def preOrder(self):
+        if(not self.IsEmpty()):
+            self._preOrder(self.root)
+        else:
+            print("El arbol esta vacio.")
+
+    """
+    Realiza el recorrido inOrder de forma recursiva, y lo almacena en una variable de tipo string
+    """
+    def _inOrder(self,root):
+        if(root != None):
+            self._inOrder(root.left)
+            print((str(root.GetObject()) + " " if (root != None) else ""), end ="")
+            self._inOrder(root.right)
+
+    """
+    Imprime el resultado del recorrido _inOrder
+    """
+    def inOrder(self):
+        if(not self.IsEmpty()):
+            self._inOrder(self.root)
+        else:
+            print("El arbol esta vacio.")
+    
+    """
+    Realiza el recorrido posOrder de forma recursiva, y lo almacena en una variable de tipo string
+    """
+    def _posOrder(self,root):
+        if(root != None):
+            self._posOrder(root.left)
+            self._posOrder(root.right)
+            print((str(root.GetObject()) + " " if (root != None) else ""), end ="")
+
+    """
+    Imprime el resultado del recorrido _posOrder
+    """
+    def posOrder(self):
+        if(not self.IsEmpty()):
+            self._posOrder(self.root)
+        else:
+            print("El arbol esta vacio.")                           
+                        </code>
+                    </pre>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="aplicacion">Ejercicio de aplicación del árbol AVL</h2>
+                    <br>
+                    <p>Escribir un programa de una longitud indeterminada que lea un texto y produzca una impresión de todas las palabras diferentes con su debida frecuencia de aparición; Hacer uso de los arboles para que cada nodo tenga una palabra con su respectiva frecuencia como su identificador.</p><br>            
+                    <pre>
+                        <code id="showCode" class="language-java">
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        AVLTree arbol = new AVLTree(); // Árbol AVL
+        ArrayList base = new ArrayList(); // ArrayList
+
+        Scanner p = new Scanner(System.in);
+        System.out.println("Digite el texto");
+        String data = p.nextLine();
+        String xd = "";
+        for(int i = 0 ; i < data.length() ; i++){
+            char u = data.charAt(i);
+            if(u == ' ' || u == '.' || u== ';' || u ==',' || u == '!' || u == '¡'){ //Se separa las palabras por medio de estos caracteres
+                base.add(xd);
+                xd = "";
+            }else{
+                xd+=u;
+            }
+        }
+        if(xd.length() != 0){ // Si al final del texto , este no posee un finalizador , el programa automaticamente lo agrega
+            base.add(xd);
+            xd="";
+        }
+        Set< Object > miSet = new HashSet< Object >(base);// Set para contar los elementos
+        for(Object s: miSet){
+            System.out.println(s + " " +Collections.frequency(base,s)); // Se identifican las palabras y su frecuencia dentro del texto
+            int cont = Collections.frequency(base,s);
+            arbol.Insert(s,cont); // Se agrega cada palabra al arbol basada en su frecuencia mediante el .insert
+        }
+        System.out.println("Su impresión en pre-order es" + " " + arbol.GetPreOrder());
+    }
+}
+                        </code>
+                    </pre>
+                <p id="descripcionImagen">EJERCICIO TOMADO DE [3]</p>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+            
+            <footer id="pie">
+                Universidad Pontificia Bolivariana - Seccional Bucaramanga
+            </footer>
+        </div>
+        <script src="Estilos, scripts e imagenes/prism.js"></script>
+    </body>
+</html>

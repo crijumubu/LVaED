@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8"/>
+        <title>LVaED</title>
+        <meta name="description" content="Este es un aporte hacia el aprendizaje de las estructuras de datos"/>
+        <meta name="author" content="Cristian Julian Muñoz Buenahora, John Jairo Corzo Calderon, Santiago Andres DelValle Pinilla"/>
+        <meta name="keywords" content="Estructuras de datos"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/EstilosPrincipal.css"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/prism.css"/>
+    </head>
+    <body>
+        <div id = "trasformaciones">
+            <header>
+                <h1>Laboratorio virtual para el aprendizaje de estructuras de datos - LVaED</h1> 
+            </header>
+
+            <nav> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="EstructurasDeDatos.html">Estructura de datos</a></li>
+                    <li><a id="pgActual" href="Trasformaciones.html">Trasformaciones</a></li>
+                </ul>
+            </nav>
+            
+            <h1 id="tituloTrasInput">Entrada del grafo</h1>
+            <section>
+                <article class = "tras">
+                    <div class="forms">
+                        <h2 class="codigoPartes">Clase</h2>
+                        <form class="form" method="">        
+                            <label for="cName">Nombre de la Clase:</label><br>
+                            <input type="text" id="claseName" name="cName" maxlength="15" >
+                            <input type="button" value="Crear Clase" id="clase"  >
+                        </form>
+                    </div>
+                    <div class="forms">
+                        <h2 class="codigoPartes">Atributo</h2>
+                        <form>
+                            <label for="aName" >Nombre del atributo:</label><br>
+                            <input type="text" id="atributoName" name="aName" maxlength="15"/>
+                            <input type="button" value="Crear Atributo" id="atributo"/>
+                        </form>
+                    </div>
+                    <div class="forms">
+                        <h2 class="codigoPartes">Método</h2>
+                        <form>
+                            <label for="aName">Nombre del metodo:</label><br>
+                            <input type="text" id="metodoName" name="aName" maxlength="15">
+                            
+                            <input type="button" value="Crear Metodo" id="metodo">
+                        </form>
+                    </div>
+                    <div class="forms">
+                        <h2 class="codigoPartes">Parámetro</h2>
+                        <label for="pName">Nombre del parametro:</label><br>
+                        <input type="text" id="parametro1" name="pName" maxlength="15" style="width: 300px;" placeholder="Escriba un parametro por espacio."><br>
+                        <input type="text" id="parametro2" name="pName" maxlength="15" style="width: 300px;" placeholder="Escriba un parametro por espacio."><br>
+                        <input type="text" id="parametro3" name="pName" maxlength="15"  style="width: 300px;" placeholder="Escriba un parametro por espacio."><br>
+                    </div>
+                    
+                    <br>
+                    <button id = "btnDeleteG">Eliminar</button>
+                    <canvas id = "lienzo">
+                    
+                    </canvas>
+                </article>
+            </section>
+
+            <section id="sectionOutput2">
+                <h1 id = "tituloTrasOutPut">Salida del código</h1>
+                <article id="especialTras">
+                    <pre>
+                        <code class="language-python" id="code">
+    
+    
+                        </code>
+                    </pre>
+                </article>
+            </section>
+            <textarea id = "outputCode" style="width: 1px; height: 1px;"></textarea>
+            <footer id="pie">
+                Universidad Pontificia Bolivariana - Seccional Bucaramanga
+            </footer>
+            <script src="Estilos, scripts e imagenes/scriptDiagram.js"></script>
+            <script src="Estilos, scripts e imagenes/prism.js"></script>
+        </div>
+    </body>
+</html>

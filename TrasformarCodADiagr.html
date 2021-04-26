@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8"/>
+        <title>LVaED</title>
+        <meta name="description" content="Este es un aporte hacia el aprendizaje de las estructuras de datos"/>
+        <meta name="author" content="Cristian Julian Muñoz Buenahora, John Jairo Corzo Calderon, Santiago Andres DelValle Pinilla"/>
+        <meta name="keywords" content="Estructuras de datos"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/EstilosPrincipal.css"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/prism.css"/>
+    </head>
+    <body>
+        <div id="trasformaciones">
+            <header>
+                <h1>Laboratorio virtual para el aprendizaje de estructuras de datos - LVaED</h1> 
+            </header>
+
+            <nav> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="EstructurasDeDatos.html">Estructura de datos</a></li>
+                    <li><a id="pgActual" href="Trasformaciones.html">Trasformaciones</a></li>
+                </ul>
+            </nav>
+
+            <h1 id = "tituloTrasInput">Entrada de texto</h1>
+            <section>
+                <article class="tras">
+                    <input id="btninput" type="file">
+                    <pre>
+                        <code id="inputCode" class="language-python">
+                        </code>
+                    </pre>
+                    <button id="btnEnviar">Enviar</button>
+                </article>
+            </section>
+            
+            <section id="sectionOutput">
+                <h1 id = "tituloTrasOutPut">Salida del grafo</h1>
+                <article class="tras">
+                    <canvas id="lienzo">
+
+                    </canvas>
+                </article>
+            </section>
+            
+            <footer id="pie">
+                Universidad Pontificia Bolivariana - Seccional Bucaramanga
+            </footer>
+            <script src="Estilos, scripts e imagenes/scriptCode.js"></script>
+            <script src="Estilos, scripts e imagenes/prism.js"></script>
+        </div>
+    </body>
+</html>

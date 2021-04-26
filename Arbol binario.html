@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <head>
+        <meta charset="utf-8"/>
+        <title>LVaED</title>
+        <meta name="description" content="Este es un aporte hacia el aprendizaje de las estructuras de datos"/>
+        <meta name="author" content="Cristian Julian Muñoz Buenahora, John Jairo Corzo Calderon, Santiago Andres DelValle Pinilla"/>
+        <meta name="keywords" content="Estructuras de datos"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/EstilosPrincipal.css"/>
+        <link rel="stylesheet" href="/Estilos, scripts e imagenes/prism.css"/>
+        <script src="Estilos, scripts e imagenes/botonArriba.js"></script>
+    </head>
+    <body>
+        <div id="principio">
+            <header>
+                <h1>Laboratorio virtual para el aprendizaje de estructuras de datos - LVaED</h1> 
+            </header>
+
+            <nav> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="EstructurasDeDatos.html">Estructura de datos</a></li>
+                    <li><a href="Trasformaciones.html">Trasformaciones</a></li>
+                </ul>
+            </nav>
+
+            <h1 id="titulo">Árbol binario</h1>
+            <section id="nuevoSection">
+                <article>
+                    <h2 id="definicion">Definición</h2><br>
+                    <p>El concepto de árbol binario deriva, de la definición de un árbol, donde cada elemento dentro de este es denominado nodo, y está conectado a otros nodos; los árboles son estructurasde datos no lineales y dinámicas, la peculiaridad de los árboles binarios reside en que cada nodo, solo puede tener 2 sucesores como máximo (Ver figura 10). Los árboles binarios están divididos en 3 partes, la raíz, es el primer nodo, del cual desciende el subárbol derecho e izquierdo [2].</p><br>
+                    <img id="imgEstructura" src="Estilos, scripts e imagenes/Arboles binarios.png" alt="Árbol binario">
+                    <p id="descripcionImagen">Figura 10: Representación de un árbol binario</p>
+                </article>
+            </section>
+
+            <aside id="indice">
+                <h2 id="tituloIndice">Índice</h2>
+                <ul id="ulindice">
+                    <li><a class="liindice" href="#definicion">1. Definición de un árbol binario</a></li>
+                    <li><a class="liindice" href="#principalesMetodos">2. Principales métodos</a></li>
+                    <li> <a class="liindice" href="#java">3. Implementación en Java</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodoJava">3.1 Nodo del árbol</a></li>
+                            <li><a class="liindice" href="#implementacionJava">3.2 Desarrollo del árbol binario</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#c++">4. Implementación en C++</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodoc++">4.1 Nodo del árbol</a></li>
+                            <li><a class="liindice" href="#implementacionC++">4.2 Desarrollo del árbol binario</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#python"> 5. Implementación en Python</a>
+                        <ul>
+                            <li><a class="liindice" href="#nodopython">5.1 Nodo del árbol</a></li>
+                            <li><a class="liindice" href="#implementacionPython">5.2 Desarrollo del árbol binario</a></li>
+                        </ul>
+                    </li> 
+                    <li><a class="liindice" href="#aplicacion">6. Ejercicio de aplicación de la estructura</a></li>      
+                </ul>
+            </aside>
+            
+            <section class="implementacion">
+                <article>
+                    <h2 id="principalesMetodos">Principales métodos</h2><br>
+                    <ul>
+                        <li><p><b>IsEmpty ()</b> -> Método Boolean el cual se encarga de verificar si el árbol contiene al menos un elemento (En este caso que exista su raíz); Retornara un true si es así y un false si la estructura está vacía.</p></li><br>
+                        <li><p><b>insertLeft (Object object)</b> -> Método Boolean el cual se encarga de insertar (Mientras que exista la raíz) por la izquierda del árbol; Retornara un true si el proceso es completado, o un false si la raíz no existe o capte cualquier otro error.</p></li><br>
+                        <li><p><b>insertRight (Object object)</b> -> Método Boolean el cual se encarga de insertar (Mientras que exista la raíz) por la derecha del árbol; Retornara un true si el proceso es completado, o un false si la raíz no existe o capte cualquier otro error.</p></li><br>
+                        <li><p><b>preOrder (Node root)</b> -> Método String el cual se encarga de retornar un conjunto de caracteres los cuales representan el contenido completo del árbol según cierto orden; En este caso se expresa de izquierda a derecha el contenido de la raíz, el sub árbol izquierdo y finalmente el sub árbol derecho.</p></li><br>
+                        <li><p><b>inOrder (Node root)</b> -> Método String el cual se encarga de retornar un conjunto de caracteres los cuales representan el contenido completo del árbol según cierto orden; En este caso se expresa de izquierda a derecha el contenido del sub árbol izquierdo, la raíz y finalmente el sub árbol derecho.</p></li><br>
+                        <li><p><b>posOrder (Node root)</b> -> Método String el cual se encarga de retornar un conjunto de caracteres los cuales representan el contenido completo del árbol según cierto orden; En este caso se expresa de izquierda a derecha el contenido del sub árbol izquierdo, el sub árbol derecho y finalmente la raíz.</p></li><br>
+                        <li><p><b>search (Object u)</b> -> Método Boolean el cual se encarga de recorrer el árbol y verificar que el elemento ingreso en el parámetro este en la estructura; Retornara un true si lo encuentra o un false si no está.</p></li><br>
+                        <li><p><b>insert (int o, Object object)</b> -> Método void el cual se encarga de insertar un Nodo al árbol con un id con el fin de asignarle un “espacio”; Con este id se conocerá si es la raíz, la rama o una hoja desplazando así el nodo del espacio anterior.</p></li><br>
+                        <li><p><b>remove (int o, Object object)</b> -> Método void el cual se encarga de eliminar el nodo con el id ingresado en el parámetro (Para el funcionamiento de este método se debe saber que: Si es una hoja, se elimina; Si es una rama con un solo hijo, se reemplaza la rama por el hijo; Si es una rama con dos hijos, se debe que tomar dos caminos, irse por el sub árbol izquierdo y tomar el nodo que esta más por la derecha o irse por el sub árbol derecho y tomar el nodo que este más por la izquierda).</p></li><br>
+                    </ul>
+                </article>
+
+                <article>
+                    <h2 id="java">Implementación de la estructura en Java</h2>
+                    <br>
+                    <h3 id="nodoJava">Nodo de un árbol binario</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+public class Node {
+
+    //ATRIBUTOS
+
+    private Object object;
+    public Node right;
+    public Node left;
+
+    //MÉTODOS Y CONSTRUCTORES
+
+    //Constructores
+    public Node(Object o){
+        this.object = o;
+        this.right = null;
+        this.left = null;
+    }
+
+    public Node(Node left,Object object, Node right) {
+        this.object = object;
+        this.left = left;
+        this.right = right;
+    }
+
+    //Getter deL atributo object
+    public Object GetObject() {
+        return object;
+    }
+
+    //Método del cálculo del grado de un nodo
+    public int Grado(){
+        if (right==null & left==null){
+            return 0;
+        }else if ((right == null & left!=null) | (right != null & left==null)){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+
+    //Método toString
+    @Override
+    public String toString() {
+        return "Node{ left=" + left + ", right=" + right + ", object=" + object + '}';
+    }
+}  
+                        </code>
+                    </pre>
+                    <br>
+                    <h3 id="implementacionJava">Árbol binario</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+public class BinTree {
+
+    //ATRIBUTOS
+
+    private int gradoArbol, alturaArbol, cont = 1;;
+    private String preorder = "", inorder = "", posorder = "";
+    private boolean search = false;
+    public Node root;
+
+    //MÉTODOS Y CONSTRUCTORES
+
+    //Constructores
+    public BinTree(){
+        gradoArbol = alturaArbol = 0;
+        this.root = null;
+    }
+
+    public BinTree(Object o){
+        gradoArbol = alturaArbol = 0;
+        this.root = SubBinTree(null, o, null);
+    }
+
+    //Método SubBinTree
+    public Node SubBinTree(Node left, Object o, Node right){
+        Node nodoARetornar = new Node(left, o, right);
+        CalcularGradoArbol(nodoARetornar);
+        return nodoARetornar;
+    }
+
+    //Método IsEmpty
+    public boolean IsEmpty(){
+        if (root.GetObject()==null & root.right == null & root.left == null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //Método Root
+    public boolean Root(Object o){
+        try {
+            this.root = SubBinTree(null,o,null);
+            CalcularGradoArbol(this.root);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //Método InsertLeft
+    public boolean InsertLeft(Object o){
+        try{
+            if (!IsEmpty()){
+                root.left = SubBinTree(null, o, null);
+                return true;
+            }else{
+                Root(o);
+                return false;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //Método InsertRight
+    public boolean InsertRight(Object o){
+        try{
+            if (!IsEmpty()){
+                root.right = SubBinTree(null, o, null);
+                return true;
+            }else{
+                Root(o);
+                return false;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //Métodos necesarios para realizar el search en el arbol binario
+    private void Search (Node n, Object o){
+        if (!IsEmpty()){
+            if (n.GetObject().toString().compareTo(o.toString()) == 0){
+                search = true;
+            }
+            if (n.right != null){
+                if (n.right.GetObject().toString().compareTo(o.toString()) == 0){
+                    search = true;
+                }else{
+                    Search(n.right, o);
+                }
+            }
+            if (n.left != null){
+                if (n.left.GetObject().toString().compareTo(o.toString()) == 0){
+                    search = true;
+                }else{
+                    Search(n.left, o);
+                }
+            }
+        }
+    }
+
+    public boolean SearchObject(Object o){
+        Search(root,o);
+        if (search == true){
+            search = false; //Se vuelve a dejar la variable booleana en false para en un futuro poder volverla a usar
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //Método Eliminar
+    public void Eliminar(Node ROOT, Node nodoAEliminar){
+        if (!IsEmpty()){
+            if (ROOT.GetObject().toString().compareTo(nodoAEliminar.GetObject().toString()) == 0){
+                if (ROOT != root){
+                    ROOT.right = null;
+                    ROOT.left = null;
+                }else {
+                    Root(null);
+                }
+                return;
+            }
+            if (ROOT.right != null){
+                if (ROOT.right.GetObject().toString().compareTo(nodoAEliminar.GetObject().toString()) == 0){
+                    ROOT.right = null;
+                }else{
+                    Eliminar(ROOT.right, nodoAEliminar);
+                }
+            }
+            if (ROOT.left != null){
+                if (ROOT.left.GetObject().toString().compareTo(nodoAEliminar.GetObject().toString()) == 0){
+                    ROOT.left = null;
+                }else{
+                    Eliminar(ROOT.left, nodoAEliminar);
+                }
+            }
+        }
+    }
+
+    //Métodos necesarios para realizar el preorder
+    private void PreOrder(Node n){
+        if (!IsEmpty()){
+            preorder += (String) n.GetObject();
+            if (n.left!=null){
+                PreOrder(n.left);
+            }
+            if (n.right!=null){
+                PreOrder(n.right);
+            }
+        }
+    }
+
+    public String GetPreOrder(){
+        PreOrder(root);
+        return preorder;
+    }
+
+    //Métodos necesarios para realizar el inorder
+    private void InOrder(Node n){
+        if (!IsEmpty()){
+            if (n.left!=null){
+                InOrder(n.left);
+            }
+            inorder += (String) n.GetObject();
+            if (n.right!=null){
+                InOrder(n.right);
+            }
+        }
+    }
+
+    public String GetInOrder(){
+        InOrder(root);
+        return inorder;
+    }
+
+    //Métodos necesarios para realizar el posorder
+    private void PosOrder(Node n){
+        if (!IsEmpty()){
+            if (n.left!=null){
+                PosOrder(n.left);
+            }
+            if (n.right!=null){
+                PosOrder(n.right);
+            }
+            posorder += (String) n.GetObject();
+        }
+    }
+
+    public String GetPosOrder(){
+        PosOrder(root);
+        return posorder;
+    }
+
+    //Métodos necesarios para cálcular el grado del arbol binario
+    private void CalcularGradoArbol(Node n){
+        if (!IsEmpty()){
+            if(n.Grado() == 1){
+                gradoArbol = 1;
+                if (n.right!=null){
+                    CalcularGradoArbol(n.right);
+                }
+                if (n.left!=null){
+                    CalcularGradoArbol(n.left);
+                }
+            }
+            else if (n.Grado() == 2){
+                gradoArbol = 2;
+            }
+        }else{
+            gradoArbol = 0;
+        }
+
+    }
+
+    public int GetGrado(){
+        CalcularGradoArbol(root);
+        return gradoArbol;
+    }
+
+    //Métodos necesarios para cálcular la altura del arbol binario
+    private void CalcularAlturaArbol(Node n){
+        if (!IsEmpty()){
+            if (n.right!=null){
+                CalcularAlturaArbol(n.right);
+            }
+            if (n.left!=null){
+                CalcularAlturaArbol(n.left);
+            }
+            cont++;
+        }
+        else{
+            alturaArbol = 1;
+            return;
+        }
+
+        if (cont%2!=0){
+            alturaArbol = (cont/2)+1;
+        }else{
+            alturaArbol = cont/2;
+        }
+    }
+
+    public int GetAltura(){
+        CalcularAlturaArbol(root);
+        return alturaArbol;
+    }
+}
+                        </code>
+                    </pre>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="c++">Implementación de la estructura en C++</h2>
+                    <br>
+                    <h3 id="nodoc++">Nodo de un árbol binario</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#include "Node.h"
+#pragma once
+#include < string >
+#include < any >
+Using namespace std
+    
+    class Node
+    {
+        private:
+            std::any object;
+        public:
+            Node *right;
+            Node *left;
+        
+        Node::Node(std::any o)
+        {
+            this->object = o;
+            this->right = nullptr;
+            this->left = nullptr;
+        }
+    
+        Node::Node(Node *left, std::any object, Node *right)
+        {
+            this->object = object;
+            this->left = left;
+            this->right = right;
+        }
+    
+        std::any Node::GetObject()
+        {
+            return object;
+        }
+    
+        int Node::Grado()
+        {
+            if (right == nullptr & left == nullptr)
+            {
+                return 0;
+            }
+            else if ((right == nullptr & left != nullptr) | (right != nullptr & left == nullptr))
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
+        }
+    
+        std::wstring Node::toString()
+        {
+            return L"Node{ left=" + left + L", right=" + right + L", object=" + object + L'}';
+        }
+
+    }                            
+                        </code>
+                    </pre>
+
+                    <br>
+                    <h3 id="implementacionC++">Árbol binario</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#include "BinTree.h"
+#pragma once
+#include "Node.h"
+#include < string >
+#include < stdexcept >
+Using namespace std
+
+    class BinTree
+    {
+        private:
+            int gradoArbol = 0, alturaArbol = 0, cont = 1;
+            std::wstring preorder = L"", inorder = L"", posorder = L"";
+            bool search = false;
+        public:
+            Node *root;
+            
+        //Constructores
+        BinTree::BinTree()
+        {
+            gradoArbol = alturaArbol = 0;
+            this->root = nullptr;
+        }
+
+        //Método SubBinTree
+        BinTree::BinTree(std::any o)
+        {
+            gradoArbol = alturaArbol = 0;
+            this->root = SubBinTree(nullptr, o, nullptr);
+        }
+    
+        Node *BinTree::SubBinTree(Node *left, std::any o, Node *right)
+        {
+            Node *nodoARetornar = new Node(left, o, right);
+            CalcularGradoArbol(nodoARetornar);
+            return nodoARetornar;
+        }
+        //Método IsEmpty
+        bool BinTree::IsEmpty()
+        {
+            if (!root->GetObject().has_value() & root->right == nullptr & 	root->left == nullptr)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //Método Root
+        bool BinTree::Root(std::any o)
+        {
+            try
+            {
+                this->root = SubBinTree(nullptr,o,nullptr);
+                CalcularGradoArbol(this->root);
+                return true;
+            }
+            catch (const std::runtime_error &e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        //Método InsertLeft
+        bool BinTree::InsertLeft(std::any o)
+        {
+            try
+            {
+                if (!IsEmpty())
+                {
+                    root->left = SubBinTree(nullptr, o, nullptr);
+                    return true;
+                }
+                else
+                {
+                    Root(o);
+                    return false;
+                }
+            }
+            catch (const std::runtime_error &e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        //Método InsertRight
+        bool BinTree::InsertRight(std::any o)
+        {
+            try
+            {
+                if (!IsEmpty())
+                {
+                    root->right = SubBinTree(nullptr, o, nullptr);
+                    return true;
+                }
+                else
+                {
+                    Root(o);
+                    return false;
+                }
+            }
+            catch (const std::runtime_error &e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        //Métodos necesarios para realizar el search en el arbol binario
+        void BinTree::Search(Node *n, std::any o)
+        {
+            if (!IsEmpty())
+            {
+                if (n->GetObject().toString().compareTo(o.toString()) == 0)
+                {
+                    search = true;
+                }
+                if (n->right != nullptr)
+                {
+                    if (n->right->GetObject().toString().compareTo(o.toString()) == 0)
+                    {
+                        search = true;
+                    }
+                    else
+                    {
+                        Search(n->right, o);
+                    }
+                }
+                if (n->left != nullptr)
+                {
+                    if (n->left->GetObject().toString().compareTo(o.toString()) == 0)
+                    {
+                        search = true;
+                    }
+                    else
+                    {
+                        Search(n->left, o);
+                    }
+                }
+            }
+        }
+    
+        bool BinTree::SearchObject(std::any o)
+        {
+            Search(root,o);
+            if (search == true)
+            {
+                search = false; //Se vuelve a dejar la variable booleana en false para en un futuro poder volverla a usar
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //Método Eliminar
+        void BinTree::Eliminar(Node *ROOT, Node *nodoAEliminar)
+        {
+            if (!IsEmpty())
+            {
+                if (ROOT->GetObject().toString().compareTo(nodoAEliminar->GetObject().toString()) == 0)
+                {
+                    if (ROOT != root)
+                    {
+                        ROOT->right = nullptr;
+                        ROOT->left = nullptr;
+                    }
+                    else
+                    {
+                        Root(std::any());
+                    }
+                    return;
+                }
+                if (ROOT->right != nullptr)
+                {
+                    if (ROOT->right->GetObject().toString().compareTo(nodoAEliminar->GetObject().toString()) == 0)
+                    {
+                        ROOT->right = nullptr;
+                    }
+                    else
+                    {
+                        Eliminar(ROOT->right, nodoAEliminar);
+                    }
+                }
+                if (ROOT->left != nullptr)
+                {
+                    if (ROOT->left->GetObject().toString().compareTo(nodoAEliminar->GetObject().toString()) == 0)
+                    {
+                        ROOT->left = nullptr;
+                    }
+                    else
+                    {
+                        Eliminar(ROOT->left, nodoAEliminar);
+                    }
+                }
+            }
+        }
+
+        //Métodos necesarios para realizar el preorder
+        void BinTree::PreOrder(Node *n)
+        {
+            if (!IsEmpty())
+            {
+                preorder += std::any_cast< std::wstring >(n->GetObject());
+                if (n->left != nullptr)
+                {
+                    PreOrder(n->left);
+                }
+                if (n->right != nullptr)
+                {
+                    PreOrder(n->right);
+                }
+            }
+        }
+        
+        std::wstring BinTree::GetPreOrder()
+        {
+        PreOrder(root);
+        return preorder;
+        }
+
+        //Métodos necesarios para realizar el inorder
+        void BinTree::InOrder(Node *n)
+        {
+            if (!IsEmpty())
+            {
+                if (n->left != nullptr)
+                {
+                    InOrder(n->left);
+                }
+                inorder += static_cast< std::wstring >(n->GetObject());
+                if (n->right != nullptr)
+                {
+                    InOrder(n->right);
+                }
+            }
+        }
+    
+        std::wstring BinTree::GetInOrder()
+        {
+            InOrder(root);
+            return inorder;
+        }
+        //Métodos necesarios para realizar el postorder
+        void BinTree::PosOrder(Node *n)
+        {
+            if (!IsEmpty())
+            {
+                if (n->left != nullptr)
+                {
+                    PosOrder(n->left);
+                }
+                if (n->right != nullptr)
+                {
+                    PosOrder(n->right);
+                }
+                posorder += static_cast< std::wstring >(n->GetObject());
+            }
+        }
+    
+        std::wstring BinTree::GetPosOrder()
+        {
+            PosOrder(root);
+            return posorder;
+        }
+
+        //Métodos necesarios para cálcular el grado del arbol binario
+        void BinTree::CalcularGradoArbol(Node *n)
+        {
+            if (!IsEmpty())
+            {
+                if (n->Grado() == 1)
+                {
+                    gradoArbol = 1;
+                    if (n->right != nullptr)
+                    {
+                        CalcularGradoArbol(n->right);
+                    }
+                    if (n->left != nullptr)
+                    {
+                        CalcularGradoArbol(n->left);
+                    }
+                }
+                else if (n->Grado() == 2)
+                {
+                    gradoArbol = 2;
+                }
+            }
+            else
+            {
+                gradoArbol = 0;
+            }
+    
+        }
+    
+        int BinTree::GetGrado()
+        {
+            CalcularGradoArbol(root);
+            return gradoArbol;
+        }
+        //Métodos necesarios para cálcular la altura del arbol binario
+        void BinTree::CalcularAlturaArbol(Node *n)
+        {
+            if (!IsEmpty())
+            {
+                if (n->right != nullptr)
+                {
+                    CalcularAlturaArbol(n->right);
+                }
+                if (n->left != nullptr)
+                {
+                    CalcularAlturaArbol(n->left);
+                }
+                cont++;
+            }
+            else
+            {
+                alturaArbol = 1;
+                return;
+            }
+    
+            if (cont % 2 != 0)
+            {
+                alturaArbol = (cont / 2) + 1;
+            }
+            else
+            {
+                alturaArbol = cont / 2;
+            }
+        }
+    
+        int BinTree::GetAltura()
+        {
+            CalcularAlturaArbol(root);
+            return alturaArbol;
+        }
+    }                                                        
+                        </code>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="python">Implementación de la estructura en Python</h2>
+                    <br>
+                    <h3 id="nodopython">Nodo de un árbol binario</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+class Node():
+
+__object = None #Variable para almacenar el objeto del nodo
+right = None  #Indicador de nodo derecho siguiente
+left = None  #Indicador de nodo izquierdo siguiente
+
+"""
+Inicializador, recibe un objeto, y puede recibir los enlaces de este. 
+"""
+def __init__(self, ob, left = None , right = None):
+    self.__object = ob
+    self.right = right
+    self.left = left
+
+
+"""
+Retorna el objeto del nodo, no recibe parametros. 
+"""
+def GetObject(self):
+    return self.__object
+
+"""
+Evaluar si un nodo u objeto, es equivalente al nodo, esto se hace comparando
+unicamente las __object con el parametro dado
+"""
+def isEquals(self, objectt):
+    if(type(objectt)==Node):
+        if(self.__object == objectt.getObject()):#Si el elemento entregado como parametro "objectt" no es un nodo, se genera error y se va al try donde si se puede evaluar si esta en la Lista
+            return True
+    else:
+        if(self.__object == objectt):
+            return True
+    return False
+
+
+"""
+Retorna el grado del nodo, no recibe parametros. 
+"""
+def Grado(self):
+    if(self.right == None and self.left==None):
+        return 0
+    elif((self.right == None and self.left!=None) or (self.right != None and self.left==None)):
+        return 1
+    else:
+        return 2
+
+"""
+Metodo para imprimir un nodo, no recibe parametros.  
+"""
+def __str__(self):
+    return "Node [left: {0}, right: {1}, object {2}]".format(self.left,self.right,self.GetObject())                        
+                        </code>
+                    </pre>
+
+                    <br>
+                    <h3 id="implementacionPython">Árbol binario</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+from Node import Node
+
+
+class BinTree(Node):
+
+__search = False
+root = None#Node()
+
+
+"""
+Inicializador de la clase.
+"""
+def __init__(self, ob = None):
+    if(ob != None):
+        self.root = self.SubBinTree(None,ob,None)
+    else:
+        self.root = None
+
+
+"""
+Como cada nodo de un arbol binario, puede ser a la misma vez un arbol binario
+con este metodo se crean sub arboles binarios, recibe un objeto, y los nodos
+derechos e izquierdos, y retorna un nodo con estos atributos.
+"""
+def SubBinTree(self,left, ob, right):
+    temp = Node(ob, left, right)
+    # CalcularGradoArbol(temp)
+    return temp;
+
+"""
+Retorna True si la lista esta vacia
+"""
+def IsEmpty(self):
+    return self.root == None
+
+"""
+Modifica o crea la raiz del arbol
+"""
+def Root(self, ob):
+    try:
+        self.root = self.SubBinTree(None, ob, None)
+        # CalcularGradoArbol(self.root)
+        return True
+    except Exception:
+        return False
+
+"""
+Inserta un elemento en la izquierda del arbol
+"""
+def InsertLeft(self, ob):
+    try:
+        if(not self.IsEmpty()):
+            self.root.left = self.SubBinTree(None, ob , None)
+            return True
+        else:
+            self.Root(ob)
+            return False
+    except Exception:
+        return False
+
+"""
+Inserta un elemento en la derecha del arbol
+"""
+def InsertRigth(self, ob):
+    try:
+        if(not self.IsEmpty()):
+            self.root.right = self.SubBinTree(None, ob , None)
+            return True
+        else:
+            self.Root(ob)
+            return False
+    except Exception:
+        return False
+
+"""
+Busca un elemento en el arbol binario, de forma recursiva, este
+metodo es privado.
+"""
+def _Search(self, node, ob):
+    if(not self.IsEmpty):
+        if(node.isEquals(ob)):
+            self.__search = True
+
+        if(node.right != None):
+            if(node.right.isEquals(ob)):
+                self.__search = True
+            else:
+                self._Search(node.right,ob)
+
+        if(node.left != None):
+            if(node.left.isEquals(ob)):
+                self.__search = True
+            else:
+                self._Search(node.left,ob)
+
+"""
+Busca un elemento en el arbol binario, y retorna un booleano si esta en el arbol.
+"""
+def Search(self, ob):   
+    self._Search(ob)
+    if(self.__search):
+        self.__search = False
+        return True
+    else:
+        return False
+
+"""
+Elimina un elemento del arbol, no tiene retorno.
+"""
+def Delete(self,root , ndDelete):
+    if(not self.IsEmpty):
+        if(root.isEquals(ndDelete)):
+            if(root != self.root):
+                root.right = None
+                root.left = None
+            else:
+                self.Root(None)
+        
+        if(root.right != None):
+            if(root.right.isEquals(ndDelete)):
+                root.right = None
+            else:
+                self.Delete(root.right, ndDelete)
+        
+        if(root.left != None):
+            if(root.left.isEquals(ndDelete)):
+                root.left = None
+            else:
+                self.Delete(root.left, ndDelete)
+
+"""
+Realiza el recorrido preOrder de forma recursiva, y lo almacena en una variable de tipo string, metodo privado
+"""
+def _preOrder(self,root):
+    if(root != None):
+        print((str(root.GetObject()) + " " if (root != None) else ""), end ="")
+        self._preOrder(root.left)
+        self._preOrder(root.right)
+
+"""
+Imprime el resultado del recorrido _preOrder
+"""
+def preOrder(self):
+    if(not self.IsEmpty()):
+        self._preOrder(self.root)
+    else:
+        print("El arbol esta vacio.")
+
+"""
+Realiza el recorrido inOrder de forma recursiva, y lo almacena en una variable de tipo string
+"""
+def _inOrder(self,root):
+    if(root != None):
+        self._inOrder(root.left)
+        print((str(root.GetObject()) + " " if (root != None) else ""), end ="")
+        self._inOrder(root.right)
+
+"""
+Imprime el resultado del recorrido _inOrder
+"""
+def inOrder(self):
+    if(not self.IsEmpty()):
+        self._inOrder(self.root)
+    else:
+        print("El arbol esta vacio.")
+
+"""
+Realiza el recorrido posOrder de forma recursiva, y lo almacena en una variable de tipo string
+"""
+def _posOrder(self,root):
+    if(root != None):
+        self._posOrder(root.left)
+        self._posOrder(root.right)
+        print((str(root.GetObject()) + " " if (root != None) else ""), end ="")
+
+"""
+Imprime el resultado del recorrido _posOrder
+"""
+def posOrder(self):
+    if(not self.IsEmpty()):
+        self._posOrder(self.root)
+    else:
+        print("El arbol esta vacio.")                            
+                        </code>
+                    </pre>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="aplicacion">Ejercicio de aplicación del árbol binario</h2>
+                    <br>
+                    <p>Escribir un programa de una longitud indeterminada que lea un texto y produzca una impresión de todas las palabras diferentes con su debida frecuencia de aparición; Hacer uso de los arboles para que cada nodo tenga una palabra con su respectiva frecuencia como su identificador.</p><br>            
+                    <pre>
+                        <code id="showCode" class="language-java">
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        BinTree arbol = new BinTree(); // Árbol Binario
+        ArrayList base = new ArrayList(); // ArrayList
+
+        Scanner p = new Scanner(System.in);
+        System.out.println("Digite el texto");
+        String data = p.nextLine();
+        String xd = "";
+        for(int i = 0 ; i < data.length() ; i++){
+            char u = data.charAt(i);
+            if(u == ' ' || u == '.' || u== ';' || u ==',' || u == '!' || u == '¡'){ //Se separa las palabras por medio de estos caracteres
+                base.add(xd);
+                xd = "";
+            }else{
+                xd+=u;
+            }
+        }
+        if(xd.length() != 0){ // Si al final del texto , este no posee un finalizador , el programa automaticamente lo agrega
+            base.add(xd);
+            xd="";
+        }
+        Set< Object > miSet = new HashSet< Object >(base);// Set para contar los elementos
+        for(Object s: miSet){
+            System.out.println(s + " " +Collections.frequency(base,s)); // Se identifican las palabras y su frecuencia dentro del texto
+            int cont = Collections.frequency(base,s);
+            arbol.Insert(s,cont); // Se agrega cada palabra al arbol basada en su frecuencia mediante el .insert
+        }
+        System.out.println("Su impresión en pre-order es" + " " + arbol.GetPreOrder());
+    }
+}
+                        </code>
+                    </pre>
+                <p id="descripcionImagen">EJERCICIO TOMADO DE [3]</p>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+            
+            <footer id="pie">
+                Universidad Pontificia Bolivariana - Seccional Bucaramanga
+            </footer>
+        </div>
+        <script src="Estilos, scripts e imagenes/prism.js"></script>
+    </body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <head>
+        <meta charset="utf-8"/>
+        <title>LVaED</title>
+        <meta name="description" content="Este es un aporte hacia el aprendizaje de las estructuras de datos"/>
+        <meta name="author" content="Cristian Julian Muñoz Buenahora, John Jairo Corzo Calderon, Santiago Andres DelValle Pinilla"/>
+        <meta name="keywords" content="Estructuras de datos"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/EstilosPrincipal.css"/>
+        <link rel="stylesheet" href="/Estilos, scripts e imagenes/prism.css"/>
+        <script src="Estilos, scripts e imagenes/botonArriba.js"></script>
+    </head>
+    <body>
+        <div id="principio">
+            <header>
+                <h1>Laboratorio virtual para el aprendizaje de estructuras de datos - LVaED</h1> 
+            </header>
+
+            <nav> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="EstructurasDeDatos.html">Estructura de datos</a></li>
+                    <li><a href="Trasformaciones.html">Trasformaciones</a></li>
+                </ul>
+            </nav>
+
+            <h1 id="titulo">Cola basada en listas</h1>
+            <section id="nuevoSection">
+                <article>
+                    <h2 id="definicion">Definición</h2><br>
+                    <p>Este tipo de estructura de datos lineal, y tambien puede ser denominado como FIFO (del inglés: “First Input, First output”, cuya respectiva traducción al español sería: "Primero en ingresar, Primero en salir"),  esto ocurre, ya que, a diferencia de las pilas, en las colas son ingresados y eliminados por distintos extremos, es decir, salen en orden de entrada, siendo el primer valor ingresado, el primero en salir (Ver figura 7). De la misma forma a las pilas, las colas no están definidas en los lenguajes de programación, por lo que, también es necesario recurrir a arreglos y listas [2].</p><br>
+                    <img id="imgEstructura" src="Estilos, scripts e imagenes/Colas.png" alt="Colas">
+                    <p id="descripcionImagen">Figura 7: Representación de una cola</p>
+                </article>
+            </section>
+
+            <aside id="indice">
+                <h2 id="tituloIndice">Índice</h2>
+                <ul id="ulindice">
+                    <li><a class="liindice" href="#definicion">1. Definición de una cola basada en listas</a></li>
+                    <li><a class="liindice" href="#principalesMetodos">2. Principales métodos</a></li>
+                    <li> <a class="liindice" href="#java">3. Implementación en Java</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionJava">3.1 Desarrollo de la cola basada en listas</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#c++">4. Implementación en C++</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionC++">4.1 Desarrollo de la cola basada en listas</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#python"> 5. Implementación en Python</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionPython">5.1 Desarrollo de la cola basada en listas</a></li>
+                        </ul>
+                    </li>  
+                    <li><a class="liindice" href="#aplicacion">6. Ejercicio de aplicación de la estructura</a></li>   
+                </ul>
+            </aside>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="principalesMetodos">Principales métodos</h2><br>
+                    <ul>
+                        <li><p><b>clear ()</b> -> Método void el cual se encarga de vaciar (Eliminar todos los elementos) la cola.</p></li><br>
+                        <li><p><b>IsEmpty ()</b> -> Método booleano el cual se encarga de verificar que la cola contenga al menos un elemento; Si no es así, retornara un false indicando que está vacía.</p></li><br>
+                        <li><p><b>extract ()</b> -> Método object el cual se encarga de retornar el primer elemento ingresado a la cola para posteriormente eliminarlo de la estructura.</p></li><br>
+                        <li><p><b>insert (Object object)</b> -> Método booleano el cual se encarga de incorporar el objeto ingresado en el parámetro a la cola; Si el proceso resulta exitoso, retornara un true indicando su correcto uso.</p></li><br>
+                        <li><p><b>size ()</b> -> Método int el cual se encarga de retornar el tamaño de la cola.</p></li><br>
+                        <li><p><b>search (Object object)</b> -> Método booleano el cual se encarga de verificar si el objeto ingresado en el parámetro existe en la cola; Retornara un true si lo está, o un false si no existe dentro de la estructura.</p></li><br>
+                        <li><p><b>sort ()</b> -> Método void el cual se encarga organizar la cola.</p></li><br>
+                        <li><p><b>reverse ()</b> -> Método void el cual se encarga de invertir las posiciones de la cola, siendo así los primeros elementos ingresados, los últimos en salir y los últimos elementos ingresados, los primeros en salir.</p></li><br>
+                        <li><p><b>toString ()</b> -> Método string el cual se encarga de retornar una concatenación en la cual están los elementos de la cola.</p></li><br>
+                    </ul>
+                </article>
+
+                <article>
+                    <h2 id="java">Implementación de la estructura en Java</h2>
+                    <br>
+                    <h3 id="implementacionJava">Cola basada en listas</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+public class Cola implements ICola{
+
+    /*
+
+    Nota : Las colas por listas estan basadas especificamente en las Listas Doblemente Enlazadas , por lo cual hace que este tipo de estructura se dinámica
+
+    */
+
+    private List lista = new List();
+
+    @Override
+    public void clear() {
+        lista.clear(); // Elimina los elementos de la cola mediante el .clear de la lista
+    }
+
+    @Override
+    public boolean isEmpty() { // Utiliza el método .clear de las listas para eliminar todo tipo de contenido de la estructura
+        return lista.isEmpty();
+    }
+
+    @Override
+    public Object extract() { 
+        Object object = lista.head.getObject(); // Almacena la cabeza de la lista en la variable object
+        lista.remove(lista.head); // Remueve la cabeza de la lista (El primer elemento que ingreso)
+        return object; // Retorna el elemento object
+    }
+
+    @Override
+    public boolean insert(Object object) {
+        lista.add(object); // Agrega el elemento ingresado en el parametro al final de la cola
+        return true;
+    }
+
+    @Override
+    public int size() { // Retorna el tamaño de la estructura
+        return lista.getSize();
+    }
+
+    @Override
+    public boolean search(Object object) {
+        try{
+            if (lista.search(object).getObject().toString().equals(object.toString())){ //Mediante el método .search de las listas , recorre la cola para verificar que el elemento este en la estructura
+                return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            return false;
+        }
+
+    }
+
+    @Override
+    public void sort() { // Organiza la cola 
+        lista.sortList();
+    }
+
+    @Override
+    public void reverse() {
+        List reverseList = new List(); // Crea la lista "Inversa"
+        ListNode inode = new ListNode(); // Crea el nodo que va a recorrer la estructura
+        inode = lista.tail; // Declara el nodo con el último valor ingresado a la estructura (La cola)
+        for (int i = lista.getSize(); i > 0; i-- ){
+            reverseList.add(inode.getObject());
+            inode = inode.previous; // Recorre la estructura desde la cola aprovechando las cualidades de la lista doblemente enlazada para ir almacenando los elementos en la lista "Inversa"
+        }
+        lista = reverseList; // Asigan los valores de la lista "Inversa"  a la lista original
+    }
+
+    @Override
+    public String toString(){
+        return lista.recInicioFin(); // Utiliza el método .recInicioFin para crear una concatenación de string con los elementos de la estructura
+    }
+}                               
+                        </code>
+                    </pre>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="c++">Implementación de la estructura en C++</h2>
+                    <br>
+                    <h3 id="implementacionC++">Cola basada en listas</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#include < iostream >
+#pragma once
+#include < vector >
+#include < any >
+using namespace std;
+
+    /*
+
+    Nota : Las colas por listas estan basadas especificamente en las Listas Doblemente Enlazadas , por lo cual hace que este tipo de estructura se dinámica
+
+    */
+
+
+class Cola : public ICola{
+    
+    private:
+    List *lista = new List();
+    
+    void Cola::clear()
+    {
+        lista->clear(); // Elimina los elementos de la cola mediante el .clear de la lista
+    }
+
+    bool Cola::isEmpty()
+    {
+        return lista->empty(); // Utiliza el método .clear de las listas para eliminar todo tipo de contenido de la estructura
+    }
+
+    std::any Cola::extract()
+    {
+        std::any object = lista->head->getObject(); // Almacena la cabeza de la lista en la variable object
+        lista->remove(lista->head); // Remueve la cabeza de la lista (El primer elemento que ingreso)
+        return object; // Retorna el elemento object
+    }
+
+    bool Cola::insert(std::any object)
+    {
+        lista->push_back(object); // Agrega el elemento ingresado en el parametro al final de la cola
+        return true;
+    }
+
+    int Cola::size() // Retorna el tamaño de la estructura
+    {
+        return lista->getSize();
+    }
+
+    bool Cola::search(std::any object)
+    {
+        try
+        {
+            if (lista->search(object)->getObject().toString().equals(object.toString())) //Mediante el método .search de las listas , recorre la cola para verificar que el elemento este en la estructura
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (const std::runtime_error &e)
+        {
+            return false;
+        }
+
+    }
+
+    void Cola::sort() // Organiza la cola 
+    {
+        lista->sortList();
+    }
+
+    void Cola::reverse()
+    {
+        List *reverseList = new List(); // Crea la lista "Inversa"
+        ListNode *inode = new ListNode(); // Crea el nodo que va a recorrer la estructura
+        inode = lista->tail; // Declara el nodo con el último valor ingresado a la estructura (La cola)
+        for (int i = lista->getSize(); i > 0; i--)
+        {
+            reverseList->push_back(inode->getObject());
+            inode = inode->previous; // Recorre la estructura desde la cola aprovechando las cualidades de la lista doblemente enlazada para ir almacenando los elementos en la lista "Inversa"
+        }
+        lista = reverseList; // Asigan los valores de la lista "Inversa"  a la lista original
+    }
+
+    std::wstring Cola::toString()
+    {
+        return lista->recInicioFin(); // Utiliza el método .recInicioFin para crear una concatenación de string con los elementos de la estructura
+    }
+};                                                                                       
+                        </code>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="python">Implementación de la estructura en Python</h2>
+                    <br>
+                    <h3 id="implementacionPython">Cola basada en listas</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+from listDouble import listDouble
+from listNode import ListNode
+
+
+class ListQueue():
+
+    __queue = None
+    
+    """
+    Constructor de la clase 
+    """
+    def __init__(self):
+        self.__queue = listDouble()
+
+    """
+    Limpia la cola, no tiene retorno
+    """
+    def clear(self):
+        self.__queue.clear()
+
+    """
+    Retorna True si la pila esta vacia, retorna un booleano
+    """
+    def isEmpty(self):
+        return self.__queue.isEmpty()
+
+    """
+    Extrae el elemento en la cabeza de la cola, retorna un objeto o none
+    """
+    def extract(self):
+        temp = self.__queue.head 
+        self.__queue.remove(temp)
+        return temp.getObject()
+    
+    """
+    Insertar un nodo, al final de la cola, retorna un booleano
+    """
+    def insert(self,ob):
+        return self.__queue.insertTail(ob)
+
+    """
+    Retorna la cantidad de elementos, que no sean nulos, en el arreglo, retorna un entero
+    """
+    def size(self):
+        return self.__queue.getSize()
+
+    """
+    Busca un objeto en la cola, returna un booleano
+    """
+    def search(self, ob):
+        return self.__queue.contains(ob)
+    
+    """
+    Ordena la cola, no tiene retorno
+    """
+    def sort(self):
+        self.__queue.sortList()
+
+    """
+    Revierte el orden de la cola, no tiene retorno
+    """
+    def reverse(self):
+        
+        rever = listDouble()
+        inode = self.__queue.tail
+        
+        for i in range(self.__queue.getSize(),0,-1):
+            rever.insertTail(inode.getObject())
+            inode = inode.prev
+
+        self.__queue = rever
+
+    """
+    Imprimir la cola
+    """
+    def __str__(self):
+        return self.__queue.__str__()                            
+                        </code>
+                    </pre>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+            
+            <section class="implementacion">
+                <article>
+                    <h2 id="aplicacion">Ejercicio de aplicación de la cola basada en listas</h2>
+                    <br>
+                    <p> Se quiere generar números de la suerte aplicando una variación al llamado “Problema de José” . El punto de partida es una lista de n número, esta lista se va reduciendo siguiendo el siguiente algoritmo:</p><br>
+                        <ol>
+                            <li><p>Se genera un número aleatorio n1.</p></li><br>
+                            <li><p>Si n1 <= n, se quitan de la lista los números que ocupan las posiciones 1, 1 + n1 , 1 + 2 *n1 , … ; n toma el valor del número de elementos que quedan en la lista.</p></li><br>
+                            <li><p>Se vuelve al paso 1.</p></li><br>
+                            <li><p>Si n1 > n, fin del algoritmo, los números de la suerte son los números que están en la lista.</p></li><br>
+                        </ol>
+
+                    <pre>
+                        <code id="showCode" class="language-java">
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+
+    //Problema de Jose o Números De La Suerte (Ejercicio del libro de estructura de datos c++ , página 353 , basado en colas por listas//
+
+    public static void main(String[] args) {
+
+        Random r = new Random();
+        Scanner p = new Scanner(System.in);
+
+        //"Objetos" necesarios para la implementación
+
+        System.out.println("Digite el tamaño de la lista");
+        int tam = p.nextInt(); // Tamaño original de la cola
+
+        Cola data = new Cola(); // Cola inicial
+        Cola dataFinal = new Cola(); // Cola final (Números de la suerte)
+        Cola dataTrash = new Cola(); // Cola basura
+
+        for(int i = 0 ; i < tam ; i++){
+            int Rd = r.nextInt(100000); // Se le agregan n (Tamaño ingresado por el usuario) numeros aleatorios
+            data.insert(Rd);
+        }
+
+        System.out.println("Esta es la lista original"+ data.toString());
+        int n = data.size();
+        int n1;
+        do{
+            n1 = r.nextInt(n);
+        }while (n1 < 1); // Se tiene que asegurar que n1 debe ser positivo
+
+        while (n1<=n){
+
+            for(int i = 0 ; i < n ; i++){
+                if(i % n1 != 1){
+                    dataFinal.insert(data.extract()); // Se le asigna los elementos "Suerte"
+                }else {
+                    dataTrash.insert(data.extract()); // Se le asignan los elementos multiplos n1 + 1 (Posiciones)
+                }
+            }
+
+            // La importancia de las colas es que mediante el recorrido se almacenan los elementos desde la posición 0 hasta n posición de la cola para dividir cuales son los números "De suerte"
+
+            n = data.size();
+            while (n1 < 1){
+                n1 = r.nextInt(n);
+            }
+        }
+        System.out.println("Esta es la lista con los números de la suerte \n"+ dataFinal);
+        System.out.println("Esta es la lista con los números excluidos \n"+ dataTrash); // Print final
+    }
+}                            
+                        </code>
+                    </pre>
+                <p id="descripcionImagen">EJERCICIO TOMADO DE [3]</p>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+
+            <footer id="pie">
+                Universidad Pontificia Bolivariana - Seccional Bucaramanga
+            </footer>
+        </div>
+        <script src="Estilos, scripts e imagenes/prism.js"></script>
+    </body>
+</html>

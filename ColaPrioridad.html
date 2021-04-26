@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <head>
+        <meta charset="utf-8"/>
+        <title>LVaED</title>
+        <meta name="description" content="Este es un aporte hacia el aprendizaje de las estructuras de datos"/>
+        <meta name="author" content="Cristian Julian Muñoz Buenahora, John Jairo Corzo Calderon, Santiago Andres DelValle Pinilla"/>
+        <meta name="keywords" content="Estructuras de datos"/>
+        <link rel="stylesheet" href="Estilos, scripts e imagenes/EstilosPrincipal.css"/>
+        <link rel="stylesheet" href="/Estilos, scripts e imagenes/prism.css"/>
+        <script src="Estilos, scripts e imagenes/botonArriba.js"></script>
+    </head>
+    <body>
+        <div id="principio">
+            <header>
+                <h1>Laboratorio virtual para el aprendizaje de estructuras de datos - LVaED</h1> 
+            </header>
+
+            <nav> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="EstructurasDeDatos.html">Estructura de datos</a></li>
+                    <li><a href="Trasformaciones.html">Trasformaciones</a></li>
+                </ul>
+            </nav>
+
+            <h1 id="titulo">Cola con prioridad</h1>
+            <section id="nuevoSection">
+                <article>
+                    <h2 id="definicion">Definición</h2><br>
+                    <p>Este tipo de estructura de datos lineal, y tambien puede ser denominado como FIFO (del inglés: “First Input, First output”, cuya respectiva traducción  al  español  sería:  "primero  en  ingresar,  primero  en  salir"),  esto ocurre, ya que, a diferencia de las pilas, en las colas son ingresados y eliminados por distintos extremos, es decir, salen en orden de entrada, siendo el primer valor ingresado, el primero en salir (Ver figura 9). De la misma forma a las pilas, las colas no están definidas en los lenguajes de programación, por lo que, también es necesario recurrir a arreglos y listas [4].</p><br>
+                    <img id="imgEstructura" src="Estilos, scripts e imagenes/Colas con Prioridad.png" alt="Colas">
+                    <p id="descripcionImagen">Figura 9: Representación de una cola con prioridad</p>
+                </article>
+            </section>
+
+            <aside id="indice">
+                <h2 id="tituloIndice">Índice</h2>
+                <ul id="ulindice">
+                    <li><a class="liindice" href="#definicion">1. Definición de una cola con prioridad</a></li>
+                    <li><a class="liindice" href="#principalesMetodos">2. Principales métodos</a></li>
+                    <li> <a class="liindice" href="#java">3. Implementación en Java</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionJava">3.1 Desarrollo de la cola con prioridad</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#c++">4. Implementación en C++</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionC++">4.1 Desarrollo de la cola con prioridad</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="liindice" href="#python"> 5. Implementación en Python</a>
+                        <ul>
+                            <li><a class="liindice" href="#implementacionPython">5.1 Desarrollo de la cola con prioridad</a></li>
+                        </ul>
+                    </li>  
+                    <li><a class="liindice" href="#aplicacion">6. Ejercicio de aplicación de la estructura</a></li> 
+                </ul>
+            </aside>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="principalesMetodos">Principales métodos</h2><br>
+                    <ul>
+                        <li><p><b>clear ()</b> -> Método void el cual se encarga de vaciar (Eliminar todos los elementos) la cola.</p></li><br>
+                        <li><p><b>IsEmpty ()</b> -> Método booleano el cual se encarga de verificar que la cola contenga al menos un elemento; Si no es así, retornara un false indicando que está vacía.</p></li><br>
+                        <li><p><b>extract ()</b> -> Método object el cual se encarga de retornar el primer elemento ingresado a la cola para posteriormente eliminarlo de la estructura.</p></li><br>
+                        <li><p><b>insert (Object object)</b> -> Método booleano el cual se encarga de incorporar el objeto ingresado en el parámetro a la cola; Si el proceso resulta exitoso, retornara un true indicando su correcto uso.</p></li><br>
+                        <li><p><b>size ()</b> -> Método int el cual se encarga de retornar el tamaño de la cola.</p></li><br>
+                        <li><p><b>search (Object object)</b> -> Método booleano el cual se encarga de verificar si el objeto ingresado en el parámetro existe en la cola; Retornara un true si lo está, o un false si no existe dentro de la estructura.</p></li><br>
+                        <li><p><b>sort ()</b> -> Método void el cual se encarga organizar la cola.</p></li><br>
+                        <li><p><b>reverse ()</b> -> Método void el cual se encarga de invertir las posiciones de la cola, siendo así los primeros elementos ingresados, los últimos en salir y los últimos elementos ingresados, los primeros en salir.</p></li><br>
+                        <li><p><b>toString ()</b> -> Método string el cual se encarga de retornar una concatenación en la cual están los elementos de la cola.</p></li><br>
+                    </ul>
+                </article>
+
+                <article>
+                    <h2 id="java">Implementación de la estructura en Java</h2>
+                    <br>
+                    <h3 id="implementacionJava">Cola con prioridad</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-java">
+public class Cola implements ICola{
+
+    private int minPrioridad;
+    private int limiteMaxPrioridad;
+    private List lista = new List();
+
+    public Cola(int minPrioridad, int limiteMaxPrioridad){ // Constructor
+        this.minPrioridad = minPrioridad;
+        this.limiteMaxPrioridad = limiteMaxPrioridad;
+        for (int i=limiteMaxPrioridad; i>=minPrioridad; i--){
+            lista.add(new List()); // Funciona como sublistas dependiendo la categoria asignada
+        }
+    }
+
+    @Override
+    public void clear() { 
+        lista.clear(); 
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return lista.isEmpty();
+    }
+
+    @Override
+    public Object extract() {
+        ListNode inode = lista.head; // Se declara el Nodo cabeza (Primer elemento que ingreso)
+        for (int i=limiteMaxPrioridad+1; i>=minPrioridad; i--){
+            List l = (List) inode.getObject();
+            if (!l.isEmpty()){
+                Object object = l.head.getObject();
+                l.remove(l.head);
+                return object; // Si la lista ,por ejemplo , de prioridad 5 tiene almenos un elemento , se extrae este
+            }else{
+                inode = inode.next; // Recorre el otro nodo el cual es una lista con los elementos de cierta prioridad
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean insert(Object object, int prioridad) {
+        ListNode inode = lista.head;
+        for (int i=limiteMaxPrioridad; i>=minPrioridad; i--){
+            if (i == prioridad){
+                List l = (List) inode.getObject();
+                l.add(object); // Si el Nodo contiene la prioridad que es , se le ingresa a la sublista
+            }else{
+                inode = inode.next;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int size() {
+        int cont = 0;
+        ListNode inode = lista.head;
+        for (int i=limiteMaxPrioridad; i>=minPrioridad; i--){
+            List l = (List) inode.getObject();
+            cont += l.getSize();
+            inode = inode.next;
+        }
+        return cont; // Recorre los elementos de las sublistas y los cuenta
+    }
+
+    @Override
+    public boolean search(Object object) {
+        try{
+            ListNode inode = lista.head;
+            for (int i=limiteMaxPrioridad; i>=minPrioridad; i--){
+                List l = (List) inode.getObject();
+                if (l.search(object) != null){ // Recorre las sublistas y si encuentra el elemento en alguna de esas , retorna true
+                    return true;
+                }else {
+                    inode = inode.next;
+                }
+            }
+            return false;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
+
+    @Override
+    public void sort() {
+        ListNode inode = lista.head;
+        for (int i=limiteMaxPrioridad; i>=minPrioridad; i--){
+            List l = (List) inode.getObject();
+            if (!l.isEmpty()){
+                l.sortList(); // Utiliza el método .sort de las listas para organizar el resultado
+            }
+            inode = inode.next;
+        }
+    }
+
+    @Override
+    public void reverse() {
+        List generalReverseList = new List(), l, reverseList;
+        ListNode inode = lista.head, inodel;
+        for (int i=limiteMaxPrioridad; i>=minPrioridad; i--){
+            l = (List) inode.getObject();
+            reverseList = new List();
+            inodel = l.tail;
+            for (int j = l.getSize(); j > 0; j-- ){
+                reverseList.add(inodel.getObject());
+                inodel = inodel.previous;
+            }
+            generalReverseList.add(reverseList);
+            inode = inode.next;
+        }
+        //Invierte cada sublista 
+        lista = generalReverseList;
+    }
+
+    @Override
+    public String toString(){ // Recorre las sublistas y crea una concatenación con sus elementos
+        String output = "";
+        ListNode inode = lista.head;
+        for (int i=limiteMaxPrioridad; i>=minPrioridad; i--) {
+            List l = (List) inode.getObject();
+            output += "Prioridad " + i + " -> " + l.recInicioFin() + " / ";
+            inode = inode.next;
+        }
+        return output;
+        //return lista.recInicioFin();
+    }
+}                            
+                        </code>
+                    </pre>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="c++">Implementación de la estructura en C++</h2>
+                    <br>
+                    <h3 id="implementacionC++">Cola con prioridad</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-cpp">
+#pragma once
+#include "ICola.h"
+#include "List.h"
+#include < string >
+#include < stdexcept >
+#include < any >
+
+Using namespace std
+
+    class Cola : public ICola{
+        
+        private:
+            int minPrioridad = 0;
+            int limiteMaxPrioridad = 0;
+            List *lista = new List();
+
+        public:
+        
+        Cola::Cola(int minPrioridad, int limiteMaxPrioridad) // Constructor
+        {
+            this->minPrioridad = minPrioridad;
+            this->limiteMaxPrioridad = limiteMaxPrioridad;
+            for (int i = limiteMaxPrioridad; i >= minPrioridad; i--)
+            {
+                List tempVar();
+                lista->push_back(&tempVar);
+            }
+        }
+    
+        void Cola::clear()
+        {
+            lista->clear();
+        }
+    
+        bool Cola::isEmpty()
+        {
+            return lista->empty();
+        }
+    
+        std::any Cola::extract()
+        {
+            ListNode *inode = lista->head; // Se declara el Nodo cabeza (Primer elemento que ingreso)
+            for (int i = limiteMaxPrioridad + 1; i >= minPrioridad; i--)
+            {
+                List *l = std::any_cast< List* >(inode->getObject());
+                if (!l->empty())
+                {
+                    std::any object = l->head->getObject();
+                    l->remove(l->head);
+                    return object; // Si la lista ,por ejemplo , de prioridad 5 tiene almenos un elemento , se extrae este
+                }
+                else
+                {
+                    inode = inode->next;// Recorre el otro nodo el cual es una lista con los elementos de cierta prioridad
+                }
+            }
+            return std::any();
+        }
+    
+        bool Cola::insert(std::any object, int prioridad)
+        {
+            ListNode *inode = lista->head;
+            for (int i = limiteMaxPrioridad; i >= minPrioridad; i--)
+            {
+                if (i == prioridad)
+                {
+                    List *l = std::any_cast< List* >(inode->getObject());
+                    l->push_back(object);// Si el Nodo contiene la prioridad que es , se le ingresa a la sublista
+                }
+                else
+                {
+                    inode = inode->next;
+                }
+            }
+            return true;
+        }
+    
+        int Cola::size()
+        {
+            int cont = 0;
+            ListNode *inode = lista->head;
+            for (int i = limiteMaxPrioridad; i >= minPrioridad; i--)
+            {
+                List *l = std::any_cast< List* >(inode->getObject());
+                cont += l->getSize();
+                inode = inode->next;
+            }
+            return cont; // Recorre los elementos de las sublistas y los cuenta
+        }
+    
+        bool Cola::search(std::any object)
+        {
+            try
+            {
+                ListNode *inode = lista->head;
+                for (int i = limiteMaxPrioridad; i >= minPrioridad; i--)
+                {
+                    List *l = std::any_cast< List* >(inode->getObject());
+                    if (l->search(object) != nullptr) // Recorre las sublistas y si encuentra el elemento en alguna de esas , retorna true
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        inode = inode->next;
+                    }
+                }
+                return false;
+            }
+            catch (const std::runtime_error &e)
+            {
+                return false;
+            }
+    
+        }
+    
+        void Cola::sort()
+        {
+            ListNode *inode = lista->head;
+            for (int i = limiteMaxPrioridad; i >= minPrioridad; i--)
+            {
+                List *l = std::any_cast< List* >(inode->getObject());
+                if (!l->empty())
+                {
+                    l->sortList(); // Utiliza el método .sort de las listas para organizar el resultado
+                }
+                inode = inode->next;
+            }
+        }
+    
+        void Cola::reverse()
+        {
+            List *generalReverseList = new List(), *l, *reverseList;
+            ListNode *inode = lista->head, *inodel;
+            for (int i = limiteMaxPrioridad; i >= minPrioridad; i--)
+            {
+                l = std::any_cast< List* >(inode->getObject());
+                reverseList = new List();
+                inodel = new ListNode();
+                inodel = l->tail;
+                for (int j = l->getSize(); j > 0; j--)
+                {
+                    reverseList->push_back(inodel->getObject());
+                    inodel = inodel->previous;
+                }
+                generalReverseList->push_back(reverseList);
+                inode = inode->next;
+            }
+            //Invierte cada sublista 
+            lista = generalReverseList;
+            delete inodel;
+        }
+    
+        std::wstring Cola::toString() // Recorre las sublistas y crea una concatenación con sus elementos
+        {
+            std::wstring output = L"";
+            ListNode *inode = lista->head;
+            for (int i = limiteMaxPrioridad; i >= minPrioridad; i--)
+            {
+                List *l = std::any_cast< List* >(inode->getObject());
+                output += L"Prioridad " + std::to_wstring(i) + L" -> " + l->recInicioFin() + L" / ";
+                inode = inode->next;
+            }
+            return output;
+            //return lista.recInicioFin();
+        }
+    }                                                                                        
+                        </code>
+                </article>
+            </section>
+
+            <section class="implementacion">
+                <article>
+                    <h2 id="python">Implementación de la estructura en Python</h2>
+                    <br>
+                    <h3 id="implementacionPython">Cola con prioridad</h3>
+                    <br>
+                    <pre>
+                        <code id="showCode" class="language-python">
+from listDouble import listDouble
+from listNode import ListNode
+
+
+class PrioQueue():
+
+    __queue = listDouble() #None
+    __minPrio = 0
+    __maxPrio = 0
+    
+    """
+    Constructor de la clase 
+    """
+    def __init__(self, minPrio, maxPrio):
+        self.__queue = listDouble()
+        self.__maxPrio = maxPrio
+        self.__minPrio = minPrio
+        for i in range(maxPrio, minPrio, -1):
+            self.__queue.add(listDouble())
+
+    """
+    Limpia la cola, no tiene retorno
+    """
+    def clear(self):
+        self.__queue.clear()
+
+    """
+    Retorna True si la pila esta vacia, retorna un booleano
+    """
+    def isEmpty(self):
+        return self.__queue.isEmpty()
+
+    """
+    Extrae el elemento en la cabeza de la cola, retorna un objeto o none
+    """
+    def extract(self):
+        inode = self.__queue.head
+        subList = listDouble()
+        obj = object
+
+        for i in range(self.__maxPrio,self.__maxPrio,-1):
+            subList = inode.getObject()
+            if(not subList.isEmpty()):
+                obj = subList.head.getObject()
+
+                subList.remove(subList.head)
+                return obj
+            else:
+                inode = inode.next
+        return None
+
+    
+    """
+    Insertar un nodo, al final de la cola, retorna un booleano
+    """
+    def insert(self,ob,prio):
+        inode = self.__queue.head
+        subList = listDouble()
+
+        for i in range(self.__maxPrio,self.__maxPrio,-1):
+            if(i ==  prio):
+                subList = inode.getObject()
+                subList.add(ob)
+                return True
+            else:
+                inode = inode.next
+            
+        return False
+
+    """
+    Retorna la cantidad de elementos, que no sean nulos, en el arreglo, retorna un entero
+    """
+    def size(self):
+        inode = self.__queue.head
+        acum  = 0
+        subList = listDouble()
+
+        for i in range(self.__maxPrio,self.__maxPrio,-1):
+            subList = inode.getObject()
+            acum += subList.getSize()
+            inode = inode.next
+        
+        return acum
+
+    """
+    Busca un objeto en la cola, returna un booleano
+    """
+    def search(self, ob):
+        inode = self.__queue.head
+        subList = listDouble()
+
+        for i in range(self.__maxPrio,self.__maxPrio,-1):
+            try:
+                subList = inode.getObject()
+                if(subList.search(ob)!= None):
+                    return True
+                else:
+                    inode = inode.next
+                return False
+            except Exception:
+                return False
+        
+    
+    """
+    Ordena la cola, no tiene retorno
+    """
+    def sort(self):
+        inode = self.__queue.head
+        subList = listDouble()
+
+        for i in range(self.__maxPrio,self.__maxPrio,-1):
+            subList = inode.getObject()
+            if(not subList.isEmpty()):
+                subList.sortList()
+            inode = inode.next
+
+    """
+    Revierte el orden de la cola, no tiene retorno
+    """
+    def reverse(self):
+        inode = self.__queue.head
+        inode2 = listDouble
+
+        subList = listDouble()
+        reverseList = listDouble()
+        generalReverseList = listDouble()
+
+        for i in range(self.__maxPrio,self.__maxPrio,-1):
+            subList = inode.getObject()
+            inode2 = subList.tail
+
+            for j in range(subList.getSize(), 0, -1):
+                reverseList.add(inode2.getObject)
+                inode2 = inode2.next
+            inode = inode.next
+            generalReverseList.add(reverseList)
+            
+        self.__queue = generalReverseList
+
+    """
+    Imprimir la cola
+    """
+    def __str__(self):
+        return self.__queue.__str__()                            
+                        </code>
+                    </pre>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+            
+            <section class="implementacion">
+                <article>
+                    <h2 id="aplicacion">Ejercicio de aplicación de la cola con prioridad</h2>
+                    <br>
+                    <p>El hospital “Los Comuneros” en el área de urgencias posee un sistema que registra el nombre del paciente y su índice de letalidad. Debido a la pandemia global ocasionada por el virus “Covid-19”, las UCIS se han convertido en objetos indispensables y escasos en estos tiempos por lo cual, al momento de registrar al paciente con su grado de letalidad (Data almacenada en el sistema), debe priorizarse a los más graves; Diseñe un programa el cual imprima a los pacientes (En primer lugar) que tengan mayor índice de letalidad y por último a los más estables. <br><br>Índice de letalidad (1-5):</p><br>            
+                    <ol>
+                        <li><p>Personas con patologías.</p></li><br>
+                        <li><p>Personas con enfermedades leves.</p></li><br>
+                        <li><p>Personas con fracturas.</p></li><br>
+                        <li><p>Personas con COVID-19 (Fuerte).</p></li><br>
+                        <li><p>Personas con heridas graves.</p></li><br>
+                    </ol>
+                    <pre>
+                        <code id="showCode" class="language-java">
+public class Main {
+
+    public static void main(String[] args) {
+
+        Cola dataHospital = new Cola(1, 5);
+
+        //Data del hospital almacenada en la cola de prioridades//
+        dataHospital.insert("Pedro Alvares Rincon", 1);
+        dataHospital.insert("Angela Lopez Martinez", 4);
+        dataHospital.insert("Ivan Sanches Obrador ", 2);
+        dataHospital.insert("Jose Perez Labrador", 5);
+        dataHospital.insert("Joey Suarez Días", 5);
+        dataHospital.insert("Leo Messi Pilar", 2);
+        dataHospital.insert("Dopa Jinx Poe", 3);
+        dataHospital.insert("Alistar Eduardo perez", 1);
+        dataHospital.insert("Ángela Suarez Guevara", 2);
+        dataHospital.insert("Lucas Martines Suarez", 1);
+        dataHospital.insert("Urgot Eduardo Perez", 3);
+        dataHospital.insert("Ahri Juliana Corzo", 3);
+        dataHospital.insert("Katarina Loer Slight", 2);
+        dataHospital.insert("Luppy Perez", 2);
+        dataHospital.insert("Sara Pilar Toro", 5);
+
+        int cont = 0; // Contador para ver el #del paciente
+        while (dataHospital.size()!=0){ // Recorre la cola hasta que la longitud de esta sea == 0
+            cont++;
+            System.out.println( "La paciente #" + cont + " " + "es" + " " +dataHospital.extract()); // Mediante el metodo .extract , se extrae el elemento con mayor prioridad que haya sido ingresado por orden
+        }
+    }
+}                            
+                        </code>
+                    </pre>
+                <p id="descripcionImagen">EJERCICIO PROPUESTO POR LOS LOS INTEGRANTES DEL EQUIPO DE TRABAJO</p>
+                </article>
+                <a href="#principio"><img id="botonArriba" src="Estilos, scripts e imagenes/Boton arriba.png"></a>
+            </section>
+
+            <footer id="pie">
+                Universidad Pontificia Bolivariana - Seccional Bucaramanga
+            </footer>
+        </div>
+        <script src="Estilos, scripts e imagenes/prism.js"></script>
+    </body>
+</html>
